@@ -95,7 +95,85 @@
               </tfoot>
               </table>
             </div>
+<!--  View product details modal -->
+    <div class="modal fade" id="modelViewProduct" tabindex="-1" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="blue bigger">View Product Details</h4>
+          </div>
 
+          <div class="modal-body">
+            <div class="row">
+              <form class="form-horizontal" role="form" id="form_addNewProductCat">
+              <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product ID </label>
+
+                <div class="col-sm-9">
+                  <input type="text" readonly="readonly" id="editModalProductId" name="editModalProductId" placeholder="" class="col-xs-10 col-sm-8" />
+                <div class="clearfix">
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Category </label>
+
+                <div class="col-sm-9">
+                  <div class="clearfix">
+                  <input type="text" readonly="readonly" id="editModalProductCat" name="editModalProductCat" placeholder="" class="col-xs-10 col-sm-8" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Sub Category </label>
+
+                <div class="col-sm-9">
+                  <div class="clearfix">
+                  <input type="text" readonly="readonly" class="col-xs-10 col-sm-8" placeholder="" id="editModalProductSubCat" name="editModalProductSubCat"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Name </label>
+
+                <div class="col-sm-9">
+                  <div class="clearfix">
+                  <input type="text" readonly="readonly" class="col-xs-10 col-sm-8" placeholder="" id="editModalProductName" name="editModalProductName"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Supplier </label>
+
+                <div class="col-sm-9">
+                  <div class="clearfix">
+                  <input type="text" readonly="readonly" class="col-xs-10 col-sm-8" placeholder="" id="editModalProductSupplier" name="editModalProductSupplier"/>
+                  </div>
+                </div>
+              </div>
+
+              </form>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-warning" data-dismiss="modal">
+              <i class="ace-icon fa fa-times"></i>
+              Cancel
+            </button>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- End of view product details modal -->
 
 
 			<!-- PAGE CONTENT ENDS -->
@@ -144,6 +222,26 @@
           }
           } );
       });
+// 
+      function modalViewProduct(proid){
+        
+        alert(proid);
+        $.post("../controllers/controller_products.php?type=viewProductModal",
+        {proid:proid},
+        function(data,status){
+        if(status=="success"){
+              //alert(data);
+              
+              var jdata=jQuery.parseJSON(data);
+              $("#editModalProductId").val(jdata.pro_id);
+              $("#editModalProductCat").val(jdata.product_cat_name);
+              $("#editModalProductSubCat").val(jdata.product_subcat_name);
+              $("#editModalProductName").val(jdata.pro_name);
+              $("#editModalProductSupplier").val(jdata.sup_name);
+
+           }
+        });
+      }
 
 
   $(document).ready(function(){
@@ -165,6 +263,7 @@
       
       }
     });
+
     // load supplier select box
       $.ajax({
       url:"../controllers/controller_products.php?type=selectSupplierLoad",
@@ -180,6 +279,10 @@
       }
     });
 
+     
+
+    
+
   });
 
     $('#selectSupplier').change(function(){
@@ -189,7 +292,7 @@
       //   .search(this.value)
       //   .draw();
       // $.noConflict();
-          var supplierval = $('#selectSupplier').val(); // get option's value
+      var supplierval = $('#selectSupplier').val(); // get option's value
  // get option's value
 
 
@@ -276,6 +379,8 @@
           }
       });
     });
+
+
 </script>
 
 

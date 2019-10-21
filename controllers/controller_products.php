@@ -31,6 +31,12 @@ if(isset($_GET["type"])){
 			case "addNewProductSubCat":
 				addNewProductSubCat(); 		
 				break;
+			case "selectSupplierLoadModal":
+				selectSupplierLoadModal(); 		
+				break;
+			case "viewProductModal":
+				viewProductModal(); 		
+				break;
 				}
 			}
 
@@ -56,7 +62,7 @@ function viewProductTable(){
 			echo("<td>No Record</td>");
 			echo('<td><div class="hidden-sm hidden-xs btn-group">
 				<button class="btn btn-xs btn-success">
-					<i class="ace-icon fa fa-check bigger-120"></i>
+					<i class="ace-icon fa-info-circle bigger-120"></i>
 				</button>
 
 				<button class="btn btn-xs btn-info">
@@ -76,24 +82,24 @@ function viewProductTable(){
 		
 		}
 		while($rec=$result->fetch_assoc()){
-		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td>
+		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
 		// </tr>";	
-		echo("<tr>");
+			echo("<tr id='".$rec["pro_id"]."'>");
 			echo("<td>".$rec["pro_id"]."</td>");
 			echo("<td>".$rec["product_cat_name"]."</td>");
 			echo("<td>".$rec["product_subcat_name"]."</td>");
 			echo("<td>".$rec["pro_name"]."</td>");
 			echo("<td>".$rec["sup_name"]."</td>");
-			echo('<td><div class="hidden-sm hidden-xs btn-group">
-					<button class="btn btn-xs btn-success">
-						<i class="ace-icon fa fa-check bigger-120"></i>
+			echo('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
+					<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelViewProduct" onclick="modalViewProduct(\''.$rec["pro_id"].'\')">
+						<i class="ace-icon fa fa-info-circle bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-info">
+					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelEditProduct">
 						<i class="ace-icon fa fa-pencil bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-danger">
+					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
@@ -186,7 +192,7 @@ function get_filtered_data(){
 			echo("<td>".$rec["sup_name"]."</td>");
 			echo('<td><div class="hidden-sm hidden-xs btn-group">
 					<button class="btn btn-xs btn-success">
-						<i class="ace-icon fa fa-check bigger-120"></i>
+						<i class="ace-icon fa-info-circle bigger-120"></i>
 					</button>
 
 					<button class="btn btn-xs btn-info">
@@ -293,7 +299,7 @@ function get_filteredSubCat(){
 
 function addNewProduct(){
 
-			//db connection
+		//db connection
 		$db=new Connection();
 		$con=$db->db_con();
 		
@@ -343,25 +349,35 @@ function addNewProduct(){
 
 		$sql="INSERT INTO sap_products(pro_id,pro_cat_id,pro_subcat_id,pro_name,pro_sup_id,pro_status)
 		VALUES('$proid','$cat','$cat','$product','$supid','$status');";
-		$result=$con->query($sql);
+		$result2=$con->query($sql);
 		if($con->errno)
 		{
+			// echo("SQL Error: ".$con->error); 
 			echo("SQL Error: ".$con->error);
 			exit;
 		}
-		//alert('func');
-		$nor=$result->num_rows;
-		if($nor==0){
-			echo("");
-		}
 		else{
 			//fetch all the records
-			while($rec=$result->fetch_assoc())
-			{
+		
 				//merge province ID and name with HTML
-				echo("Success");
-			}
+			echo("Success");
+		
 		}
+
+
+		//alert('func');
+		// $nor2=$result2->num_rows;
+		// if($nor2==0){
+		// 	echo("Success");
+		// }
+		// else{
+		// 	//fetch all the records
+		// 	while($rec=$result2->fetch_assoc())
+		// 	{
+		// 		//merge province ID and name with HTML
+		// 		echo("Success");
+		// 	}
+		// }
 		$con->close();
 }
 
@@ -441,7 +457,7 @@ function addNewSupplier(){
 function addNewProductCat(){
 
 
-		$supid=$_POST["procat_supid"];
+		$supid=$_POST["procat_supplier"];
 		$cat=$_POST["procat_procat"];
 		$des=$_POST["procat_prodes"];
 
@@ -470,6 +486,91 @@ function addNewProductCat(){
 			}
 		}
 		$con->close();
+}
+
+function selectSupplierLoadModal(){
+		$supplierval=$_POST["supplierval"];
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql="SELECT DISTINCT sup_id,sup_name FROM sap_suppliers;";
+		$result=$con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		//alert('func');
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("No records");
+			exit;
+		}
+		else{
+			//fetch all the records
+			while($rec=$result->fetch_assoc())
+			{
+				//merge province ID and name with HTML <option value="">--Select Supplier--</option>
+
+				echo("<option value='".$rec["sup_id"]."'>".$rec["sup_name"]."</option>");
+			}
+		}
+		$con->close();
+
+}
+
+function addNewProductSubCat(){
+
+
+		$supid=$_POST["prosubcat_supplier"];
+		$cat=$_POST["prosubcat_procat"];
+		$subcat=$_POST["prosubcat_prosubcat"];
+		$des=$_POST["prosubcat_subcatdes"];
+
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql="INSERT INTO tbl_product_subcat(product_cat_id,product_subcat_name,product_subcat_des)
+		VALUES('$cat','$subcat','$des');";
+		$result=$con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		//alert('func');
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("");
+		}
+		else{
+			//fetch all the records
+			while($rec=$result->fetch_assoc())
+			{
+				
+				echo("Success");
+			}
+		}
+		$con->close();
+}
+
+function viewProductModal(){
+
+		$proid=$_POST["proid"];
+
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql="SELECT spp.pro_id, cat.product_cat_name, sub.product_subcat_name, spp.pro_name, sup.sup_name
+				FROM sap_products spp, tbl_product_cat cat, tbl_product_subcat sub, sap_suppliers sup
+				WHERE pro_status=0 and spp.pro_cat_id=cat.product_cat_id and spp.pro_subcat_id=sub.product_subcat_id and spp.pro_sup_id=sup.sup_id and spp.pro_id='$proid'";
+		$result=$con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		
+		$rec=$result->fetch_assoc();
+			echo(json_encode($rec));
+		$con->close();	
 }
 
 ?>
