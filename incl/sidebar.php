@@ -117,7 +117,7 @@
 							</li>
 
 							<li class="">
-								<a href="jqgrid.html">
+								<a href="../pages/product_stock.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Stock
 								</a>
@@ -173,14 +173,14 @@
 							<li class="">
 								<a href="form-elements.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									View Purchase Orsers
+									View Purchase Orders
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a href="../pages/purchase_create2.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Create Purchase Order
 								</a>
@@ -276,7 +276,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="form-elements.html">
+								<a href="../pages/route_sche_view.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									View Route Schedule
 								</a>
@@ -285,7 +285,7 @@
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a href="../pages/route_sche_create.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Create Route Schedule
 								</a>
@@ -358,7 +358,7 @@
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a href="">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Add New Customer
 								</a>
@@ -381,7 +381,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="form-elements.html">
+								<a href="../pages/suppliers_view.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									View Suppliers
 								</a>
@@ -390,7 +390,7 @@
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a href="../pages/suppliers_add.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Add New Supplier
 								</a>

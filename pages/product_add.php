@@ -31,7 +31,7 @@
 				<select class="col-xs-10 col-sm-5" id="pro_supplier" name="pro_supplier">
 					<option value="">Select Supplier</option>
 				</select>
-				<button class="btn btn-xs btn-success" type="button" id="addSupplier" name="addSupplier" data-toggle='modal' style="margin-left: 10px:" href="#modelAddSupplier">
+				<button class="btn btn-xs btn-success" type="button" id="addSupplier" name="addSupplier" data-toggle="modal" style="margin-left: 10px:" href="#modelAddSupplier">
 					<i class="ace-icon fa fa-plus bigger-120"></i>
 				</button>
 				</div>
@@ -117,8 +117,9 @@
 					</button>
 				</div>
 			</div>
+		</form>
     	</div>
-      	</form>
+
 
       	<div id="dialog-message" class="hide">
 <!-- 			<p>

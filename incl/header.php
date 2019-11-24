@@ -12,8 +12,11 @@
 		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="../assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 		<link rel="stylesheet" href="../assets/datatables/css/dataTables.bootstrap.min.css" />
-
-		<link rel="stylesheet" href="../assets/jqueryui/jquery-ui.min.css" />
+    	
+    	<link rel="stylesheet" href="../assets/css/jquery-ui.min.css" />
+    	<link rel="stylesheet" href="../assets/css/bootstrap-datepicker3.min.css" />
+<!-- 		<link rel="stylesheet" href="../assets/jqueryui/jquery-ui.min.css" /> -->
+		<link rel="stylesheet" href="../assets/css/ui.jqgrid.min.css" />
 
 		<!-- page specific plugin styles -->
 
@@ -37,7 +40,7 @@
 
 		<!-- ace settings handler -->
 		<script src="../assets/js/jquery-2.1.4.min.js"></script>
-		<script src="../assets/js/bootstrap.min.js"></script>
+
 		<script src="../assets/jquery/js/jquery.js"></script>
 		<script src="../assets/jquery/js/jquery.min.js"></script>
 		<script src="../assets/jqueryui/jquery-ui.min.js"></script>
@@ -47,7 +50,7 @@
 <!-- 		<script src="../assets/datatables/js/jquery.dataTables.min.js"></script> -->
 		<script src="../assets/js/ace-extra.min.js"></script>
 
-		<script src="../assets/js/bootstrap.min.js"></script>
+<!-- 		<script src="../assets/js/bootstrap.min.js"></script> -->
 
 		<script src="../assets/js/dataTables.buttons.min.js"></script>
 		<script src="../assets/js/buttons.flash.min.js"></script>
@@ -396,7 +399,7 @@
 				try{ace.settings.loadState('main-container')}catch(e){}
 			</script>
 			
-			
+	
 
 
 

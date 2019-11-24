@@ -9,17 +9,16 @@
 		<div class="col-xs-12">
 			<!-- PAGE CONTENT BEGINS -->
           <div class="box-header with-border">
-              <h3 class="box-title">View Stock</h3>
+              <h3 class="box-title">View Suplliers</h3>
           </div>
 
-              <table id="stockTable" class="table table-bordered table-striped">
+              <table id="supplierTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Product ID</th>
-                  <th>Product Category</th>                  
-                  <th>Product Sub-Category</th>
-                  <th>Product Name</th>
-                  <th>Supplier</th>
+                  <th>Supplier ID</th>
+                  <th>Supplier Name</th>                  
+                  <th>Supplier Address</th>
+                  <th>Supplier Telephone</th>            
                   <th>Actions</th>
                 </tr>
                 </thead>
@@ -29,20 +28,12 @@
                 <tfoot>
             
               </tfoot>
-              </table>
-
-
+              </table>						
 
 			<!-- PAGE CONTENT ENDS -->
 		</div><!-- /.col -->
 	</div><!-- /.row -->
-
-
-
-
 </div><!-- /.page-content -->
-
-
 <script type="text/javascript">
         jQuery(function($){
 
@@ -52,7 +43,7 @@
         .DataTable( {
           bAutoWidth: false,
           "aoColumns": [
-            null, null,null, null, null,
+            null, null,null,null,
             { "bSortable": false }
           ],
           "aaSorting": [],
@@ -81,9 +72,26 @@
           } );
       });
 
+       $(document).ready(function(){
+       	    $.noConflict();
+		    
+		    // load datatable on load
+		    $.ajax({
+		      url:"../controllers/controller_suppliers.php?type=viewSupplierTable",
+		      method:"POST",
+		      processData: false,
+		      contentType: false,
+		    success: function(data){
+		      //alert(data);
+		        $("#supplierTable").DataTable().destroy();
+		        $("#supplierTable tbody").empty();
+		        $("#supplierTable tbody").append(data);
+		        $("#supplierTable").DataTable();
+		      
+		      }
+		    });
+       });
+
 </script>
-
-
 <!-- Require footer here -->
 <?php require_once("../incl/footer.php");?>
-

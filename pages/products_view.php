@@ -29,9 +29,9 @@
                   <div class="form-group" id="filter_col1" data-column="2">
                     <label for="exampleInputEmail1">Supplier</label>
                     <div class="input-group">
-                        <span class="input-group-addon">
+<!--                         <span class="input-group-addon">
                           <input type="checkbox" class="column_filter" id="col2_smart">
-                        </span>
+                        </span> -->
                     <select name="selectSupplier" id="selectSupplier" class="form-control selcet-filter">
                      <option value="0">--Select Supplier--</option>
                         <?php 
@@ -45,9 +45,9 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Product Category</label>
                     <div class="input-group">
-                        <span class="input-group-addon">
+<!--                         <span class="input-group-addon">
                           <input type="checkbox">
-                        </span>
+                        </span> -->
                     <select name="selectProductCat" id="selectProductCat" class="form-control">
                      <option value="">--Select Product Category--</option>
                         <?php 
@@ -61,9 +61,9 @@
                   <div class="form-group">
                     <label for="exampleInputEmail1">Product</label>
                     <div class="input-group">
-                        <span class="input-group-addon">
+<!--                         <span class="input-group-addon">
                           <input type="checkbox">
-                        </span>
+                        </span> -->
                     <select name="selectProductsubCat" id="selectProductsubCat" class="form-control">
                      <option value="">--Select Product Sub Category--</option>
                         
