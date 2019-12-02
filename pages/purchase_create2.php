@@ -44,12 +44,13 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="proid">Date</label>
-                  <div class="input-group date">
-                    <div class="input-group-addon">
-                      <i class="fa fa-calendar"></i>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                        <input class="form-control date-picker" id="purdate"
+                         type="text" data-date-format="dd-mm-yyyy"/>
                     </div>
-                  <input type="text" class="form-control pull-right" id="podatepicker" name="podatepicker">
-                </div>
                 </div>
               </div>
             
@@ -223,6 +224,17 @@
 
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
+        jQuery(function($) {
+          $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+          })
+          
+          .next().on(ace.click_event, function () {
+              $(this).prev().focus();
+          });
+        });
+
       var grid_data = 
       [ 
         {id:"P0001",pname:"Chocolate Biscuits 80g",qty:"120"},

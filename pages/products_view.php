@@ -186,43 +186,15 @@
 </div><!-- /.page-content -->
 
 <script type="text/javascript">
-      jQuery(function($){
+jQuery(function($){
 
-        var myTable = 
-        $('#productTable')
-        //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-        .DataTable( {
-          bAutoWidth: false,
-          "aoColumns": [
-            null, null,null, null, null,
-            { "bSortable": false }
-          ],
-          "aaSorting": [],
-          
-          
-          //"bProcessing": true,
-              //"bServerSide": true,
-              //"sAjaxSource": "http://127.0.0.1/table.php" ,
-      
-          //,
-          //"sScrollY": "200px",
-          //"bPaginate": false,
-      
-          //"sScrollX": "100%",
-          //"sScrollXInner": "120%",
-          //"bScrollCollapse": true,
-          //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-          //you may want to wrap the table inside a "div.dataTables_borderWrap" element
-      
-          //"iDisplayLength": 50
-      
-      
-          select: {
-            style: 'multi'
-          }
-          } );
-      });
-// 
+var myTable = $('#productTable').DataTable({
+    bAutoWidth: false,
+    aoColumns: [null, null,null, null, null,{"bSortable": false }],
+    aaSorting: [],
+    select: {style:'multi'}
+  });
+});
       function modalViewProduct(proid){
         
         alert(proid);

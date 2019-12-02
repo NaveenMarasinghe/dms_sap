@@ -74,7 +74,8 @@
 								<i class="fa fa-calendar bigger-110"></i>
 							</span>
 
-							<input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" />
+							<input class="form-control date-picker" type="text" name="txtRouteScheDate" 
+              id="txtRouteScheDate" data-date-format="dd-mm-yyyy"/>
 						</div>
                 </div>
               </div>
@@ -258,6 +259,18 @@
 
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
+
+        jQuery(function($) {
+          $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+          })
+          
+          .next().on(ace.click_event, function () {
+              $(this).prev().focus();
+          });
+        });
+
       var grid_data = 
       [ 
         {id:"P0001",pname:"Chocolate Biscuits 80g",qty:"120"},

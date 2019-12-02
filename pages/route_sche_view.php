@@ -46,15 +46,20 @@
                     </div>                    
                   </div>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label for="proid">Date Range</label>                  
 						<div class="input-group">
-							<span class="input-group-addon">
-								<i class="fa fa-calendar bigger-110"></i>
-							</span>
+							<div class="input-daterange input-group">
+                  <input type="text" class="input form-control "
+                    name="start" id="datestart"/>
+                  <span class="input-group-addon">
+                    <i class="fa fa-exchange"></i>
+                  </span>
 
-							<input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" />
+                  <input type="text" class="input form-control"
+                    name="end" id="enddate"/>
+              </div>
 						</div>
                 </div>
               </div>
