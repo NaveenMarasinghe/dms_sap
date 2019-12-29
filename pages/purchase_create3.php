@@ -1,6 +1,9 @@
 <?php require_once("../incl/header.php");?>
   <link href="../assets/css/select2.min.css" rel="stylesheet" />
   <script src="../assets/js/select2.min.js"></script>
+
+
+
 <?php require_once("../incl/sidebar.php");?>
 <?php require_once("../incl/pagetop.php");?>
 
@@ -135,7 +138,7 @@
 
                     <!-- div.dataTables_borderWrap -->
                     <div>
-                      <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                      <table id="purchaseTable" class="table table-striped table-bordered table-hover">
                         <thead>
                           <tr>
 <!--                             <th class="center">
@@ -152,7 +155,7 @@
                         </thead>
 
                         <tbody id="tablebody">
-                          <tr class="selected">
+                          <!-- <tr class="selected"> -->
 <!--                             <td class="center">
                               <label class="pos-rel">
                                 <input type="checkbox" class="ace" />
@@ -160,7 +163,7 @@
                               </label>
                             </td> -->
 
-                            <td>GG</td>
+<!--                             <td>GG</td>
                             <td>GoodGame</td>
                             <td class="hidden-480">30</td>
 
@@ -180,7 +183,7 @@
                               </div>
 
                             </td>
-                          </tr>
+                          </tr> -->
                         </tbody>
                       </table>
                     </div>
@@ -243,20 +246,97 @@
 
 <script type="text/javascript">
 
+  $.noConflict();
+  jQuery(function($){
+  $(document).ready(function() {
+      var myTable = $('#purchaseTable').DataTable();
+   
+      $('#addproductbutton').on( 'click', function () {
 
-      jQuery(function($){
+      var proname = $("#id_label_multiple option:selected").text();
+      var proid = $('#id_label_multiple').val();
+      var qnty = $('#qty').val();
+      var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
 
-        var myTable = $('#stockTable').DataTable({
-          bAutoWidth: false,
-          aoColumns: [null, null,null, null, null,null],
-          aaSorting: [],
-          select: {style: 'multi'}
-          });
+      //<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>
+
+          myTable.row.add( [
+              proid,
+              proname,              
+              qnty,
+              buttons
+          ] ).draw( false );
+
+      } );
+
+      // $('#purchaseTable tbody').on( 'click', 'fa-trash-o', function () {
+      //     myTable
+      //         .row( $(this).parents('tr') )
+      //         .remove()
+      //         .draw();
+      //     alert('sda');
+      // } );
+    $('#purchaseTable tbody').on( 'click', '.fa-trash-o', function () {
+      // alert('sda');
+            swal({
+                title: "Do you want to save this customer ?",
+                text: "You can not reverse this",
+                type: "warning",
+                confirmButtonClass: "btn-primary",
+                confirmButtonText: "Confirm",
+                showCancelButton: true,
+                closeOnConfirm: false
+            },
+            function() {
+                var rowval =  myTable.row($(this).parents('tr')).val();
+                alert(rowval);
+                // myTable.row($(this).parents('tr')).remove().draw( false );
+                swal("Customer form is validated", "", "success");
+            });
+
+
+      // swal({
+      //   title: "Are you sure?",
+      //   text: "Once deleted, you will not be able to recover this imaginary file!",
+      //   icon: "warning",
+      //   buttons: true,
+      //   dangerMode: true,
+      // })
+      // .then((willDelete) => {
+      //   if (willDelete) {
+      //     myTable.row($(this).parents('tr')).remove().draw( false );
+      //     swal("Poof! Your imaginary file has been deleted!", {
+      //       icon: "success",
+      //     });
+      //   } else {
+      //     swal("Your imaginary file is safe!");
+      //   }
+      // });
+      
+    } );
+ 
       $(".fa-trash-o").click(function(){
         myTable.row(".selected").remove().draw( false );
          alert('sda');
         // myTable.row('.selected').remove().draw( false );
       }); 
+      // // Automatically add a first row of data
+      // $('#addRow').click();
+  });
+});
+
+
+      jQuery(function($){
+
+        // var myTable = $('#purchaseTable').DataTable({
+        //   bAutoWidth: false,
+        //   aoColumns: [null, null,null, null],
+        //   aaSorting: [],
+        //   select: {style: 'multi'}
+        //   });
+
+
+
 
 
       // $('#stockTable').on( 'click', 'tbody tr', function () {
@@ -280,19 +360,20 @@
 
       });
 
-      $('#addproductbutton').click(function(){
-        var proname = $("#id_label_multiple option:selected").text();
-        var proid = $('#id_label_multiple').val();
-        var qnty = $('#qty').val();
-
+      // $('#addproductbutton').click(function(){
+      //   var proname = $("#id_label_multiple option:selected").text();
+      //   var proid = $('#id_label_multiple').val();
+      //   var qnty = $('#qty').val();
+      //   var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
           
-          $('#tablebody').append("<tr><td>"+ proid +"</td><td>" + proname + "</td><td>" + qnty + "</td> '<td><div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div> </td>' </tr>" );
-          
-          $('#id_label_multiple').val("");
-          $('#qty').val("");
-          $('#productname').focus();
 
-        });
+      //     // $('#tablebody').append("<tr><td>"+ proid +"</td><td>" + proname + "</td><td>" + qnty + "</td> '<td><div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div> </td>' </tr>" );
+          
+      //     $('#id_label_multiple').val("");
+      //     $('#qty').val("");
+      //     $('#productname').focus();
+
+      //   });
 
 
 

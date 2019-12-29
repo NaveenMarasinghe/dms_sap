@@ -17,7 +17,7 @@
             <!-- /.box-header -->
             <div class="box-body" >
               <form id="purchaseform" method="post" >
-            <div class="col-xs-12"> 
+            <div class="row"> 
               
               <div class="col-md-4">
                 <div class="form-group">
@@ -55,7 +55,7 @@
               </div>
             
             </div>
-            <div class="col-xs-12">
+            <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="proid">Remarks</label>
@@ -65,7 +65,7 @@
               </div>
             </div>
 
-            <div class="col-xs-12">
+            <div class="row">
               <div class="col-md-4">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Product Category</label>
@@ -73,7 +73,7 @@
 <!--                         <span class="input-group-addon">
                           <input type="checkbox" class="column_filter" id="col2_smart">
                         </span> -->
-                    <select name="selectSupplier" id="selectSupplier" class="form-control selcet-filter">
+                    <select name="selectProductCat" id="selectProductCat" class="form-control selcet-filter">
                      <option value="0">--Select Product Category--</option>
                      <option value="0">--Select Sggggggggggggggggggggggggggupplier--</option>
 
@@ -100,20 +100,21 @@
               <div class="col-xs-2">
                   <div class="col-xs-2">
                 <div class="form-group">
-                  <label for="proid" style="color: white;">gg</label>
+                  <label for="proid" style="color: white;">&nbsp;</label>
                    <button type='button' class='btn btn-primary m-b-20' id='addproductbutton' >Add Items</button>
                 </div>
               </div>
               </div>
             </div>
-             <div class="col-xs-12">
+             <div class="row">
+              <div class="col-xs-12">
 
                 <div class="form-group">
                 <table id="grid-table"></table>
 
                 <div id="grid-pager"></div>                  
                 </div>
-
+              </div>
               </div>            
 
 <!--                     <table id="product_table" class="table table-bordered table-striped">

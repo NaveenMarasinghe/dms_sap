@@ -9,11 +9,15 @@
 		<div class="col-xs-12">
 			<!-- PAGE CONTENT BEGINS -->
 
-
-      <div>       
-        <h4 class="title form-actions"><b>Add New Product</b></h4>
+	<div class="form-actions">
+      <div>   
+      	<div class="col-sm-3">
+      	</div>  
+      	<div class="col-sm-9">  
+        <h4 class="page-header"><b>Add New Product</b></h4>
+    	</div>
       </div>
-      <div class="form-actions">
+      
       	<form class="form-horizontal" role="form" id="form_addNewProduct">
 		<div class="form-group">
 			<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product ID </label>
@@ -105,7 +109,7 @@
 			<div class="clearfix form-actions">
 				<div class="col-md-offset-3 col-md-9">
 					
-					<button class="btn btn-warning" type="reset">
+					<button class="btn btn-grey" type="reset">
 						<i class="ace-icon fa fa-undo bigger-110"></i>
 						Reset
 					</button>
@@ -537,7 +541,7 @@
 						},
 						pro_cat: "Please choose product category",
 						pro_subcat: "Please provide a product sub category",
-						pro_name: "Please provide a product name"
+						pro_name: "Please enter a valid name"
 					},
 			
 			
@@ -587,7 +591,7 @@
 			if($("#form_addNewProduct").valid()) {
 
 			f= new FormData($("#form_addNewProduct")[0]);
-
+				
 		       $.ajax({
 		            url:"../controllers/controller_products.php?type=addNewProduct",
 		            method:"POST",

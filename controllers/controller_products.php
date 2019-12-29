@@ -43,9 +43,9 @@ if(isset($_GET["type"])){
 function viewProductTable(){
 		$db=new Connection();
 		$con=$db->db_con();
-		$sql="SELECT spp.pro_id, cat.product_cat_name, sub.product_subcat_name, spp.pro_name, sup.sup_name
-				FROM sap_products spp, tbl_product_cat cat, tbl_product_subcat sub, sap_suppliers sup
-				WHERE pro_status=0 and spp.pro_cat_id=cat.product_cat_id and spp.pro_subcat_id=sub.product_subcat_id and spp.pro_sup_id=sup.sup_id";
+		$sql="SELECT pro.pro_id, cat.product_cat_name, sub.product_subcat_name, pro.pro_name, sup.sup_name
+				FROM tbl_products pro, tbl_product_cat cat, tbl_product_subcat sub, tbl_suppliers sup
+				WHERE pro_status=0 and pro.pro_cat_id=cat.product_cat_id and pro.pro_subcat_id=sub.product_subcat_id and pro.pro_sup_id=sup.sup_id";
 		$result = $con->query($sql);
 		if($con->errno)
 		{
@@ -125,42 +125,42 @@ function get_filtered_data(){
 
 		if($procatval !=""){
 			if($where !=""){
-				$where .=" AND spp.pro_cat_id = "."'".$procatval."'";
+				$where .=" AND pro.pro_cat_id = "."'".$procatval."'";
 			}
 			else{
-			$where .="WHERE spp.pro_cat_id = "."'".$procatval."'" ;
+			$where .="WHERE pro.pro_cat_id = "."'".$procatval."'" ;
 			}
 		}
 		if($product !=""){
 			if($where !=""){
-				$where .=" AND spp.pro_subcat_id = "."'".$product."'" ;
+				$where .=" AND pro.pro_subcat_id = "."'".$product."'" ;
 			}
 			else{
-			$where .="WHERE spp.pro_subcat_id = "."'".$product."'" ;
+			$where .="WHERE pro.pro_subcat_id = "."'".$product."'" ;
 			}
 		}
 
 		if($supplierval !=""){
 			if($where !=""){
-				$where .=" AND spp.pro_sup_id = "."'".$supplierval."'" ;
+				$where .=" AND pro.pro_sup_id = "."'".$supplierval."'" ;
 			}
 			else{
-			$where .="WHERE spp.pro_sup_id = "."'".$supplierval."'" ;
+			$where .="WHERE pro.pro_sup_id = "."'".$supplierval."'" ;
 			}
 		}
 		if($where !=""){
-			$joinwhere=" AND pro_status=0 and spp.pro_cat_id=cat.product_cat_id and spp.pro_subcat_id=sub.product_subcat_id and spp.pro_sup_id=sup.sup_id";
+			$joinwhere=" AND pro_status=0 and pro.pro_cat_id=cat.product_cat_id and pro.pro_subcat_id=sub.product_subcat_id and pro.pro_sup_id=sup.sup_id";
 			$where = $where.$joinwhere;
 		}
 		else{
-			$where ="WHERE pro_status=0 and spp.pro_cat_id=cat.product_cat_id and spp.pro_subcat_id=sub.product_subcat_id and spp.pro_sup_id=sup.sup_id";
+			$where ="WHERE pro_status=0 and pro.pro_cat_id=cat.product_cat_id and pro.pro_subcat_id=sub.product_subcat_id and pro.pro_sup_id=sup.sup_id";
 		}
 		
 
 		$db=new Connection();
 		$con=$db->db_con();
-		$sql="SELECT spp.pro_id, cat.product_cat_name, sub.product_subcat_name, spp.pro_name, sup.sup_name
-				FROM sap_products spp, tbl_product_cat cat, tbl_product_subcat sub, sap_suppliers sup $where;";
+		$sql="SELECT pro.pro_id, cat.product_cat_name, sub.product_subcat_name, pro.pro_name, sup.sup_name
+				FROM tbl_products pro, tbl_product_cat cat, tbl_product_subcat sub, tbl_suppliers sup $where;";
 		$result=$con->query($sql);
 		if($con->errno)
 		{
@@ -216,7 +216,7 @@ function get_filtered_data(){
 function selectSupplierLoad(){
 		$db=new Connection();
 		$con=$db->db_con();
-		$sql="SELECT DISTINCT sup_id,sup_name FROM sap_suppliers;";
+		$sql="SELECT DISTINCT sup_id,sup_name FROM tbl_suppliers;";
 		$result=$con->query($sql);
 		if($con->errno)
 		{
@@ -304,7 +304,7 @@ function addNewProduct(){
 		$con=$db->db_con();
 		
 		//query
-		$sql="SELECT pro_id FROM sap_products ORDER BY pro_id DESC LIMIT 1;";
+		$sql="SELECT pro_id FROM tbl_products ORDER BY pro_id DESC LIMIT 1;";
 		
 		//execute the query
 		$result=$con->query($sql);
@@ -347,8 +347,8 @@ function addNewProduct(){
 	$product=$_POST["pro_name"];
 	$status="0";
 
-		$sql="INSERT INTO sap_products(pro_id,pro_cat_id,pro_subcat_id,pro_name,pro_sup_id,pro_status)
-		VALUES('$proid','$cat','$cat','$product','$supid','$status');";
+		$sql="INSERT INTO tbl_products(pro_id,pro_cat_id,pro_subcat_id,pro_name,pro_sup_id,pro_status)
+		VALUES('$proid','$cat','$subcat','$product','$supid','$status');";
 		$result2=$con->query($sql);
 		if($con->errno)
 		{
@@ -386,7 +386,7 @@ function addNewSupplier(){
 		$db=new Connection();
 		$con=$db->db_con();
 
-		$sqlsup="SELECT sup_id FROM sap_suppliers ORDER BY sup_id DESC LIMIT 1;";
+		$sqlsup="SELECT sup_id FROM tbl_suppliers ORDER BY sup_id DESC LIMIT 1;";
 		
 		//execute the query
 		$result=$con->query($sqlsup);
@@ -430,7 +430,7 @@ function addNewSupplier(){
 
 
 
-		$sql="INSERT INTO sap_suppliers(sup_id,sup_name,sup_add,sup_tel)
+		$sql="INSERT INTO tbl_suppliers(sup_id,sup_name,sup_add,sup_tel)
 		VALUES('$new_id','$sup_name','$sup_add','$sup_tel');";
 		$result=$con->query($sql);
 		if($con->errno)
@@ -492,7 +492,7 @@ function selectSupplierLoadModal(){
 		$supplierval=$_POST["supplierval"];
 		$db=new Connection();
 		$con=$db->db_con();
-		$sql="SELECT DISTINCT sup_id,sup_name FROM sap_suppliers;";
+		$sql="SELECT DISTINCT sup_id,sup_name FROM tbl_suppliers;";
 		$result=$con->query($sql);
 		if($con->errno)
 		{
@@ -558,9 +558,9 @@ function viewProductModal(){
 
 		$db=new Connection();
 		$con=$db->db_con();
-		$sql="SELECT spp.pro_id, cat.product_cat_name, sub.product_subcat_name, spp.pro_name, sup.sup_name
-				FROM sap_products spp, tbl_product_cat cat, tbl_product_subcat sub, sap_suppliers sup
-				WHERE pro_status=0 and spp.pro_cat_id=cat.product_cat_id and spp.pro_subcat_id=sub.product_subcat_id and spp.pro_sup_id=sup.sup_id and spp.pro_id='$proid'";
+		$sql="SELECT pro.pro_id, cat.product_cat_name, sub.product_subcat_name, pro.pro_name, sup.sup_name
+				FROM tbl_products pro, tbl_product_cat cat, tbl_product_subcat sub, tbl_suppliers sup
+				WHERE pro_status=0 and pro.pro_cat_id=cat.product_cat_id and pro.pro_subcat_id=sub.product_subcat_id and pro.pro_sup_id=sup.sup_id and pro.pro_id='$proid'";
 		$result=$con->query($sql);
 		if($con->errno)
 		{

@@ -15,12 +15,12 @@
               <table id="stockTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Product ID</th>
-                  <th>Product Category</th>                  
-                  <th>Product Sub-Category</th>
-                  <th>Product Name</th>
-                  <th>Supplier</th>
-                  <th>Actions</th>
+                  <th>Batch ID</th>
+                  <th>Product Name</th>                  
+                  <th>Quantity</th>
+                  <th>Item Cost</th>
+                  <th>Selling Price</th>
+                  <th>Item MRP</th>
                 </tr>
                 </thead>
                 <tbody id="viewStockBody">
@@ -44,41 +44,14 @@
 
 
 <script type="text/javascript">
-        jQuery(function($){
+      jQuery(function($){
 
-        var myTable = 
-        $('#stockTable')
-        //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-        .DataTable( {
+        var myTable = $('#stockTable').DataTable({
           bAutoWidth: false,
-          "aoColumns": [
-            null, null,null, null, null,
-            { "bSortable": false }
-          ],
-          "aaSorting": [],
-          
-          
-          //"bProcessing": true,
-              //"bServerSide": true,
-              //"sAjaxSource": "http://127.0.0.1/table.php" ,
-      
-          //,
-          //"sScrollY": "200px",
-          //"bPaginate": false,
-      
-          //"sScrollX": "100%",
-          //"sScrollXInner": "120%",
-          //"bScrollCollapse": true,
-          //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-          //you may want to wrap the table inside a "div.dataTables_borderWrap" element
-      
-          //"iDisplayLength": 50
-      
-      
-          select: {
-            style: 'multi'
-          }
-          } );
+          aoColumns: [null, null,null, null, null,null],
+          aaSorting: [],
+          select: {style: 'multi'}
+          });
       });
 
 </script>

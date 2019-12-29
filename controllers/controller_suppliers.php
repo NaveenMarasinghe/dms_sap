@@ -14,7 +14,7 @@ function viewSupplierTable(){
 		$db=new Connection();
 		$con=$db->db_con();
 		$sql="SELECT sup_id, sup_name, sup_add, sup_tel
-				FROM sap_suppliers ";
+				FROM tbl_suppliers ";
 		$result = $con->query($sql);
 		if($con->errno)
 		{

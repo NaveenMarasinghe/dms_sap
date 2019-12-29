@@ -98,7 +98,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-folder-open"></i>
 							<span class="menu-text"> Inventory </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -129,7 +129,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-book"></i>
 							<span class="menu-text"> Sales Orders </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -193,7 +193,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-credit-card"></i>
 							<span class="menu-text"> Payments </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -225,7 +225,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-download"></i>
 							<span class="menu-text"> GRN </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -266,7 +266,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-calendar"></i>
 							<span class="menu-text"> Route Schedule </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -307,7 +307,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-exchange"></i>
 							<span class="menu-text"> Stock Adjestments </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -339,7 +339,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-briefcase"></i>
 							<span class="menu-text"> Customers </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -371,7 +371,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-hdd-o"></i>
 							<span class="menu-text"> Suppliers </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -403,7 +403,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-home"></i>
 							<span class="menu-text"> Warehouses </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -435,7 +435,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-users"></i>
 							<span class="menu-text"> Employees </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -467,7 +467,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
+							<i class="menu-icon fa fa-bar-chart-o"></i>
 							<span class="menu-text"> Reports </span>
 
 							<b class="arrow fa fa-angle-down"></b>
