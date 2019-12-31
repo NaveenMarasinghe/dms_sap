@@ -155,6 +155,7 @@
                         </thead>
 
                         <tbody id="tablebody">
+ 
                           <!-- <tr class="selected"> -->
 <!--                             <td class="center">
                               <label class="pos-rel">
@@ -269,49 +270,34 @@
 
       } );
 
-      // $('#purchaseTable tbody').on( 'click', 'fa-trash-o', function () {
-      //     myTable
-      //         .row( $(this).parents('tr') )
-      //         .remove()
-      //         .draw();
-      //     alert('sda');
-      // } );
     $('#purchaseTable tbody').on( 'click', '.fa-trash-o', function () {
-      // alert('sda');
-            swal({
-                title: "Do you want to save this customer ?",
-                text: "You can not reverse this",
-                type: "warning",
-                confirmButtonClass: "btn-primary",
-                confirmButtonText: "Confirm",
-                showCancelButton: true,
-                closeOnConfirm: false
-            },
-            function() {
-                var rowval =  myTable.row($(this).parents('tr')).val();
-                alert(rowval);
-                // myTable.row($(this).parents('tr')).remove().draw( false );
-                swal("Customer form is validated", "", "success");
-            });
+      
+      var btn = this;      
 
+      var $row = $(this).closest("tr");    // Find the row
+      var proname = $row.find("td:nth-child(2)").text();
+      var proqty = $row.find("td:nth-child(3)").text();
+      // alert(proqty);
+      // alert(proname);
 
-      // swal({
-      //   title: "Are you sure?",
-      //   text: "Once deleted, you will not be able to recover this imaginary file!",
-      //   icon: "warning",
-      //   buttons: true,
-      //   dangerMode: true,
-      // })
-      // .then((willDelete) => {
-      //   if (willDelete) {
-      //     myTable.row($(this).parents('tr')).remove().draw( false );
-      //     swal("Poof! Your imaginary file has been deleted!", {
-      //       icon: "success",
-      //     });
-      //   } else {
-      //     swal("Your imaginary file is safe!");
-      //   }
-      // });
+        Swal.fire({
+          title: 'Remove following items?',
+          text: proname +" - "+ proqty +" units",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Remove items'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Removed!',
+              proname +" - "+ proqty +" units removed.",
+              'success'
+            );
+            myTable.row($(btn).parents('tr')).remove().draw(false);
+          }
+        })
       
     } );
  
@@ -320,6 +306,31 @@
          alert('sda');
         // myTable.row('.selected').remove().draw( false );
       }); 
+
+      $('#purchaseTable tbody').on( 'click', '.fa-pencil', function (){
+        var btn = this; 
+        // alert("gg");
+
+        const { value: formValues } = Swal.fire({
+          title: 'Change values',
+          html:
+            '<div class="form-group" style="text-align: left;"><label for="swal-input1" >Product Name</label><input id="swal-input1" class="swal2-input" style="margin-top: 0px;"></div>'+
+            '<div class="form-group" style="text-align: left;"><label for="swal-input1" >Product Quantity</label><input id="swal-input2" class="swal2-input" style="margin-top: 0px; margin-bottom: 0px;"></div>',
+          focusConfirm: false,
+          preConfirm: () => {
+            return [
+              document.getElementById('swal-input1').value,
+              document.getElementById('swal-input2').value
+            ]
+          }
+        })
+
+        if (formValues) {
+          Swal.fire(JSON.stringify(formValues))
+        }
+
+        // myTable.row('.selected').remove().draw( false );
+      });       
       // // Automatically add a first row of data
       // $('#addRow').click();
   });
