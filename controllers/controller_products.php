@@ -45,7 +45,7 @@ function viewProductTable(){
 		$con=$db->db_con();
 		$sql="SELECT pro.pro_id, cat.product_cat_name, sub.product_subcat_name, pro.pro_name, sup.sup_name
 				FROM tbl_products pro, tbl_product_cat cat, tbl_product_subcat sub, tbl_suppliers sup
-				WHERE pro_status=0 and pro.pro_cat_id=cat.product_cat_id and pro.pro_subcat_id=sub.product_subcat_id and pro.pro_sup_id=sup.sup_id";
+				WHERE pro.pro_status=0 and pro.pro_cat_id=cat.product_cat_id and pro.pro_subcat_id=sub.product_subcat_id and pro.pro_sup_id=sup.sup_id";
 		$result = $con->query($sql);
 		if($con->errno)
 		{

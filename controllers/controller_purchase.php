@@ -4,126 +4,30 @@
 	if(isset($_GET["type"])){
 		$type=$_GET["type"];
 		switch($type){			// checks the type
-			case "newPurID":
-				new_pur_id(); 		// calls function new_id
-				break;
-			case "get_supplierlist":
-				get_supplierlist(); 		// calls function new_id
+			case "get_productList":
+				get_productList(); 		// calls function new_id
 				break;
 			case "purchaseSave":
 				save_pur_order(); //calls function save_student
 				break;
-			case "get_oneStudent":
-				get_oneStudent();
-				break;
-			case "saveNewProduct":
-				saveNewProduct();
-				break;
-			case "delete_student":
-				delete_student();
-				break;
 			case "purchaseSaveDetails":
 				purchaseSaveDetails();
 				break;
+			case "purchaseView":
+				purchaseView();
+				break;				
 		}
 	}
 
-function viewProduct(){
-		$db=new Connection();
-		$con=$db->db_con();
-		$sql="SELECT *
-				FROM sap_products
-				WHERE pro_status=0  ORDER BY pro_id DESC;";
-		$result = $con->query($sql);
-		if($con->errno)
-		{
-			echo("SQL Error: ".$con->error);
-			exit;
-		}
-		$nor=$result->num_rows;
-		if($nor==0){
-			echo("No Records Found");
-			exit;
-		
-		}
-		while($rec=$result->fetch_assoc()){
-			
-			echo("<td>".$rec["pro_id"]."</td>");
-			echo("<td>".$rec["pro_cat"]."</td>");
-			echo("<td>".$rec["pro_subcat"]."</td>");
-			echo("<td>".$rec["pro_name"]."</td>");
-			echo("<td>".$rec["pro_sup"]."</td>");
-			echo('<td><div class="btn-group">
-                  <button type="button" class="btn btn-default btn-flat">Action</button>
-                  <button type="button" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">View</a></li>
-                    <li><a href="#">Edit</a></li>
-                    <li><a href="#">Delete</a></li>
-                    
-                  </ul>
-                </div></td>');
-			echo("</tr>");
-			
-		}
-		
-		$con->close();
-	}
 
-	function new_pur_id(){// function for next ID generator
-		
-		//db connection
-		$db=new Connection();
-		$con=$db->db_con();
-		
-		//query
-		$sql="SELECT pur_id FROM sap_purorder ORDER BY pur_id DESC LIMIT 1;";
-		
-		//execute the query
-		$result=$con->query($sql);
-		
-		//error handling
-		if($con->errno)
-		{
-			echo("SQL Error: ".$con->error);
-			exit;
-		}
-		
-		//checks the number of rows in the result 
-		$nor=$result->num_rows;
-		
-	
-		if($nor>0){
-			//fetch the result
-			$rec=$result->fetch_assoc();
-			//assign ID to variable $num
-			$num=$rec["pur_id"];
-			//eliminate string S and get remaining ID no
-			$num=substr($num,1);
-			//increment the ID
-			$num++;
-			//merge zeros to left side of ID (total length of ID should be 4)
-			$no=str_pad($num,4,'0',STR_PAD_LEFT);
-			//merge string S to new sID
-			$pur_id="P".$no;
-		}
-		else{
-			//first ID of student
-			$pur_id="PO0001";
-		}
-		//encode the new ID to JSON
-		echo(json_encode($new_id));
-		//close the connection
-		$con->close();
-	}
 
-	function get_supplierlist(){
+function get_productList(){
+		$procatval=$_POST["procatval"];
+		$supplierval=$_POST["supplierval"];
 		$db=new Connection();
 		$con=$db->db_con();
-		$sql="SELECT DISTINCT sup_id,sup_name FROM sap_suppliers;";
+		$sql="SELECT DISTINCT pro_id,pro_name FROM tbl_products where pro_sup_id='$supplierval' and pro_cat_id='$procatval'";
+		
 		$result=$con->query($sql);
 		if($con->errno)
 		{
@@ -133,19 +37,18 @@ function viewProduct(){
 		//alert('func');
 		$nor=$result->num_rows;
 		if($nor==0){
-			echo("No records");
-			exit;
+			echo("");
 		}
 		else{
 			//fetch all the records
 			while($rec=$result->fetch_assoc())
 			{
 				//merge province ID and name with HTML
-				echo("<option value='".$rec["sup_name"]."'>".$rec["sup_name"]."</option>");
+				echo("<option value='".$rec["pro_id"]."'>".$rec["pro_name"]."</option>");
 			}
 		}
 		$con->close();
-	}
+}
 
 	function save_pur_order(){
 
@@ -189,11 +92,12 @@ function viewProduct(){
 		}		
 
 		$podate=$_POST["podate"];
-		$posupplier=$_POST["posupplier"];
+		$poSupplier=$_POST["poSupplier"];
 		$remarks=$_POST["poremarks"];
+		$postatus="Pending";
 
-		$sql2="INSERT INTO tbl_po(pur_id,pur_date,sup_id,pur_remarks)
-		VALUES('$poid','$podate','$posupplier','$remarks');";
+		$sql2="INSERT INTO tbl_po(pur_id,pur_date,sup_id,pur_remarks,pur_status)
+		VALUES('$poid','$podate','$poSupplier','$remarks','$postatus');";
 
 		$result2=$con->query($sql2);
 		if($con->error){
@@ -251,6 +155,79 @@ function purchaseSaveDetails(){
 			}
 
 		}
+}
+
+function purchaseView(){
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql="SELECT po.pur_id, po.pur_date, sup.sup_name, po.pur_remarks, po.pur_status
+				FROM tbl_po po, tbl_suppliers sup
+				WHERE po.sup_id=sup.sup_id and po.pur_status<>'Removed'";
+		$result = $con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("<tr>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo('<td><div class="hidden-sm hidden-xs btn-group">
+				<button class="btn btn-xs btn-success">
+					<i class="ace-icon fa-info-circle bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-info">
+					<i class="ace-icon fa fa-pencil bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-danger">
+					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-warning">
+					<i class="ace-icon fa fa-flag bigger-120"></i>
+				</button>
+			</div></td>');
+			echo("</tr>");
+			exit;
+		
+		}
+		while($rec=$result->fetch_assoc()){
+		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
+		// </tr>";	
+			echo("<tr id='".$rec["pur_id"]."'>");
+			echo("<td>".$rec["pur_id"]."</td>");
+			echo("<td>".$rec["sup_name"]."</td>");
+			echo("<td>".$rec["pur_date"]."</td>");
+			echo("<td>".$rec["pur_status"]."</td>");
+			echo('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
+					<button type="button" class="btn btn-xs btn-success" id="btn_modelView" onclick="viewSingleProduct(\''.$rec["pur_id"].'\')">
+						<i class="ace-icon fa fa-info-circle bigger-120"></i>
+					</button>
+
+					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelEditProduct">
+						<i class="ace-icon fa fa-pencil bigger-120"></i>
+					</button>
+
+					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
+						<i class="ace-icon fa fa-trash-o bigger-120"></i>
+					</button>
+
+					<button class="btn btn-xs btn-warning">
+						<i class="ace-icon fa fa-flag bigger-120"></i>
+					</button>
+				</div></td>');
+			echo("</tr>");
+			
+		}
+		
+		$con->close();
 }
 ?>
 

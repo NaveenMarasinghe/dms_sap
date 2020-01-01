@@ -171,7 +171,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="form-elements.html">
+								<a href="../pages/purchase_view.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									View Purchase Orders
 								</a>
@@ -180,7 +180,7 @@
 							</li>
 
 							<li class="">
-								<a href="../pages/purchase_create2.php">
+								<a href="../pages/purchase_create.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Create Purchase Order
 								</a>

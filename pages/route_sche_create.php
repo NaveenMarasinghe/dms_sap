@@ -259,10 +259,11 @@
 
     <!-- inline scripts related to this page -->
     <script type="text/javascript">
-
+        var dateToday = new Date();
         jQuery(function($) {
           $('.date-picker').datepicker({
             autoclose: true,
+            minDate: 0,
             todayHighlight: true
           })
           

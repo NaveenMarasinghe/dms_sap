@@ -1,6 +1,9 @@
 <?php require_once("../incl/header.php");?>
   <link href="../assets/css/select2.min.css" rel="stylesheet" />
   <script src="../assets/js/select2.min.js"></script>
+
+
+
 <?php require_once("../incl/sidebar.php");?>
 <?php require_once("../incl/pagetop.php");?>
 
@@ -14,7 +17,7 @@
     <div class="form-actions">  
       <div>       
             <h4 class="page-header"><b>Add Purchase Order</b></h4>
-          </div>
+      </div>
         <div class="box box-info">
             <!-- /.box-header -->
             <div class="box-body" >
@@ -28,19 +31,12 @@
                 </div>
               </div>
               
-              <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Supplier</label>
-                    <div class="input-group">
-<!--                         <span class="input-group-addon">
-                          <input type="checkbox" class="column_filter" id="col2_smart">
-                        </span> -->
-                    <select name="posupplier" id="posupplier" class="form-control selcet-filter">
-                     <option value="0">--Select Supplier--</option>
-                     <option value="12">--Select Sggggggggggggggggggggggggggupplier--</option>
-
-                    </select>
-                    </div>                    
+              <div class="col-md-4 form-group">
+                  <div>
+                    <label for="poSupplier">Supplier</label>
+                    <select name="poSupplier" id="poSupplier" class="form-control selcet-filter">
+                     <option value="3">--Select Supplier--</option>
+                    </select>                  
                   </div>
               </div>
               <div class="col-md-4">
@@ -50,8 +46,8 @@
                         <span class="input-group-addon">
                           <i class="fa fa-calendar bigger-110"></i>
                         </span>
-                        <input class="form-control date-picker" id="purdate" name="podate"
-                         type="text" data-date-format="dd-mm-yyyy"/>
+                        <input class="form-control date-picker" id="podate" name="podate"
+                         readonly type="text" data-date-format="dd-mm-yyyy"/>
                     </div>
                 </div>
               </div>
@@ -61,46 +57,32 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="proid">Remarks</label>
-                  <textarea class="form-control" rows="3" id="poremarks" name="poremarks"></textarea>
-                  
+                  <textarea class="form-control" rows="3" id="poremarks" name="poremarks"></textarea>                  
                 </div>
               </div>
             </div>
 
             <div class="row">
-              <div class="col-md-4">
-                  <div class="form-group">
+              <div class="col-md-4 form-group">
+                  <div>
                     <label for="exampleInputEmail1">Product Category</label>
-                    <div class="input-group">
-<!--                         <span class="input-group-addon">
-                          <input type="checkbox" class="column_filter" id="col2_smart">
-                        </span> -->
-                    <select name="selectSupplier" id="selectSupplier" class="form-control selcet-filter">
-                     <option value="0">--Select Product Category--</option>
-                     <option value="0">--Select Sggggggggggggggggggggggggggupplier--</option>
-
-                    </select>
-                    </div>                    
+                    <select name="poProductCat" id="poProductCat" class="form-control selcet-filter">
+                     <option value="0">--Select Product Category--</option>                     
+                    </select>                                       
                   </div>
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="proid">Product Name</label>
-                  <select class="form-control selcet-filter select2gg" id="id_label_multiple">
+              <div class="col-md-4 form-group">
+                <div>
+                  <label for="poProductList">Product Name</label>
+                  <select class="form-control selcet-filter select2gg" id="poProductList" name="poProductList">
                     <option></option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
                   </select>
                 </div>
               </div>
 
-                <div class="col-md-2">
-                <div class="form-group">
-                  <label for="proid">Qty</label>
+                <div class="col-md-2 form-group">
+                <div>
+                  <label for="qty">Qty</label>
                   <input type="text" class="form-control" name="qty" id="qty">
                   
                 </div>
@@ -128,14 +110,14 @@
                       <div class="pull-right tableTools-container"></div>
                     </div>
                     <div class="table-header">
-                      Results for "Latest Registered Domains"
+                      Purchase Order - Product List
                     </div>
 
                     <!-- div.table-responsive -->
 
                     <!-- div.dataTables_borderWrap -->
                     <div>
-                      <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                      <table id="purchaseTable" class="table table-striped table-bordered table-hover">
                         <thead>
                           <tr>
 <!--                             <th class="center">
@@ -152,7 +134,8 @@
                         </thead>
 
                         <tbody id="tablebody">
-                          <tr class="selected">
+ 
+                          <!-- <tr class="selected"> -->
 <!--                             <td class="center">
                               <label class="pos-rel">
                                 <input type="checkbox" class="ace" />
@@ -160,7 +143,7 @@
                               </label>
                             </td> -->
 
-                            <td>GG</td>
+<!--                             <td>GG</td>
                             <td>GoodGame</td>
                             <td class="hidden-480">30</td>
 
@@ -180,7 +163,7 @@
                               </div>
 
                             </td>
-                          </tr>
+                          </tr> -->
                         </tbody>
                       </table>
                     </div>
@@ -211,7 +194,7 @@
                <div class="clearfix form-actions">
         <div class="col-md-offset-3 col-md-9">
           <div class="pull-right">
-          <button class="btn btn-warning" type="reset">
+          <button class="btn btn-grey" type="reset">
             <i class="ace-icon fa fa-undo bigger-110"></i>
             Reset
           </button>
@@ -243,20 +226,274 @@
 
 <script type="text/javascript">
 
+  $(document).ready(function(){
+    $.noConflict();
+      // load supplier select box
+      $.ajax({
+      url:"../controllers/controller_products.php?type=selectSupplierLoad",
+      method:"POST",
+      processData: false,
+      contentType: false,
+    success: function(data){
+      //alert(data); 
+      $("#poSupplier").empty();
+      $("#poSupplier").append("<option value=''>--Select Supplier--</option>");
+      $("#poSupplier").append(data);
+      
+      }
+    });
+  });
 
-      jQuery(function($){
+      $('#poSupplier').change(function(){
 
-        var myTable = $('#stockTable').DataTable({
-          bAutoWidth: false,
-          aoColumns: [null, null,null, null, null,null],
-          aaSorting: [],
-          select: {style: 'multi'}
-          });
+      var supplierval = $('#poSupplier').val(); // get option's value
+
+      //change product category select box
+      $.post("../controllers/controller_products.php?type=get_filteredProCat",
+      {supplierval:supplierval},
+      function(data,status){
+      if(status=="success"){
+        // alert(data);
+        $("#poProductCat").empty();
+        $("#selectProductsubCat").empty();
+        $("#poProductCat").append("<option value=''>--Select Product Category--</option>");        
+        $("#selectProductCat").append("<option value=''>--Select Product Category--</option>");
+        $("#poProductCat").append(data);
+        }
+      });
+
+      });
+
+    $('#poProductCat').change(function(){
+
+          var supplierval = $('#poSupplier').val();
+          var procatval = $('#poProductCat').val(); // get option's value
+
+      // get filtered data to datatable
+      $.post("../controllers/controller_purchase.php?type=get_productList",
+      {procatval:procatval,supplierval:supplierval},
+      function(data,status){
+      if(status=="success"){
+        // alert(data);
+        $("#poProductList").empty();
+        $("#poProductList").append("<option></option>");
+        $("#poProductList").append(data);
+      //   $('.select2gg').select2({
+      //   placeholder: "Select a Product",
+      //   allowClear: true
+      // });
+        }
+      });
+
+
+
+          var prosubcatval = $('#selectProductsubCat').val();
+
+      $.post("../controllers/controller_products.php?type=get_filtered_data",
+        {supplierval:supplierval,procatval:procatval,prosubcatval:prosubcatval},
+        function(data,status){
+        if(status=="success"){
+          //alert(data);
+          // $("#productTable").DataTable().destroy();
+          // $("#productTable tbody").empty();
+          // $("#productTable tbody").append(data);
+          // $("#productTable").DataTable();
+          }
+      });
+
+    });  
+
+  $.noConflict();
+  jQuery(function($){
+          //   $('#purchaseform').validate({
+          //   errorElement: 'div',
+          //   errorClass: 'help-block',
+          //   focusInvalid: false,
+          //   ignore: "",
+          //   rules: {
+          //     qty: {
+          //       required: true,
+          //       number: true
+          //     },
+          //     poProductList: {
+          //       required: true
+          //     },
+          //     poProductCat: {
+          //       required: false
+          //     }
+          //   },
+        
+          //   messages: {
+          //     qty: {
+          //     number: "Please select a supplier.",
+          //     required: "Please enter valid quantity."
+          //   },
+          //     poProductList: "Please select a product"
+          //   },
+        
+        
+          //   highlight: function (e) {
+          //     $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+          //   },
+        
+          //   success: function (e) {
+          //     $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+          //     $(e).remove();
+          //   },
+        
+          //   errorPlacement: function (error, element) {
+          //     if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+          //       var controls = element.closest('div[class*="col-"]');
+          //       if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+          //       else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+          //     }
+          //     else if(element.is('.select2')) {
+          //       error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+          //     }
+          //     else if(element.is('.chosen-select')) {
+          //       error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+          //     }
+          //     else error.insertAfter(element.parent());
+          //   },
+            
+          // });
+  $(document).ready(function() {
+
+
+      // $('.date-picker').datepicker('setDate', 'today');
+      $('.date-picker').datepicker({
+        autoclose: true,
+        minDate: 0,
+        maxDate: 0,
+        todayHighlight: true
+      });
+      $('.date-picker').datepicker('setDate', new Date());
+
+      var myTable = $('#purchaseTable').DataTable();
+   
+      $('#addproductbutton').on( 'click', function () {
+
+
+      var proname = $("#poProductList option:selected").text();
+      var proid = $('#poProductList').val();
+      var qnty = $('#qty').val();
+      var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
+
+      //<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>
+
+          myTable.row.add( [
+              proid,
+              proname,              
+              qnty,
+              buttons
+          ] ).draw( false );
+
+      $("#qty").val("");
+      $("#poProductList").empty();
+      $('.select2gg').select2({
+        placeholder: "--Select a Product--",
+        allowClear: true
+      });
+
+          var supplierval = $('#poSupplier').val();
+          var procatval = $('#poProductCat').val(); // get option's value
+
+      // get filtered data to datatable
+      $.post("../controllers/controller_purchaseCreate.php?type=get_productList",
+      {procatval:procatval,supplierval:supplierval},
+      function(data,status){
+      if(status=="success"){
+        // alert(data);
+        $("#poProductList").empty();
+        $("#poProductList").append("<option></option>");
+        $("#poProductList").append(data);
+      //   $('.select2gg').select2({
+      //   placeholder: "Select a Product",
+      //   allowClear: true
+      // });
+        }
+      });
+
+      } );
+
+    $('#purchaseTable tbody').on( 'click', '.fa-trash-o', function () {
+      
+      var btn = this;      
+
+      var $row = $(this).closest("tr");    // Find the row
+      var proname = $row.find("td:nth-child(2)").text();
+      var proqty = $row.find("td:nth-child(3)").text();
+      // alert(proqty);
+      // alert(proname);
+
+        Swal.fire({
+          title: 'Remove following items?',
+          text: proname +" - "+ proqty +" units",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Remove items'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Removed!',
+              proname +" - "+ proqty +" units removed.",
+              'success'
+            );
+            myTable.row($(btn).parents('tr')).remove().draw(false);
+          }
+        })
+      
+    } );
+ 
       $(".fa-trash-o").click(function(){
         myTable.row(".selected").remove().draw( false );
          alert('sda');
         // myTable.row('.selected').remove().draw( false );
       }); 
+
+      $('#purchaseTable tbody').on( 'click', '.fa-pencil', function (){
+        var btn = this; 
+        // alert("gg");
+
+        const { value: formValues } = Swal.fire({
+          title: 'Change values',
+          html:
+            '<div class="form-group" style="text-align: left;"><label for="swal-input1" >Product Name</label><input id="swal-input1" class="swal2-input" style="margin-top: 0px;"></div>'+
+            '<div class="form-group" style="text-align: left;"><label for="swal-input1" >Product Quantity</label><input id="swal-input2" class="swal2-input" style="margin-top: 0px; margin-bottom: 0px;"></div>',
+          focusConfirm: false,
+          preConfirm: () => {
+            return [
+              document.getElementById('swal-input1').value,
+              document.getElementById('swal-input2').value
+            ]
+          }
+        })
+
+        if (formValues) {
+          Swal.fire(JSON.stringify(formValues))
+        }
+
+        // myTable.row('.selected').remove().draw( false );
+      });       
+      // // Automatically add a first row of data
+      // $('#addRow').click();
+  });
+});
+
+
+      jQuery(function($){
+
+        // var myTable = $('#purchaseTable').DataTable({
+        //   bAutoWidth: false,
+        //   aoColumns: [null, null,null, null],
+        //   aaSorting: [],
+        //   select: {style: 'multi'}
+        //   });
+
+
+
 
 
       // $('#stockTable').on( 'click', 'tbody tr', function () {
@@ -270,35 +507,103 @@
 
         
       $(document).ready(function() {
+        $.noConflict();
         $('.select2gg').select2({
-          placeholder: "Select a Product",
+          placeholder: "--Select a Product--",
           allowClear: true
         });
+
+
+          // $.validator.addMethod("notEqual", function(value, element, param) {
+          //   return this.optional(element) || value != param;
+          // }, "Please specify a different (non-default) value");
+
+          $('#purchaseform').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            ignore: "",
+            rules: {
+              poSupplier: {
+                required: true,
+              },
+              podate: {
+                required: true
+              },
+              qty: {
+                required: false,
+                number: false
+              },
+              poProductList: {
+                required: false
+              },
+            },
+        
+            messages: {
+              poSupplier: {
+              required: "Please select a supplier.",
+              minlength: "Please select a supplier."
+            },
+              podate: "Please enter a date"
+            },
+        
+        
+            highlight: function (e) {
+              $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+        
+            success: function (e) {
+              $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+              $(e).remove();
+            },
+        
+            errorPlacement: function (error, element) {
+              if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                var controls = element.closest('div[class*="col-"]');
+                if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+              }
+              else if(element.is('.select2')) {
+                error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+              }
+              else if(element.is('.chosen-select')) {
+                error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+              }
+              else error.insertAfter(element.parent());
+            },
+            
+          });
+
+
+
+
+
        
       });
 
 
       });
 
-      $('#addproductbutton').click(function(){
-        var proname = $("#id_label_multiple option:selected").text();
-        var proid = $('#id_label_multiple').val();
-        var qnty = $('#qty').val();
-
+      // $('#addproductbutton').click(function(){
+      //   var proname = $("#id_label_multiple option:selected").text();
+      //   var proid = $('#id_label_multiple').val();
+      //   var qnty = $('#qty').val();
+      //   var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
           
-          $('#tablebody').append("<tr><td>"+ proid +"</td><td>" + proname + "</td><td>" + qnty + "</td> '<td><div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div> </td>' </tr>" );
+
+      //     // $('#tablebody').append("<tr><td>"+ proid +"</td><td>" + proname + "</td><td>" + qnty + "</td> '<td><div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div> </td>' </tr>" );
           
-          $('#id_label_multiple').val("");
-          $('#qty').val("");
-          $('#productname').focus();
+      //     $('#id_label_multiple').val("");
+      //     $('#qty').val("");
+      //     $('#productname').focus();
 
-        });
+      //   });
 
-
+      jQuery(function($){
 
         $("#pobtnSave").click(function(){
 
-
+        if($("#purchaseform").valid()) {
               d= new FormData($("#purchaseform")[0]);
               alert(d);
                   $.ajax({
@@ -310,7 +615,7 @@
                    success: function(data){
                     // $('#purchaseform')[0].reset();
                     // location.reload(true);
-                      //alert(data);
+                      alert(data);
 
                     // $("#poid").append(data);
                     var poidddata=jQuery.parseJSON(data);
@@ -349,12 +654,15 @@
                     });
                   } 
                 }); 
-        });      
+                }
+        });     
+        });  
+
 
 </script>
 
 
   <script src="../assets/js/chosen.jquery.min.js"></script>
-
+  <script src="../assets/js/jquery.validate.min.js"></script>
 <!-- Require footer here -->
 <?php require_once("../incl/footer.php");?>

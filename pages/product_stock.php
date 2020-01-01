@@ -21,10 +21,19 @@
                   <th>Item Cost</th>
                   <th>Selling Price</th>
                   <th>Item MRP</th>
+                  <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody id="viewStockBody">
-                  
+<!--                   <tr>
+                  <td>Batch ID</td>
+                  <td>Product Name</td>                  
+                  <td>Quantity</td>
+                  <td>34</td>
+                  <td>Selling Price</td>
+                  <td>56</td>
+                  <td>Actions</td>
+                </tr> -->
                 </tbody>
                 <tfoot>
             
@@ -48,7 +57,7 @@
 
         var myTable = $('#stockTable').DataTable({
           bAutoWidth: false,
-          aoColumns: [null, null,null, null, null,null],
+          aoColumns: [null, null,null, null, null,null,null],
           aaSorting: [],
           select: {style: 'multi'}
           });

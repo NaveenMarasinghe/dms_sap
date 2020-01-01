@@ -60,8 +60,7 @@
 		<script src="../assets/js/buttons.colVis.min.js"></script>
 		<script src="../assets/js/dataTables.select.min.js"></script>
 		<script src="../assets/js/jquery.validate.min.js"></script>
-		
-
+		<!-- <script src="../assets/js/bootstrap-datepicker.min.js"></script> -->		
 		
 
 

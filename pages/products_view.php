@@ -18,7 +18,7 @@
 
           <div class="box-header with-border">
               <h3 class="box-title">View Products</h3>
-            </div>
+          </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
