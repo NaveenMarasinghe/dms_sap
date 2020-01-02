@@ -192,7 +192,7 @@ function get_filtered_data(){
 			echo("<td>".$rec["sup_name"]."</td>");
 			echo('<td><div class="hidden-sm hidden-xs btn-group">
 					<button class="btn btn-xs btn-success">
-						<i class="ace-icon fa-info-circle bigger-120"></i>
+						<i class="ace-icon fa fa-info-circle bigger-120"></i>
 					</button>
 
 					<button class="btn btn-xs btn-info">

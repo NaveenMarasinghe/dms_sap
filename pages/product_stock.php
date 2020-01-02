@@ -19,7 +19,6 @@
                   <th>Product Name</th>                  
                   <th>Quantity</th>
                   <th>Item Cost</th>
-                  <th>Selling Price</th>
                   <th>Item MRP</th>
                   <th>Actions</th>
                 </tr>
@@ -57,7 +56,7 @@
 
         var myTable = $('#stockTable').DataTable({
           bAutoWidth: false,
-          aoColumns: [null, null,null, null, null,null,null],
+          aoColumns: [null, null,null, null,null,null],
           aaSorting: [],
           select: {style: 'multi'}
           });

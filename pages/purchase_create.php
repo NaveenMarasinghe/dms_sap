@@ -31,14 +31,7 @@
                 </div>
               </div>
               
-              <div class="col-md-4 form-group">
-                  <div>
-                    <label for="poSupplier">Supplier</label>
-                    <select name="poSupplier" id="poSupplier" class="form-control selcet-filter">
-                     <option value="3">--Select Supplier--</option>
-                    </select>                  
-                  </div>
-              </div>
+
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="proid">Date</label>
@@ -54,6 +47,15 @@
             
             </div>
             <div class="row">
+              <div class="col-md-4 form-group">
+                  <div>
+                    <label for="poSupplier">Supplier</label>
+                    <select name="poSupplier" id="poSupplier" class="form-control selcet-filter">
+                     <option value="0">--Select Supplier--</option>
+                    </select>                  
+                  </div>
+              </div>
+
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="proid">Remarks</label>
@@ -259,6 +261,7 @@
         $("#poProductCat").append("<option value=''>--Select Product Category--</option>");        
         $("#selectProductCat").append("<option value=''>--Select Product Category--</option>");
         $("#poProductCat").append(data);
+        // $("#poSupplier").attr("disabled", "disabled");
         }
       });
 
@@ -365,7 +368,8 @@
         autoclose: true,
         minDate: 0,
         maxDate: 0,
-        todayHighlight: true
+        todayHighlight: true,
+        dateFormat: 'yy-mm-dd'
       });
       $('.date-picker').datepicker('setDate', new Date());
 
@@ -377,16 +381,27 @@
       var proname = $("#poProductList option:selected").text();
       var proid = $('#poProductList').val();
       var qnty = $('#qty').val();
-      var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
+      // var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
 
       //<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>
 
+      var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-success' id='btn_modelView'><i class='ace-icon fa fa-info-circle bigger-120'></i></button><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button><button type='button' class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div>"
+      if(proid!=0){
           myTable.row.add( [
               proid,
               proname,              
               qnty,
               buttons
           ] ).draw( false );
+      } else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please select a product!'
+          
+        });
+      }
+
 
       $("#qty").val("");
       $("#poProductList").empty();
@@ -414,7 +429,7 @@
         }
       });
 
-      } );
+      });
 
     $('#purchaseTable tbody').on( 'click', '.fa-trash-o', function () {
       
@@ -456,25 +471,37 @@
       $('#purchaseTable tbody').on( 'click', '.fa-pencil', function (){
         var btn = this; 
         // alert("gg");
+        var $row = $(this).closest("tr");    // Find the row
+        var proname = $row.find("td:nth-child(2)").text();
+        // bootbox.prompt("What is your name?", function(result) {
+        //   if (result === null) {
 
-        const { value: formValues } = Swal.fire({
-          title: 'Change values',
-          html:
-            '<div class="form-group" style="text-align: left;"><label for="swal-input1" >Product Name</label><input id="swal-input1" class="swal2-input" style="margin-top: 0px;"></div>'+
-            '<div class="form-group" style="text-align: left;"><label for="swal-input1" >Product Quantity</label><input id="swal-input2" class="swal2-input" style="margin-top: 0px; margin-bottom: 0px;"></div>',
-          focusConfirm: false,
-          preConfirm: () => {
-            return [
-              document.getElementById('swal-input1').value,
-              document.getElementById('swal-input2').value
-            ]
+        //   } else {
+        //     $row.find("td:nth-child(2)").append(result);
+        //   }
+        // });
+
+        const { value: newQty } = Swal.fire({
+          title: proname,
+          input: 'text',
+          inputPlaceholder: 'Change quantity',
+          inputAttributes: {
+            maxlength: 10,
+            autocapitalize: 'off',
+            autocorrect: 'off'
           }
-        })
+        }).then((newQty) => {
+        var noval = "''";
+        var newQty2 = newQty['value']; 
+        if (newQty2) {
+          $row.find("td:nth-child(3)").empty();
+          $row.find("td:nth-child(3)").append(newQty2);
+          Swal.fire(`Quantity changed to: ${newQty2}`);
 
-        if (formValues) {
-          Swal.fire(JSON.stringify(formValues))
+          // alert(newQty2);
+          
         }
-
+      });
         // myTable.row('.selected').remove().draw( false );
       });       
       // // Automatically add a first row of data

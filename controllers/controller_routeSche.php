@@ -4,8 +4,8 @@
 	if(isset($_GET["type"])){
 		$type=$_GET["type"];
 		switch($type){			// checks the type
-			case "get_productList":
-				get_productList(); 		// calls function new_id
+			case "get_productsGroup":
+				get_productsGroup(); 		// calls function new_id
 				break;
 			case "purchaseSave":
 				save_pur_order(); //calls function save_student
@@ -13,20 +13,20 @@
 			case "purchaseSaveDetails":
 				purchaseSaveDetails();
 				break;
-			case "purchaseView":
-				purchaseView();
+			case "rtscheProductTable":
+				rtscheProductTable();
 				break;				
 		}
 	}
 
 
 
-function get_productList(){
-		$procatval=$_POST["procatval"];
+function get_productsGroup(){
+
 		$supplierval=$_POST["supplierval"];
 		$db=new Connection();
 		$con=$db->db_con();
-		$sql="SELECT DISTINCT pro_id,pro_name FROM tbl_products where pro_sup_id='$supplierval' and pro_cat_id='$procatval'";
+		$sql="SELECT DISTINCT prdgroup_id,prdgroup_name FROM tbl_supplier_productgroup where prdgroup_supplier='$supplierval'";
 		
 		$result=$con->query($sql);
 		if($con->errno)
@@ -44,9 +44,61 @@ function get_productList(){
 			while($rec=$result->fetch_assoc())
 			{
 				//merge province ID and name with HTML
-				echo("<option value='".$rec["pro_id"]."'>".$rec["pro_name"]."</option>");
+				echo("<option value='".$rec["prdgroup_id"]."'>".$rec["prdgroup_name"]."</option>");
 			}
 		}
+		$con->close();
+}
+
+function rtscheProductTable(){
+		$proGroup=$_POST["proGroup"];
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql="SELECT pd.pro_id, pd.pro_name, pdgrp.prd_qty
+				FROM tbl_products pd, tbl_group_product pdgrp
+				WHERE pdgrp.prd_id=pd.pro_id and pdgrp.prd_group='$proGroup'";
+		$result = $con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("<tr>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("</tr>");
+			exit;
+		
+		}
+		while($rec=$result->fetch_assoc()){
+		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
+		// </tr>";	
+			echo("<tr id='".$rec["pro_id"]."'>");
+			echo("<td>".$rec["pro_id"]."</td>");
+			echo("<td>".$rec["pro_name"]."</td>");
+			echo("<td>".$rec["prd_qty"]."</td>");
+			echo('<td><div class="hidden-sm hidden-xs btn-group">
+				<button class="btn btn-xs btn-success">
+					<i class="ace-icon fa fa-info-circle bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-info">
+					<i class="ace-icon fa fa-pencil bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-danger">
+					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+				</button>
+
+			</div></td>');
+			echo("</tr>");
+			
+		}
+		
 		$con->close();
 }
 

@@ -244,7 +244,7 @@
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a href="../pages/grn_create.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Create GRN
 								</a>
@@ -285,7 +285,7 @@
 							</li>
 
 							<li class="">
-								<a href="../pages/route_sche_create.php">
+								<a href="../pages/route_sche_create2.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Create Route Schedule
 								</a>
