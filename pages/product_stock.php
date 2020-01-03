@@ -52,15 +52,36 @@
 
 
 <script type="text/javascript">
-      jQuery(function($){
+    $(document).ready(function(){
 
-        var myTable = $('#stockTable').DataTable({
-          bAutoWidth: false,
-          aoColumns: [null, null,null, null,null,null],
-          aaSorting: [],
-          select: {style: 'multi'}
-          });
-      });
+      $.noConflict();
+      $.ajax({
+        url:"../controllers/controller_products.php?type=viewStock",
+        method:"POST",
+        processData: false,
+        contentType: false,
+      success: function(data){
+        //alert(data);
+          $("#stockTable").DataTable().destroy();
+          $("#stockTable tbody").empty();
+          $("#stockTable tbody").append(data);
+          $("#stockTable").DataTable({
+        "order": [[ 0, "dsec" ]],
+        // "columnDefs": [
+        //     { "width": "20%", "targets": 4 },
+        //     { "width": "20%", "targets": 3 },
+        //     { "width": "20%", "targets": 2 },
+        //     { "width": "20%", "targets": 1 },
+        //     { "width": "20%", "targets": 0 }
+        // ]
+      });      
+        }
+      });  
+// $("#btn_modelView").click(function() {
+//   alert( "Handler for .click() called." );
+// });
+
+    });
 
 </script>
 

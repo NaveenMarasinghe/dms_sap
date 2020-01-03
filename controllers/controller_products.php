@@ -37,6 +37,9 @@ if(isset($_GET["type"])){
 			case "viewProductModal":
 				viewProductModal(); 		
 				break;
+			case "viewStock":
+				viewStock(); 		
+				break;				
 				}
 			}
 
@@ -73,9 +76,7 @@ function viewProductTable(){
 					<i class="ace-icon fa fa-trash-o bigger-120"></i>
 				</button>
 
-				<button class="btn btn-xs btn-warning">
-					<i class="ace-icon fa fa-flag bigger-120"></i>
-				</button>
+
 			</div></td>');
 			echo("</tr>");
 			exit;
@@ -103,9 +104,6 @@ function viewProductTable(){
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-warning">
-						<i class="ace-icon fa fa-flag bigger-120"></i>
-					</button>
 				</div></td>');
 			echo("</tr>");
 			
@@ -203,9 +201,6 @@ function get_filtered_data(){
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-warning">
-						<i class="ace-icon fa fa-flag bigger-120"></i>
-					</button>
 				</div></td>');
 			echo("</tr>");
 			}
@@ -571,6 +566,74 @@ function viewProductModal(){
 		$rec=$result->fetch_assoc();
 			echo(json_encode($rec));
 		$con->close();	
+}
+
+function viewStock(){
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql="SELECT st.batch_id, pro.pro_name, st.stock_qty, st.item_cost, st.item_mrp
+				FROM tbl_products pro, tbl_stock st
+				WHERE st.pro_id=pro.pro_id";
+		$result = $con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("<tr>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo('<td><div class="hidden-sm hidden-xs btn-group">
+				<button class="btn btn-xs btn-success">
+					<i class="ace-icon fa-info-circle bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-info">
+					<i class="ace-icon fa fa-pencil bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-danger">
+					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+				</button>
+
+			</div></td>');
+			echo("</tr>");
+			exit;
+		
+		}
+		while($rec=$result->fetch_assoc()){
+		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
+		// </tr>";	
+			echo("<tr id='".$rec["batch_id"]."'>");
+			echo("<td>".$rec["batch_id"]."</td>");
+			echo("<td>".$rec["pro_name"]."</td>");
+			echo("<td>".$rec["stock_qty"]."</td>");
+			echo("<td>".$rec["item_cost"]."</td>");
+			echo("<td>".$rec["item_mrp"]."</td>");
+			echo('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
+					<button class="btn btn-xs btn-success" id="btn_modelView">
+						<i class="ace-icon fa fa-info-circle bigger-120"></i>
+					</button>
+
+					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelEditProduct">
+						<i class="ace-icon fa fa-pencil bigger-120"></i>
+					</button>
+
+					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
+						<i class="ace-icon fa fa-trash-o bigger-120"></i>
+					</button>
+
+				</div></td>');
+			echo("</tr>");
+			
+		}
+		
+		$con->close();
 }
 
 ?>

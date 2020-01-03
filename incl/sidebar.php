@@ -308,7 +308,7 @@
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-exchange"></i>
-							<span class="menu-text"> Stock Adjestments </span>
+							<span class="menu-text"> Stock Manage </span>
 
 							<b class="arrow fa fa-angle-down"></b>
 						</a>
@@ -316,6 +316,7 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
+
 							<li class="">
 								<a href="form-elements.html">
 									<i class="menu-icon fa fa-caret-right"></i>
@@ -420,6 +421,15 @@
 
 								<b class="arrow"></b>
 							</li>
+
+							<li class="">
+								<a href="../pages/stock_issue.php">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Issue Stock
+								</a>
+
+								<b class="arrow"></b>
+							</li>							
 
 							<li class="">
 								<a href="form-elements-2.html">

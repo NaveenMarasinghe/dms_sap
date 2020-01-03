@@ -5,17 +5,38 @@
 		$type=$_GET["type"];
 		switch($type){			// checks the type
 			case "get_productsGroup":
-				get_productsGroup(); 		// calls function new_id
+				get_productsGroup(); 		
 				break;
 			case "purchaseSave":
-				save_pur_order(); //calls function save_student
+				save_pur_order(); //calls function
 				break;
 			case "purchaseSaveDetails":
 				purchaseSaveDetails();
 				break;
 			case "rtscheProductTable":
 				rtscheProductTable();
-				break;				
+				break;	
+			case "get_batch":
+				get_batch();
+				break;	
+			case "routeScheSave":
+				routeScheSave();
+				break;		
+			case "rtscheSaveDetails":
+				rtscheSaveDetails();
+				break;		
+			case "selectTerritory":
+				selectTerritory();
+				break;	
+			case "selectRoute":
+				selectRoute();
+				break;					
+			case "rtscheViewDatatable":
+				rtscheViewDatatable();
+				break;		
+			case "routeScheId":
+				routeScheId();
+				break;																							
 		}
 	}
 
@@ -280,5 +301,314 @@ function purchaseView(){
 		}
 		
 		$con->close();
+}
+
+function get_batch(){
+		$proid=$_POST["proid"];
+
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql="SELECT DISTINCT batch_id FROM tbl_stock where stock_qty>0 and pro_id='$proid'";
+		
+		$result=$con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		//alert('func');
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("");
+		}
+		else{
+			//fetch all the records
+			while($rec=$result->fetch_assoc())
+			{
+				//merge province ID and name with HTML
+				echo("<option value='".$rec["batch_id"]."'>".$rec["batch_id"]."</option>");
+			}
+		}
+		$con->close();
+}
+
+function routeScheSave(){
+		$db=new Connection();
+		$con=$db->db_con();
+		
+		//query
+		$sql="SELECT routesche_id FROM tbl_route_sche ORDER BY routesche_id DESC LIMIT 1;";
+		
+		//execute the query
+		$result=$con->query($sql);
+		
+		//error handling
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		
+		//checks the number of rows in the result 
+		$nor=$result->num_rows;
+		
+	
+		if($nor>0){
+			//fetch the result
+			$rec=$result->fetch_assoc();
+			//assign ID to variable $num
+			$num=$rec["routesche_id"];
+			//eliminate string GRN and get remaining ID no
+			$num=substr($num,3);
+			//increment the ID
+			$num++;
+			//merge zeros to left side of ID (total length of ID should be 4)
+			$no=str_pad($num,4,'0',STR_PAD_LEFT);
+			//merge string S to new sID
+			$rtscheid="RSH".$no;
+		}
+		else{
+			//first ID of student
+			$rtscheid="RSH0001";
+		}		
+
+		$rtscheSupplier=$_POST["rtscheSupplier"];
+		$rtscheRoute=$_POST["rtscheRoute"];
+		$rtscheDate=$_POST["rtscheDate"];
+		$rtscheRemarks=$_POST["rtscheRemarks"];		
+		$rtscheStatus="Pending";
+
+		// if($purid=='1'){
+		// 	$purid="Without PO";
+		// } else{
+		// 	$sqlupdate="UPDATE tbl_po
+		// 				SET pur_status = 'Received'
+		// 				WHERE pur_id = '$purid';";
+		// 	$resultupdate=$con->query($sqlupdate);
+		// }
+
+		$sql2="INSERT INTO tbl_route_sche(routesche_id,route_id,route_date,sup_id,rtsche_remarks,rtsche_status)
+		VALUES('$rtscheid','$rtscheRoute','$rtscheDate','$rtscheSupplier','$rtscheRemarks','$rtscheStatus');";
+
+		$result2=$con->query($sql2);
+		
+		if($con->error){
+			echo("SQL error ".$con->error);
+			exit;
+		}
+		if($result2>0){
+			echo(json_encode($rtscheid));
+
+		}
+		else{
+			echo("error");
+		}
+
+}
+
+function rtscheSaveDetails(){
+		// Unescape the string values in the JSON array
+		$tableData = stripcslashes($_POST['pTableData']);
+
+		// Decode the JSON array
+		$tableData = json_decode($tableData,TRUE);
+
+		// now $tableData can be accessed like a PHP array
+		//echo $tableData[1]['pname'];
+		$tblDataLength = count($tableData);
+		
+
+
+		for ($x=1; $x<$tblDataLength; $x++){
+			$rtschepid = $tableData[$x]['rtschepid'];
+			$rtschpname = $tableData[$x]['rtschpname'];
+			$rtschebatch = $tableData[$x]['rtschebatch'];
+			$rtscheqty = $tableData[$x]['rtscheqty'];
+			$rtscheid = $tableData[$x]['rtscheid'];
+
+			$db=new Connection();
+			$con=$db->db_con();
+
+			$sql2="INSERT INTO tbl_route_sche_details(rtsche_id,rtsche_proid,rtsche_batch,rtsche_qty)
+			VALUES('$rtscheid','$rtschepid','$rtschebatch','$rtscheqty');";
+
+			// $result=$con->query($sql);
+			$result2=$con->query($sql2);
+			if($con->error){
+				echo("SQL error ".$con->error);
+				exit;
+			}
+			if($result2>0){
+				echo("success2");
+				
+			}
+			else{
+				echo("error");
+			}
+
+		}
+}
+
+function selectTerritory(){
+		$supplierval=$_POST["supplierval"];
+
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql=
+		"SELECT DISTINCT tr.trty_name, st.ter_id
+		FROM tbl_supplier_territory st, tbl_territory tr
+		where st.sup_id='$supplierval'";
+		
+		$result=$con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		//alert('func');
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("");
+		}
+		else{
+			//fetch all the records
+			while($rec=$result->fetch_assoc())
+			{
+				//merge province ID and name with HTML
+				echo("<option value='".$rec["ter_id"]."'>".$rec["trty_name"]."</option>");
+			}
+		}
+		$con->close();
+}
+
+function selectRoute(){
+		$rtscheTerritory=$_POST["rtscheTerritory"];
+
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql=
+		"SELECT DISTINCT rt.route_id,rt.route_name
+		FROM tbl_route rt, tbl_territory tr
+		where tr.trty_id='$rtscheTerritory' and tr.route_id=rt.route_id";
+		
+		$result=$con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		//alert('func');
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("");
+		}
+		else{
+			//fetch all the records
+			while($rec=$result->fetch_assoc())
+			{
+				//merge province ID and name with HTML
+				echo("<option value='".$rec["route_id"]."'>".$rec["route_name"]."</option>");
+			}
+		}
+		$con->close();
+}
+
+function rtscheViewDatatable(){
+
+		$supplierval=$_POST["supplierval"];
+		$selectTerritory=$_POST["selectTerritory"];
+		$datestart=$_POST["datestart"];
+		$enddate=$_POST["enddate"];
+
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql="SELECT DISTINCT rtsch.routesche_id, rtsch.route_id, rt.route_name, rtsch.rtsche_status, rtsch.route_date
+				FROM tbl_route_sche rtsch, tbl_route rt, tbl_territory tr
+				WHERE rtsch.sup_id='$supplierval' and tr.trty_id='$selectTerritory' and rtsch.route_date>'$datestart' and rtsch.route_date<'$enddate' and rtsch.route_id=rt.route_id;";
+		$result = $con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("<tr>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo('<td><div class="hidden-sm hidden-xs btn-group">
+				<button class="btn btn-xs btn-success">
+					<i class="ace-icon fa-info-circle bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-info">
+					<i class="ace-icon fa fa-pencil bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-danger">
+					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-warning">
+					<i class="ace-icon fa fa-flag bigger-120"></i>
+				</button>
+			</div></td>');
+			echo("</tr>");
+			exit;
+		
+		}
+		while($rec=$result->fetch_assoc()){
+		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
+		// </tr>";	
+			echo("<tr id='".$rec["routesche_id"]."'>");
+			echo("<td>".$rec["routesche_id"]."</td>");
+			echo("<td>".$rec["route_id"]."</td>");
+			echo("<td>".$rec["route_name"]."</td>");
+			echo("<td>".$rec["rtsche_status"]."</td>");
+			echo("<td>".$rec["route_date"]."</td>");			
+			echo('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
+					<button type="button" class="btn btn-xs btn-success" id="btn_modelView" onclick="viewSingleProduct(\''.$rec["pur_id"].'\')">
+						<i class="ace-icon fa fa-info-circle bigger-120"></i>
+					</button>
+
+		          <a href="route_sche_edit.php?routeSche_id=\''.$rec["routesche_id"].'\'" class="btn btn-xs btn-info">
+		            <i class="ace-icon fa fa-pencil bigger-120"></i>
+		          </a>
+
+					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
+						<i class="ace-icon fa fa-trash-o bigger-120"></i>
+					</button>
+
+					<button class="btn btn-xs btn-warning">
+						<i class="ace-icon fa fa-flag bigger-120"></i>
+					</button>
+				</div></td>');
+			echo("</tr>");
+			
+		}
+		
+		$con->close();
+}
+
+function get_routeSche(){
+
+		$routeScheId=$_POST["routeScheId"];
+		$db=new Connection();
+		$con=$db->db_con();
+
+		$sql="SELECT * FROM tbl_route_sche WHERE routesche_id='$routeScheId'";
+		$result=$con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		
+		$rec=$result->fetch_assoc();
+			echo(json_encode($rec));
+		$con->close();	
 }
 ?>

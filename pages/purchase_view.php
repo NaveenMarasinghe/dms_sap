@@ -11,106 +11,114 @@
 		<div class="form-actions">	
 			<div>       
         		<h4 class="page-header"><b>View Purchase Orders</b></h4>
-      		</div>
+      </div>
 
-           <form id="purchaseform" method="post" >
-            <div class="row">               
-              <div class="col-md-3">
-                  <div class="form-group" id="filter_col1" data-column="2">
-                    <label for="exampleInputEmail1">Supplier</label>
-                    <div class="input-group">
-<!--                         <span class="input-group-addon">
-                          <input type="checkbox" class="column_filter" id="col2_smart">
-                        </span> -->
-                    <select name="selectSupplier" id="selectSupplier" class="form-control selcet-filter">
-                     <option value="0">--Select Supplier--</option>
-                     <option value="0">--Select Sggggggggggggggggggggggggggupplier--</option>
-
-                    </select>
-                    </div>                    
-                  </div>
-              </div>
-              
-              <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Territory</label>
-                    <div class="input-group">
-<!--                         <span class="input-group-addon">
-                          <input type="checkbox" class="column_filter" id="col2_smart">
-                        </span> -->
-                    <select name="selectSupplier" id="selectSupplier" class="form-control selcet-filter">
-                     <option value="0">--Select Territory--</option>
-                     <option value="0">--Select Sggggggggggggggggggggggggggupplier--</option>
-
-                    </select>
-                    </div>                    
-                  </div>
-              </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="proid">Date Range</label>                  
-						<div class="input-group">
-							<div class="input-daterange input-group">
-                  <input type="text" class="input form-control "
-                    name="start" id="datestart"/>
-                  <span class="input-group-addon">
-                    <i class="fa fa-exchange"></i>
-                  </span>
-
-                  <input type="text" class="input form-control"
-                    name="end" id="enddate"/>
-              </div>
-						</div>
-                </div>
-              </div>
+      <form id="purchaseform" method="post" >
+        <div class="row">               
+        <div class="col-xs-2">
+        </div>
             
-            </div>
-            <div class="table-header">
-              View Purchase Order List
-            </div>            
-            <div class="row">
-            	<table id="purchaseOrderTable" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Purchase Order ID</th>
-                  <th>Supplier</th>             
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody id="purchaseOrderTableBody">
-                                                                                                         
-                </tbody>
-                <tfoot>
-            
-              </tfoot>
-              </table>
-            </div>
-            </div>
+        </div>
+           
+        <div class="row">
+        	<table id="purchaseOrderTable" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>Purchase Order ID</th>
+              <th>Supplier</th>             
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="purchaseOrderTableBody">
+                                                                                                     
+            </tbody>
+            <tfoot>
+        
+          </tfoot>
+          </table>
+        </div>
+      </form>        
+    </div>
 
-            </form>
-          
-<!--             <div class="col-md-offset-10 col-md-2">
-              <div class="pull-right">
-              <button type="button" class="btn btn-success" id="pobtnSave">Create</button>
-              <button type="button" class="btn btn-primary" id="pobtncancel" onclick="$('#frmStudntEdit')[0].reset();">Cancel</button>
-            </div>
-            </div> -->
 
-    </div>						
+  </div>						
+<div id="modalPoView" class="modal" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><b>View Student Details</b></h4>
+      </div>
+      <div class="modal-body">
+        <table class="table" id=''>
+          <thead>
+            <tr>
+            <th class="col-sm-2"></th>
+            <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Student Id  : </td>
+              <td><label id="lblsid" class="viewBookInfo"></label></td>
+            </tr>
+            <tr>
+              <td>Student Name  :</td>
+              <td><label id="lblname" class="viewBookInfo"></label></td>
+            </tr>
+            <tr>
+              <td>Student Address  :</td>
+              <td><label id="lbladd" class="viewBookInfo"></label></td>
+            </tr>
+            <tr>
+              <td>Province  :</td>
+              <td><label id="lblprovince" class="viewBookInfo"></label></td>
+            </tr>
+              <tr>
+              <td>City  :</td>
+              <td><label id="lblcity" class="viewBookInfo"></label></td>
+            </tr>
+            <tr>
+              <td>Gender  :</td>
+              <td><label id="lblgender" class="viewBookInfo"></label></td>
+            </tr>
+            <tr>
+              <td>Tel  :</td>
+              <td><label id="lbltel" class="viewBookInfo"></label></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><label id="lbltel_opt" class="viewBookInfo"></label></td>
+            </tr>
+            <tr>
+              <td>Email  :</td>
+              <td><label id="lblemail" class="viewBookInfo"></label></td>
+            </tr>
+          </tbody>    
+        </table> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnMdlviewBkInfo" onclick="$('.viewBookInfo').text('');">Close</button>
+      </div>
+    </div>
+    <!--end Modal content-->
+  </div>
+</div>
 			<!-- PAGE CONTENT ENDS -->
 		</div><!-- /.col -->
 	</div><!-- /.row -->
 </div><!-- /.page-content -->
 <script type="text/javascript">
 		function viewSingleProduct(proid){
-        $('.page-content').load("purchase_view_single.php");
-        //alert(proid);      
-       	var pur_id=proid;
-       	//alert(pur_id); 
-        $("#qty").text("gg");
+        // $('.page-content').load("purchase_view_single.php");
+        // //alert(proid);      
+       	// var pur_id=proid;
+       	// //alert(pur_id); 
+        // $("#qty").text("gg");
     	
         // $.post("../controllers/controller_products.php?type=viewProductModal",
         // {proid:proid},
@@ -128,6 +136,35 @@
         //    }
         // });
       }
+
+      function modalPoProduct(proid){
+        
+        alert(proid);
+        $.post("../controllers/controller_products.php?type=viewProductModal",
+        {proid:proid},
+        function(data,status){
+        if(status=="success"){
+              //alert(data);
+              
+              var jdata=jQuery.parseJSON(data);
+              $("#editModalProductId").val(jdata.pro_id);
+              $("#editModalProductCat").val(jdata.product_cat_name);
+              $("#editModalProductSubCat").val(jdata.product_subcat_name);
+              $("#editModalProductName").val(jdata.pro_name);
+              $("#editModalProductSupplier").val(jdata.sup_name);
+
+           }
+        });
+      }      
+      $('.fa-pencil').removeAttr('checked').on('click', function(){
+
+          $('#purchaseform').hide();
+          $('#purchaseform').removeClass('hide');
+
+          // $('#purchaseform').addClass('hide');
+          // $('#purchaseform').show();
+
+      })      
 
     $(document).ready(function(){
 

@@ -10,13 +10,14 @@
 <div class="page-content">
   
 
+	<input type="hidden" id="routeSche_id" value="<?php echo $_GET['routeSche_id']?>">
   <div class="row">
     <div class="col-xs-12">
       <!-- PAGE CONTENT BEGINS -->
 
 		<div class="widget-box">
 			<div class="widget-header widget-header-blue widget-header-flat">
-				<h4 class="widget-title lighter">Create Route Schedule</h4>
+				<h4 class="widget-title lighter">Edit Route Schedule</h4>
 			</div>
 
 			<div class="widget-body">
@@ -71,7 +72,7 @@
                     </select>                 
                   </div>
               </div>
-              <div class="col-md-3 form-group">
+              <div class="col-md-4 form-group">
                   <div>
                     <label for="rtscheRoute">Route</label>
                     <select name="rtscheRoute" id="rtscheRoute" class="form-control selcet-filter">
@@ -330,13 +331,38 @@
 		<script type="text/javascript">
 
 
-			  
+			function getInfoToView(routeScheId){
+			  $.get("controllers/controller_routeSche.php?type=get_routeSche&id="+routeScheId,function(data,status){
+			    alert(data);
+			    if(status=='success'){
+			          // $('.viewBookInfo').text('');
+			          // var jdata=jQuery.parseJSON(data);
+			          // $("#lblsid").text(jdata.std_id);
+			          // $("#lblname").text(jdata.std_name);
+			          // $("#lbladd").text(jdata.std_address);
+			          // $("#lblprovince").text(jdata.pro_name);
+			          // $("#lblcity").text(jdata.std_city);
+			          // if(jdata.std_gender==0)
+			          //   $("#lblgender").text("Meal");
+			          // else
+			          //   $("#lblgender").text("Femeal");
+			          // $("#lbltel").text(jdata.std_tel);
+			          // $("#lbltel_opt").text(jdata.std_tel_opt);
+			          // $("#lblemail").text(jdata.std_email);
+			       }
+			    });
+			  }	
+
 			$.noConflict();
 			jQuery(function($) {
 
 			
 
 				$(document).ready(function(){
+
+					var routeScheId = $("#routeSche_id").val();
+					alert(routeScheId);
+
 
 					$.noConflict();
 					$("#rtscheTable").DataTable()										
@@ -354,13 +380,34 @@
 				      //alert(data); 
 				      $("#rtscheSupplier").empty();
 				      $("#rtscheSupplier").append("<option value=''>--Select Supplier--</option>");
-				      $("#rtscheSupplier").append(data);
-				      
+				      $("#rtscheSupplier").append(data);				      
 				      }
 				    });
-				});
 
-			
+					$.post("../controllers/controller_routeSche.php?type=get_routeSche",
+					{routeScheId:routeScheId},
+					function(data,status){
+
+					if(status=='success'){
+
+					  // $('.viewBookInfo').text('');
+					  	var jdata=jQuery.parseJSON(data);
+						$("#rtscheSupplier option[value='"+jdata.sup_id+"']").prop("selected", true);
+					  // $("#lblsid").text(jdata.std_id);
+					  // $("#lblname").text(jdata.std_name);
+					  // $("#lbladd").text(jdata.std_address);
+					  // $("#lblprovince").text(jdata.pro_name);
+					  // $("#lblcity").text(jdata.std_city);
+					  // if(jdata.std_gender==0)
+					  //   $("#lblgender").text("Meal");
+					  // else
+					  //   $("#lblgender").text("Femeal");
+					  // $("#lbltel").text(jdata.std_tel);
+					  // $("#lbltel_opt").text(jdata.std_tel_opt);
+					  // $("#lblemail").text(jdata.std_email);
+					}
+					});				      
+				});
 
 				$('#rtscheSupplier').change(function(){
 
@@ -426,7 +473,8 @@
 				//       }
 				//     });			
 
-			 //    });		
+			 //    });				    
+
 				$('#rtscheTerritory').change(function(){
 
 			      var rtscheTerritory = $('#rtscheTerritory').val(); // get option's value
@@ -436,14 +484,17 @@
 			      {rtscheTerritory:rtscheTerritory},
 			      function(data,status){
 			      if(status=="success"){
-			        //alert(data);
+			        alert(data);
 			        $("#rtscheRoute").empty();
 			        $("#rtscheRoute").append("<option value=''>--Select Route--</option>");
 			        $("#rtscheRoute").append(data);
 			        }
 			      });	
 
-			    });				 		    
+			    });	
+
+
+
 
 				$('#rtscheProCat').change(function(){
 

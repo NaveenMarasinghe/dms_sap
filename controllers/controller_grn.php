@@ -229,15 +229,40 @@ function purchaseSaveDetails(){
 			$itcost = $tableData[$x]['itcost'];
 			$itmrp = $tableData[$x]['itmrp'];						
 			$grnid = $tableData[$x]['grnid'];
+			$grnbatch = $tableData[$x]['grnbatch'];
 
 			$db=new Connection();
 			$con=$db->db_con();
 
-			$sql="INSERT INTO tbl_grn_details(grn_id,pro_id,qty,item_cost,item_mrp)
-			VALUES('$grnid','$grnpid','$grnpqty','$itcost','$itmrp');";
+			$sql="INSERT INTO tbl_grn_details(grn_id,pro_id,grn_batch,qty,item_cost,item_mrp)
+			VALUES('$grnid','$grnpid','$grnbatch','$grnpqty','$itcost','$itmrp');";
+
+
+			$stocksql="SELECT stock_qty
+					FROM tbl_stock
+					WHERE batch_id='$grnbatch' and pro_id='$grnpid';";
+
+			$rec=$con->query($stocksql);
+			$nor=$rec->num_rows;
+
+			if($nor>0){
+				$num=$rec->fetch_assoc();
+				$stock=$num["stock_qty"];
+				$grnpqty==$grnpqty+$stock;
+				$sqlupdate="UPDATE tbl_stock
+							SET stock_qty = '$grnpqty'
+							WHERE batch_id = '$grnbatch';";
+				$resultupdate=$con->query($sqlupdate);				
+		
+			} else{
+				$sql2="INSERT INTO tbl_stock(batch_id,pro_id,stock_qty,item_cost,item_mrp)
+				VALUES('$grnbatch','$grnpid','$grnpqty','$itcost','$itmrp');";		
+				$result2=$con->query($sql2);						
+			}			
 
 			// $result=$con->query($sql);
 			$result=$con->query($sql);
+			
 			if($con->error){
 				echo("SQL error ".$con->error);
 				exit;

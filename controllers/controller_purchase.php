@@ -8,14 +8,20 @@
 				get_productList(); 		// calls function new_id
 				break;
 			case "purchaseSave":
-				save_pur_order(); //calls function save_student
+				save_pur_order(); //calls function save_student 
 				break;
 			case "purchaseSaveDetails":
 				purchaseSaveDetails();
 				break;
 			case "purchaseView":
 				purchaseView();
-				break;				
+				break;	
+			case "viewPurchaseModal":
+				viewPurchaseModal();
+				break;		
+			case "viewPurchaseModalText":
+				viewPurchaseModalText();
+				break;																
 		}
 	}
 
@@ -207,7 +213,7 @@ function purchaseView(){
 			echo("<td>".$rec["pur_date"]."</td>");
 			echo("<td>".$rec["pur_status"]."</td>");
 			echo('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
-					<button type="button" class="btn btn-xs btn-success" id="btn_modelView" onclick="viewSingleProduct(\''.$rec["pur_id"].'\')">
+					<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelPoView" onclick="modalViewPo(\''.$rec["pur_id"].'\')">
 						<i class="ace-icon fa fa-info-circle bigger-120"></i>
 					</button>
 
@@ -229,4 +235,46 @@ function purchaseView(){
 		
 		$con->close();
 }
+
+function viewPurchaseModal(){
+
+		$purid=$_POST["purid"];
+		$db=new Connection();
+		$con=$db->db_con();
+		$sql="SELECT pod.pro_id, pro.pro_name, pod.pur_qty
+				FROM tbl_po_details pod, tbl_products pro
+				WHERE pod.pro_id=pro.pro_id and pod.purod_id='$purid'";
+		$result = $con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("<tr>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+
+		
+			echo("</tr>");
+			exit;
+		
+		}
+		while($rec=$result->fetch_assoc()){
+		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
+		// </tr>";	
+			echo("<tr id='".$rec["pro_id"]."'>");
+			echo("<td>".$rec["pro_id"]."</td>");
+			echo("<td>".$rec["pro_name"]."</td>");
+			echo("<td>".$rec["pur_qty"]."</td>");
+
+			echo("</tr>");
+			
+		}
+		
+		$con->close();	
+}
+
 ?>

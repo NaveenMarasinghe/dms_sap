@@ -158,15 +158,31 @@
 	                  
 	                </div>
 	            </div>
+	            <div class="col-md-4 form-group">
+	                <div>
+	                  <label for="grnBatchID">Batch ID</label>
+	                  <input type="text" class="form-control" name="grnBatchID" id="grnBatchID">
+	                  
+	                </div>
+	            </div>	
+            
+            </div>
+			<div class="row">
+	            <div class="col-xs-4">
+
+	             </div>
+	            <div class="col-xs-4">
+
+	             </div>	             				                        
 	            <div class="col-xs-4">
                   <div class="col-xs-2">
-                <div class="form-group">
-                  <label for="grnAddItems" style="color: white;">&nbsp;</label>
-                   <button type='button' class='btn btn-primary m-b-20' id='grnAddItems' >Add Items</button>
-                </div>
-              </div>
+	                <div class="form-group">
+	                  <label for="grnAddItems" style="color: white;">&nbsp;</label>
+	                   <button type='button' class='btn btn-primary m-b-20' id='grnAddItems' >Add Items</button>
+	                </div>
+	              </div>
+	             </div>
               </div>	            
-            </div>
 
             <div class="row">
               <div class="col-xs-12">
@@ -189,6 +205,7 @@
 
                             <th>Product ID</th>
                             <th>Product Name</th>
+                            <th>Batch ID</th>                            
                             <th>Quantity</th>
                             <th>Item Cost</th>
                             <th>Item MRP</th>
@@ -423,12 +440,14 @@
 		      var qnty = $('#grnQty').val();
 		      var cost = $('#grnCost').val();
 		      var mrp = $('#grnMRP').val();
+		      var batch = $('#grnBatchID').val();
 
 		      var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-success' id='btn_modelView'><i class='ace-icon fa fa-info-circle bigger-120'></i></button><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button><button type='button' class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div>"
 		      if(proid!=0){
 		          grnTable2.row.add( [
 		              proid,
-		              proname,              
+		              proname,
+		              batch,           
 		              qnty,
 		              cost,
 		              mrp,
@@ -447,6 +466,7 @@
 		      $("#grnQty").val("");
   		      $("#grnCost").val("");
   		      $("#grnMRP").val("");
+  		      $("#grnBatchID").val("");  		      
 		      $("#grnProductName").empty();
 		      $('.select2gg').select2({
 		        placeholder: "--Select a Product--",
@@ -554,9 +574,10 @@
 		                                TableData[row]={
 		                                    "grnpid" : $(tr).find('td:eq(0)').text()                                    
 		                                    , "grnpname" : $(tr).find('td:eq(1)').text()
-		                                    , "grnpqty" :$(tr).find('td:eq(2)').text()
-		                                    , "itcost" :$(tr).find('td:eq(3)').text()
-		                                    , "itmrp" :$(tr).find('td:eq(4)').text()
+		                                    , "grnbatch" : $(tr).find('td:eq(2)').text()		                                    
+		                                    , "grnpqty" :$(tr).find('td:eq(3)').text()
+		                                    , "itcost" :$(tr).find('td:eq(4)').text()
+		                                    , "itmrp" :$(tr).find('td:eq(5)').text()
 		                                    , "grnid" :grnidddata
 		                                }
 		                              //   poid    
