@@ -19,7 +19,11 @@ if(isset($_GET["type"])){
 			case "purchaseSaveDetails":
 				purchaseSaveDetails(); 		
 				break;													
-				}
+				
+				case "poLoad":
+					poLoad(); 		
+					break;													
+					}
 			}
 function get_poid(){
 		$supplierval=$_POST["supplierval"];
@@ -93,6 +97,7 @@ function grnProductTable(){
 		$nor=$result->num_rows;
 		if($nor==0){
 			echo("<tr>");
+			echo("<td class='novalue'>No Record</td>");
 			echo("<td>No Record</td>");
 			echo("<td>No Record</td>");
 			echo("<td>No Record</td>");
@@ -109,6 +114,7 @@ function grnProductTable(){
 			echo("<tr id='".$rec["pro_id"]."'>");
 			echo("<td>".$rec["pro_id"]."</td>");
 			echo("<td>".$rec["pro_name"]."</td>");
+			echo("<td>".$rec["pur_qty"]."</td>");
 			echo("<td>".$rec["pur_qty"]."</td>");
 			echo("<td></td>");
 			echo("<td></td>");
@@ -276,5 +282,32 @@ function purchaseSaveDetails(){
 			}
 
 		}
+}
+function poLoad(){
+	$db=new Connection();
+	$con=$db->db_con();
+	$sql="SELECT DISTINCT pur_id FROM tbl_po WHERE pur_status='Pending';";
+	$result=$con->query($sql);
+	if($con->errno)
+	{
+		echo("SQL Error: ".$con->error);
+		exit;
+	}
+	//alert('func');
+	$nor=$result->num_rows;
+	if($nor==0){
+		echo("No records");
+		exit;
+	}
+	else{
+		//fetch all the records
+		while($rec=$result->fetch_assoc())
+		{
+			//merge province ID and name with HTML <option value="">--Select Supplier--</option>
+
+			echo("<option value='".$rec["pur_id"]."'>".$rec["pur_id"]."</option>");
+		}
+	}
+	$con->close();
 }
 ?>

@@ -39,7 +39,13 @@ if(isset($_GET["type"])){
 				break;
 			case "viewStock":
 				viewStock(); 		
-				break;				
+				break;	
+				case "modalEditSave":
+					modalEditSave(); 		
+					break;		
+					case "modalDeleteSave":
+						modalDeleteSave(); 		
+						break;						
 				}
 			}
 
@@ -92,15 +98,13 @@ function viewProductTable(){
 			echo("<td>".$rec["pro_name"]."</td>");
 			echo("<td>".$rec["sup_name"]."</td>");
 			echo('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
-					<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelViewProduct" onclick="modalViewProduct(\''.$rec["pro_id"].'\')">
-						<i class="ace-icon fa fa-info-circle bigger-120"></i>
-					</button>
 
-					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelEditProduct">
+
+					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modalEditProduct" onclick="modalEditProduct(\''.$rec["pro_id"].'\')">
 						<i class="ace-icon fa fa-pencil bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
+					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modalDeleteProduct" onclick="modalDeleteProduct(\''.$rec["pro_id"].'\')">
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
@@ -189,15 +193,13 @@ function get_filtered_data(){
 			echo("<td>".$rec["pro_name"]."</td>");
 			echo("<td>".$rec["sup_name"]."</td>");
 			echo('<td><div class="hidden-sm hidden-xs btn-group">
-					<button class="btn btn-xs btn-success">
-						<i class="ace-icon fa fa-info-circle bigger-120"></i>
-					</button>
 
-					<button class="btn btn-xs btn-info">
+
+					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modalEditProduct" onclick="modalEditProduct(\''.$rec["pro_id"].'\')">
 						<i class="ace-icon fa fa-pencil bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-danger">
+					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modalDeleteProduct" onclick="modalDeleteProduct(\''.$rec["pro_id"].'\')">
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
@@ -588,20 +590,6 @@ function viewStock(){
 			echo("<td>No Record</td>");
 			echo("<td>No Record</td>");
 			echo("<td>No Record</td>");
-			echo('<td><div class="hidden-sm hidden-xs btn-group">
-				<button class="btn btn-xs btn-success">
-					<i class="ace-icon fa-info-circle bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-info">
-					<i class="ace-icon fa fa-pencil bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-danger">
-					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-				</button>
-
-			</div></td>');
 			echo("</tr>");
 			exit;
 		
@@ -615,25 +603,53 @@ function viewStock(){
 			echo("<td>".$rec["stock_qty"]."</td>");
 			echo("<td>".$rec["item_cost"]."</td>");
 			echo("<td>".$rec["item_mrp"]."</td>");
-			echo('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
-					<button class="btn btn-xs btn-success" id="btn_modelView">
-						<i class="ace-icon fa fa-info-circle bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelEditProduct">
-						<i class="ace-icon fa fa-pencil bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
-						<i class="ace-icon fa fa-trash-o bigger-120"></i>
-					</button>
-
-				</div></td>');
 			echo("</tr>");
 			
 		}
 		
 		$con->close();
 }
+function modalEditSave(){
 
+	$editModalProductName=$_POST["editModalProductName"];
+	$editModalProductId=$_POST["editModalProductId"];
+	$db=new Connection();
+	$con=$db->db_con();
+	$sql="UPDATE tbl_products SET pro_name='$editModalProductName' WHERE pro_id='$editModalProductId'";
+	
+
+	$result=$con->query($sql);
+
+	if($con->errno)
+	{
+		echo("SQL Error: ".$con->error);
+		exit;
+	}
+	
+
+	echo ("Success");
+	$con->close();
+}
+
+function modalDeleteSave(){
+
+
+	$deleteModalProductId=$_POST["deleteModalProductId"];
+	$db=new Connection();
+	$con=$db->db_con();
+	$sql="UPDATE tbl_products SET pro_status='1' WHERE pro_id='$deleteModalProductId'";
+	
+
+	$result=$con->query($sql);
+
+	if($con->errno)
+	{
+		echo("SQL Error: ".$con->error);
+		exit;
+	}
+	
+
+	echo ("Success");
+	$con->close();
+}
 ?>

@@ -96,7 +96,7 @@
 			</div>
 		</div>
 
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Image </label>
 
 			<div class="col-sm-9">
@@ -104,7 +104,7 @@
 				<input type="file" class="col-xs-10 col-sm-5" id="pro_image" name="pro_image" onchange="readURL(this);"/>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 			<div class="clearfix form-actions">
 				<div class="col-md-offset-3 col-md-9">
@@ -867,7 +867,7 @@
 							required: true
 						},
 						prosubcat_subcatdes: {
-							required: true
+							required: false
 						},
 
 					},

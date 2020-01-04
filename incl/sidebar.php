@@ -130,7 +130,7 @@
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-book"></i>
-							<span class="menu-text"> Sales Orders </span>
+							<span class="menu-text"> Create Sales </span>
 
 							<b class="arrow fa fa-angle-down"></b>
 						</a>
@@ -139,18 +139,18 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="form-elements.html">
+								<a href="">
 									<i class="menu-icon fa fa-caret-right"></i>
-									View Sales Orsers
+									View Sales
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a href="../pages/sales_create.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Create Sales Order
+									Create Sales
 								</a>
 
 								<b class="arrow"></b>
@@ -457,7 +457,7 @@
 							<li class="">
 								<a href="form-elements.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Employee Management
+									View Employee
 								</a>
 
 								<b class="arrow"></b>
@@ -466,7 +466,7 @@
 							<li class="">
 								<a href="form-elements-2.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Vehicle Management
+									Add New Employee
 								</a>
 
 								<b class="arrow"></b>

@@ -20,7 +20,6 @@
                   <th>Quantity</th>
                   <th>Item Cost</th>
                   <th>Item MRP</th>
-                  <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody id="viewStockBody">

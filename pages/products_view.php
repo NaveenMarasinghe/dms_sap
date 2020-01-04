@@ -35,47 +35,38 @@
                 <div class="col-md-3">
                   <div class="form-group" id="filter_col1" data-column="2">
                     <label for="exampleInputEmail1">Supplier</label>
-                    <div class="input-group">
-<!--                         <span class="input-group-addon">
-                          <input type="checkbox" class="column_filter" id="col2_smart">
-                        </span> -->
+
                     <select name="selectSupplier" id="selectSupplier" class="form-control selcet-filter">
                      <option value="0">--Select Supplier--</option>
                         <?php 
                         
                         ?>
                     </select>
-                    </div>                    
+                 
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Product Category</label>
-                    <div class="input-group">
-<!--                         <span class="input-group-addon">
-                          <input type="checkbox">
-                        </span> -->
+
                     <select name="selectProductCat" id="selectProductCat" class="form-control">
                      <option value="">--Select Product Category--</option>
                         <?php 
                         
                         ?>
                     </select>
-                    </div>                    
+                  
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Product</label>
-                    <div class="input-group">
-<!--                         <span class="input-group-addon">
-                          <input type="checkbox">
-                        </span> -->
+
                     <select name="selectProductsubCat" id="selectProductsubCat" class="form-control">
                      <option value="">--Select Product Sub Category--</option>
                         
                     </select>
-                    </div>                    
+                   
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -103,17 +94,17 @@
               </table>
             </div>
 <!--  View product details modal -->
-    <div class="modal fade" id="modelViewProduct" tabindex="-1" >
+    <div class="modal fade" id="modalEditProduct" tabindex="-1" >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
-            <h4 class="blue bigger">View Product Details</h4>
+            <h4 class="blue bigger">Edit Product Details</h4>
           </div>
 
           <div class="modal-body">
             <div class="row">
-              <form class="form-horizontal" role="form" id="form_addNewProductCat">
+              <form class="form-horizontal" role="form" id="modalForm">
               <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product ID </label>
 
@@ -150,7 +141,7 @@
 
                 <div class="col-sm-9">
                   <div class="clearfix">
-                  <input type="text" readonly="readonly" class="col-xs-10 col-sm-8" placeholder="" id="editModalProductName" name="editModalProductName"/>
+                  <input type="text" class="col-xs-10 col-sm-8" placeholder="" id="editModalProductName" name="editModalProductName"/>
                   </div>
                 </div>
               </div>
@@ -170,9 +161,13 @@
           </div>
 
           <div class="modal-footer">
-            <button class="btn btn-sm btn-warning" data-dismiss="modal">
+            <button class="btn btn-sm btn-warning" id="modalEditCancel"data-dismiss="modal">
               <i class="ace-icon fa fa-times"></i>
               Cancel
+            </button>
+            <button class="btn btn-sm btn-success" id="modalEditSave">
+              <i class="ace-icon fa fa-times"></i>
+              Save
             </button>
 
             
@@ -181,16 +176,65 @@
       </div>
     </div>
 <!-- End of view product details modal -->
+<div class="modal fade" id="modalDeleteProduct" tabindex="-1" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="blue bigger">Delete Product</h4>
+          </div>
+
+          <div class="modal-body">
+            <div class="row">
+              <form class="form-horizontal" role="form" id="modalDeleteForm">
+              <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product ID </label>
+
+                <div class="col-sm-9">
+                  <input type="text" readonly="readonly" id="deleteModalProductId" name="deleteModalProductId" placeholder="" class="col-xs-10 col-sm-8" />
+                <div class="clearfix">
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Name </label>
+
+                <div class="col-sm-9">
+                  <div class="clearfix">
+                  <input type="text" readonly="readonly" id="deleteModalProductName" name="editModalProductName" placeholder="" class="col-xs-10 col-sm-8" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <h3 align="center">Are you sure?</h3>
+              </div>
 
 
-			<!-- PAGE CONTENT ENDS -->
-		</div><!-- /.col -->
-	</div><!-- /.row -->
 
+              </form>
+            </div>
+          </div>
 
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-warning" id="modalEditCancel"data-dismiss="modal">
+              <i class="ace-icon fa fa-times"></i>
+              Cancel
+            </button>
+            <button class="btn btn-sm btn-danger" id="modalEditDelete">
+              <i class="ace-icon fa fa-times"></i>
+              Delete
+            </button>
 
-
-</div><!-- /.page-content -->
+            
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+<!-- /.page-content -->
 
 <script type="text/javascript">
 jQuery(function($){
@@ -202,9 +246,9 @@ var myTable = $('#productTable').DataTable({
     select: {style:'multi'}
   });
 });
-      function modalViewProduct(proid){
+      function modalEditProduct(proid){
         
-        alert(proid);
+        //alert(proid);
         $.post("../controllers/controller_products.php?type=viewProductModal",
         {proid:proid},
         function(data,status){
@@ -222,6 +266,95 @@ var myTable = $('#productTable').DataTable({
         });
       }
 
+      function modalDeleteProduct(proid){
+        
+        //alert(proid);
+        $.post("../controllers/controller_products.php?type=viewProductModal",
+        {proid:proid},
+        function(data,status){
+        if(status=="success"){
+              //alert(data);
+              
+              var jdata=jQuery.parseJSON(data);
+              $("#deleteModalProductId").val(jdata.pro_id);
+              $("#deleteModalProductName").val(jdata.pro_name);
+
+
+           }
+        });
+      }
+
+      $("#modalEditSave").click(function(){
+
+        f = new FormData($("#modalForm")[0]);
+        // alert(f);
+         $.ajax({
+            method: "POST",
+            url: "../controllers/controller_products.php?type=modalEditSave",
+            data: f,
+            processData: false,
+            contentType: false,
+    success: function(data){
+      
+		          // Add product name to modal
+		          // var supplierval2 = $('#pro_name').val();
+		          // $('#productAddedModal').append(supplierval2);
+
+		          	//alert(data);
+   
+      
+      // location.reload(true);
+      // Swal.fire({
+		  //         icon: 'success',
+		  //         title: 'Done...',
+		  //         text: 'Product Name Changed'
+		          
+		  //       });  
+
+            Swal.fire({
+              icon: 'success',
+		          title: 'Done...',
+		          text: 'Product Name Changed'
+        }).then((result) => {
+          if (result.value) {
+            
+            location.reload(true);
+          }
+        })
+      
+      }
+        })
+
+      });
+
+      $("#modalEditDelete").click(function(){
+
+f = new FormData($("#modalDeleteForm")[0]);
+// alert(f);
+ $.ajax({
+    method: "POST",
+    url: "../controllers/controller_products.php?type=modalDeleteSave",
+    data: f,
+    processData: false,
+    contentType: false,
+success: function(data){
+
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Done...',
+      text: 'Product Deleted'
+}).then((result) => {
+  if (result.value) {
+    
+    location.reload(true);
+  }
+})
+
+}
+})
+
+});
 
   $(document).ready(function(){
 
