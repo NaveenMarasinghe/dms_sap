@@ -81,6 +81,7 @@
                   <th>Product Category</th>                  
                   <th>Product Sub-Category</th>
                   <th>Product Name</th>
+                  <th>Product Stock</th>
                   <th>Supplier</th>
                   <th>Actions</th>
                 </tr>
@@ -241,7 +242,7 @@ jQuery(function($){
 
 var myTable = $('#productTable').DataTable({
     bAutoWidth: false,
-    aoColumns: [null, null,null, null, null,{"bSortable": false }],
+    aoColumns: [null, null,null, null, null, null,{"bSortable": false }],
     aaSorting: [],
     select: {style:'multi'}
   });

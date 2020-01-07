@@ -472,7 +472,7 @@
 			var mrp = $('#grnMRP').val();
 			var batch = $('#grnBatchID').val();
 			var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-success' id='btn_modelView'><i class='ace-icon fa fa-info-circle bigger-120'></i></button><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button><button type='button' class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div>"
-			var tablerow = "<tr><td>" + proid + "</td><td>" + proname + "</td><td>" + batch + "</td><td>" + qnty + "</td><td>" + cost + "</td><td>" + mrp + "</td><td>" + mrp + "</td></tr>";
+			var tablerow = "<tr><td>" + proid + "</td><td>" + proname + "</td><td>" + batch + "</td><td>" + qnty + "</td><td>" + cost + "</td><td>" + mrp + "</td><td>" + buttons + "</td></tr>";
 			
 			$("#grnTable").DataTable().destroy();
 			$("#grnTable tbody").append(tablerow);

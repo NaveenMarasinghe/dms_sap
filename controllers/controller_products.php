@@ -69,6 +69,7 @@ function viewProductTable(){
 			echo("<td>No Record</td>");
 			echo("<td>No Record</td>");
 			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
 			echo('<td><div class="hidden-sm hidden-xs btn-group">
 				<button class="btn btn-xs btn-success">
 					<i class="ace-icon fa-info-circle bigger-120"></i>
@@ -91,12 +92,18 @@ function viewProductTable(){
 		while($rec=$result->fetch_assoc()){
 		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
 		// </tr>";	
+			// sql2 ="select sum(stock_qty) from tbl_stock where pro_id='.$rec["pro_id"].';";
+			// $result2 = $con->query($sql2);
+			// // $rec2=$result2->fetch_assoc();
+
 			echo("<tr id='".$rec["pro_id"]."'>");
 			echo("<td>".$rec["pro_id"]."</td>");
 			echo("<td>".$rec["product_cat_name"]."</td>");
 			echo("<td>".$rec["product_subcat_name"]."</td>");
 			echo("<td>".$rec["pro_name"]."</td>");
+			echo("<td>".$rec["pro_name"]."</td>");
 			echo("<td>".$rec["sup_name"]."</td>");
+			// echo("<td>".$rec2["sum(stock_qty)"]."</td>");
 			echo('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
 
 
@@ -179,6 +186,7 @@ function get_filtered_data(){
 			echo("<td>No Record</td>");
 			echo("<td>No Record</td>");
 			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
 			echo("</tr>");
 		}
 		else{
@@ -190,6 +198,7 @@ function get_filtered_data(){
 			echo("<td>".$rec["pro_id"]."</td>");
 			echo("<td>".$rec["product_cat_name"]."</td>");
 			echo("<td>".$rec["product_subcat_name"]."</td>");
+			echo("<td>".$rec["pro_name"]."</td>");
 			echo("<td>".$rec["pro_name"]."</td>");
 			echo("<td>".$rec["sup_name"]."</td>");
 			echo('<td><div class="hidden-sm hidden-xs btn-group">
@@ -652,4 +661,3 @@ function modalDeleteSave(){
 	echo ("Success");
 	$con->close();
 }
-?>

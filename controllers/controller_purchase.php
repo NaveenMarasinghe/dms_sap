@@ -21,7 +21,10 @@
 				break;		
 			case "viewPurchaseModalText":
 				viewPurchaseModalText();
-				break;																
+				break;			
+				case "viewPurchaseReport":
+					viewPurchaseReport();
+					break;														
 		}
 	}
 
@@ -276,5 +279,59 @@ function viewPurchaseModal(){
 		
 		$con->close();	
 }
+function viewPurchaseReport()
+{
+	$date_from = $_POST['dateFrom'];
+	$date_to = $_POST['dateTo'];
 
+	$db = new Connection();
+	$con = $db->db_con();
+
+	$sql="SELECT po.pur_id, po.pur_date, sup.sup_name, po.pur_remarks, po.pur_status
+				FROM tbl_po po, tbl_suppliers sup
+				WHERE po.sup_id=sup.sup_id and po.pur_status<>'Removed'";
+
+		if($date_from != "")
+		{
+			$sql .= ' AND pur_date >='.'"'.$date_from.'"';
+		}
+
+		if($date_to != "")
+		{
+			$sql .= ' AND pur_date <='.'"'.$date_to.'"';
+		}		
+
+		$result = $con->query($sql);
+		if($con->errno)
+		{
+			echo("SQL Error: ".$con->error);
+			exit;
+		}
+		$nor=$result->num_rows;
+		if($nor==0){
+			echo("<tr>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("<td>No Record</td>");
+			echo("</tr>");
+			exit;
+		
+		}
+		while($rec=$result->fetch_assoc()){
+		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
+		// </tr>";	
+			echo("<tr id='".$rec["pur_id"]."'>");
+			echo("<td>".$rec["pur_id"]."</td>");
+			echo("<td>".$rec["sup_name"]."</td>");
+			echo("<td>".$rec["pur_date"]."</td>");
+			echo("<td>".$rec["pur_status"]."</td>");
+			
+			echo("</tr>");
+			
+		}
+		
+		$con->close();
+}
 ?>

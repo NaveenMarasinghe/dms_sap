@@ -171,7 +171,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="../pages/purchase_view.php">
+								<a href="../pages/purchase_view2.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									View Purchase Orders
 								</a>
