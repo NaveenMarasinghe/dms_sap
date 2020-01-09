@@ -148,7 +148,7 @@
 							</li>
 
 							<li class="">
-								<a href="../pages/sales_create.php">
+								<a href="../pages/sales_create3.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Create Sales
 								</a>

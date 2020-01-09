@@ -36,7 +36,16 @@
 				break;		
 			case "routeScheId":
 				routeScheId();
-				break;																							
+				break;		
+			case "selectSalesman";
+				selectSalesman();
+				break;	
+			case "selectDriver";
+				selectDriver();
+				break;	
+			case "selectVehicle";
+				selectVehicle();
+				break;																											
 		}
 	}
 
@@ -610,5 +619,93 @@ function get_routeSche(){
 		$rec=$result->fetch_assoc();
 			echo(json_encode($rec));
 		$con->close();	
+}
+
+function selectSalesman()
+{
+
+	$rtscheDate = $_POST["rtscheDate"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT DISTINCT usr.emp_fname, usr.emp_lname, usr.emp_id FROM tbl_user_details usr, tbl_route_sche rt where rt.route_date<>'$rtscheDate' and rt.salesman=usr.emp_id";
+
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	//alert('func');
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("");
+	} else {
+		//fetch all the records
+		while ($rec = $result->fetch_assoc()) {
+			//merge province ID and name with HTML
+			echo ("<option value='" . $rec["emp_id"] . "'>" . $rec["emp_fname"] ." ". $rec["emp_lname"] . "</option>");
+		}
+	}
+	$con->close();
+}
+
+function selectDriver()
+{
+
+	$rtscheDate = $_POST["rtscheDate"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT DISTINCT usr.emp_fname, usr.emp_lname, usr.emp_id FROM tbl_user_details usr, tbl_route_sche rt where rt.route_date<>'$rtscheDate' and rt.driver=usr.emp_id and usr.emp_type='4'";
+
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	//alert('func');
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("");
+	} else {
+		//fetch all the records
+		while ($rec = $result->fetch_assoc()) {
+			//merge province ID and name with HTML
+			echo ("<option value='" . $rec["emp_id"] . "'>" . $rec["emp_fname"] ." ". $rec["emp_lname"] . "</option>");
+		}
+	}
+	$con->close();
+}
+
+function selectVehicle()
+{
+
+	$rtscheDate = $_POST["rtscheDate"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT DISTINCT veh.veh_number FROM tbl_vehicles veh, tbl_route_sche rt where rt.route_date<>'$rtscheDate' and rt.vehicle=veh.veh_number";
+
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	//alert('func');
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("");
+	} else {
+		//fetch all the records
+		while ($rec = $result->fetch_assoc()) {
+			//merge province ID and name with HTML
+			echo ("<option value='" . $rec["veh_number"] . "'>" . $rec["veh_number"] . "</option>");
+		}
+	}
+	$con->close();
+}
+
+function routeScheId() {
+
 }
 ?>

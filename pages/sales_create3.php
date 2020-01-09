@@ -123,7 +123,7 @@
 
                   </div>
                 </div>
-                
+
               </div>
               <div class="row">
                 <div class="col-xs-10">
@@ -136,8 +136,8 @@
                 <div class="col-xs-2">
                   <div class="col-xs-2">
                     <div class="form-group">
-                      <label for="proid" style="color: white;">&nbsp;</label>
-                      <button type='button' class='btn btn-primary m-b-20' id='salesProductAdd'>Add Items</button>
+                      
+                      <button type='button' class='btn btn-primary' id='salesProductAdd'>Add Items</button>
                     </div>
                   </div>
                 </div>
@@ -166,13 +166,13 @@
                                 <span class="lbl"></span>
                               </label>
                             </th> -->
-                                <th></th>
-                                <th>Batch ID</th>
-                                <th>Product Name</th>
-                                <th>Item Price</th>
-                                <th>Quantity</th>
-                                <th>Discount %</th>
-                                <th>Total</th>
+                                <th style="width:10%"></th>
+                                <th style="width:10%">Batch ID</th>
+                                <th style="width:40%">Product Name</th>
+                                <th style="width:10%">Item Price</th>
+                                <th style="width:10%">Quantity</th>
+                                <th style="width:10%">Discount %</th>
+                                <th style="width:10%">Total</th>
 
                               </tr>
                             </thead>
@@ -209,13 +209,38 @@
                             </td>
                           </tr> -->
                             </tbody>
+                            <tfoot>
+                              <tr>
 
+                                <td colspan="5" class="blank"> </td>
+                                <td colspan="1">Sub Total</td>
+                                <td class="subTotal" id="subTotal">
+                                  0.00
+                                </td>
+                              </tr>
+                              <tr>
+
+                                <td colspan="5" class="blank"> </td>
+                                <td colspan="1">Amount Paid</td>
+                                <td>
+                                  <div id="total"><input class="amountPaid" id="amountPaid" style="border:0px; width:50%" value="" /></div>
+                                </td>
+                              </tr>
+                              <tr>
+
+                                <td colspan="5" class="blank"> </td>
+                                <td colspan="1">Balance due</td>
+                                <td class="balanceVal" id="balanceVal">
+                                  0.00
+                                </td>
+                              </tr>
+                            </tfoot>
                           </table>
                         </div>
                       </div>
                     </div>
 
-                    <div id="grid-pager"></div>
+                    <!-- <div id="grid-pager"></div> -->
                   </div>
                 </div>
               </div>
@@ -236,47 +261,69 @@
                           </tr>
                         </tbody>
                       </table> -->
-
+              <!-- 
 <div class="row">
               <div class="col-sm-3 pull-right" style="margin-right: 50px;">
-  <div class="col-sm-6"><h4>Sub Total :</h4></div><div class="col-sm-6"><h4 class="subTotal">100</h4></div>
-  <div class="col-sm-6"><h4>Amount paid :</h4></div><div class="col-sm-6"><h4 class="amountPaid">100</h4></div>
-  <div class="col-sm-6"><h4>Balance Due :</h4></div><div class="col-sm-6"><h4 class="balance">100</h4></div>
+  <div class="col-sm-6"><h4>Sub Total :</h4></div><div class="col-sm-6"><h4 class="subTotal"></h4></div>
+  <div class="col-sm-6"><h4>Amount paid :</h4></div><div class="col-sm-6"><h4><input class="amountPaid" style='border:0px' value="0.00"/></h4></div>
+  <div class="col-sm-6"><h4>Balance Due :</h4></div><div class="col-sm-6"><h4 class="balance">0.00</h4></div>
               </div>
 
-          </div>
+          </div> -->
 
-          <div class="clearfix form-actions">
-            <div class="col-md-offset-3 col-md-9">
-              <div class="pull-right">
+              <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                  <div class="pull-right">
 
 
-                &nbsp; &nbsp; &nbsp;
-                <button class="btn btn-info" type="button" id="salessave">
-                  <i class="ace-icon fa fa-check bigger-110"></i>
-                  Submit
-                </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn btn-info" type="button" id="salessave">
+                      <i class="ace-icon fa fa-check bigger-110"></i>
+                      Submit
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          </form>
+            </form>
 
-          <!--             <div class="col-md-offset-10 col-md-2">
+            <!--             <div class="col-md-offset-10 col-md-2">
               <div class="pull-right">
               <button type="button" class="btn btn-success" id="pobtnSave">Create</button>
               <button type="button" class="btn btn-primary" id="pobtncancel" onclick="$('#frmStudntEdit')[0].reset();">Cancel</button>
             </div>
             </div> -->
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- PAGE CONTENT ENDS -->
-  </div><!-- /.col -->
-</div><!-- /.row -->
+      <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
 </div><!-- /.page-content -->
 
 <script type="text/javascript">
+
+function storeTblValues(test) {
+            var TableData = new Array();
+
+            $('#salesTableBody tr').each(function(row, tr) {
+              TableData[row] = {
+                "batch_id": $(tr).find('td:eq(1)').text(),
+                "item_name": $(tr).find('td:eq(2)').text(),
+                "item_price": $(tr).find('td:eq(3)').text(),
+                "item_qty": $(tr).find('.qtyTable').val(),
+                "item_dis": $(tr).find('.discountVal').val(),
+                "item_total": $(tr).find('.subTol').val(),
+                "salesId": test
+              }
+              //   poid    
+              // TableData.push("Kiwi");
+            });
+            // TableData.shift();  // first row will be empty - so remove
+
+            return TableData;
+          }
+
   jQuery(function($) {
     function toFixedFunction(numb) {
       // var num = 5.56789;
@@ -287,23 +334,22 @@
 
   function getItemPrice() {
 
-var batch = $("#salesBatch option:selected").text();
-var proid = $('#salesProductName').val();
+    var batch = $("#salesBatch option:selected").text();
+    var proid = $('#salesProductName').val();
 
-$.post("../controllers/controller_sales.php?type=get_itemPrice", {
-    proid: proid,
-    batch: batch
-  },
-  function(data, status) {
-    if (status == "success") {
-      $("#itemPrice").val(data);
-
-
-    }
-  });
-}
+    $.post("../controllers/controller_sales.php?type=get_itemPrice", {
+        proid: proid,
+        batch: batch
+      },
+      function(data, status) {
+        if (status == "success") {
+          $("#itemPrice").val(data);
+        }
+      });
+  }
 
   $(document).ready(function() {
+
     $.noConflict();
     // load supplier select box
     $.post("../controllers/controller_sales.php?type=get_route",
@@ -421,13 +467,13 @@ $.post("../controllers/controller_sales.php?type=get_itemPrice", {
 
   $('#salesBatch').change(function() {
 
-var proid = $('#salesBatch').val(); // get option's value
-// var procatval = $('#rtscheProCat').val();
-//alert(proid);
-//change product name select box options
-getItemPrice()
+    var proid = $('#salesBatch').val(); // get option's value
+    // var procatval = $('#rtscheProCat').val();
+    //alert(proid);
+    //change product name select box options
+    getItemPrice()
 
-});
+  });
 
   $.noConflict();
   jQuery(function($) {
@@ -485,7 +531,8 @@ getItemPrice()
     // });
     $(document).ready(function() {
 
-
+      $(".amountPaid").val("0.00");
+      $(".balanceVal").text("0.00");
       // $('.date-picker').datepicker('setDate', 'today');
       $('.date-picker').datepicker({
         autoclose: true,
@@ -544,35 +591,50 @@ getItemPrice()
       $("#qty").change(function() {
         getItemPrice();
       });
-      function updateSubTol(){
-       
-       // $("#salesTable tbody").on("change", '.discountVal', function() { 
-         var $row = $(this).closest("tr");
-         var subTotal = 0;
-         
-         $('#salesTableBody tr').each(function(row, tr) {
-           var $row = $(this).closest("tr");
-             // var rows = $("#invoice-table tbody").children('tr');
-             var rowTotalVal = parseFloat($row.find(".subTol").text());
-             rowTotalVal = rowTotalVal;
-             subTotal = subTotal + rowTotalVal;
-             // alert(subTotal);
-             // totalVal = totalVal.toFixed(2);
-             
-             // TableData[row] = {
-             //   "item_id": $(tr).find('td:eq(0)').text(),
-             //   "item_name": $(tr).find('td:eq(1)').text(),
-             //   "item_batch": $(tr).find('td:eq(2)').text(),
-             //   "item_qty": $(tr).find('td:eq(3)').text(),
-             //   "salesId": salesId
-             // }
-             //   poid    
-             // TableData.push("Kiwi");
-           });
-           $(".subTotal").text(subTotal.toFixed(2));
 
-       // });
-     }
+      function updateSubTol() {
+
+        // $("#salesTable tbody").on("change", '.discountVal', function() { 
+        var $row = $(this).closest("tr");
+        var subTotal = 0;
+
+        $('#salesTableBody tr').each(function(row, tr) {
+          var $row = $(this).closest("tr");
+          // var rows = $("#invoice-table tbody").children('tr');
+          var rowTotalVal = parseFloat($row.find(".subTol").text());
+          rowTotalVal = rowTotalVal;
+          subTotal = subTotal + rowTotalVal;
+          // alert(subTotal);
+          // totalVal = totalVal.toFixed(2);
+
+          // TableData[row] = {
+          //   "item_id": $(tr).find('td:eq(0)').text(),
+          //   "item_name": $(tr).find('td:eq(1)').text(),
+          //   "item_batch": $(tr).find('td:eq(2)').text(),
+          //   "item_qty": $(tr).find('td:eq(3)').text(),
+          //   "salesId": salesId
+          // }
+          //   poid    
+          // TableData.push("Kiwi");
+        });
+        $(".subTotal").text(subTotal.toFixed(2));
+
+        // });
+      }
+
+      function updateAmountDue() {
+        // alert("gg");
+        // var balance = 0;
+        var amountPaid = $(".amountPaid").val();
+        var subTotal = parseFloat($(".subTotal").text());
+        subTotal = subTotal.toFixed(2);
+        // alert(subTotal);
+        balance = subTotal - amountPaid;
+        balance = balance.toFixed(2);
+        $(".balanceVal").text(balance);
+        $(".amountPaid").text(subTotal);
+      }
+
       $('#salesProductAdd').on('click', function() {
 
         var batch = $("#salesBatch option:selected").text();
@@ -616,6 +678,7 @@ getItemPrice()
         $("#salesTable tbody").append(tablerow);
         // $("#salesTable").DataTable();
         updateSubTol();
+        updateAmountDue();
 
         // } else{
         //   Swal.fire({
@@ -668,41 +731,56 @@ getItemPrice()
       //   oldVal = currentVal;
       //   //action to be performed on textarea changed
       //   alert("currentVal");
-        
+
 
       // });
 
 
 
-      $("#salesTable tbody").on("keyup", '.discountVal', function() {      
+      $("#salesTable tbody").on("keyup", '.discountVal', function() {
 
         var discPer = $(this).val();
         var $row = $(this).closest("tr");
         var itemPrice = parseFloat($row.find("td:nth-child(4)").text());
         var qty = parseFloat($row.find(".qtyTable").val());
         // alert(qty);
-        
+
         //alert(discPer);
         // var $row = $(this).closest("tr"); // Find the row
-        var total = itemPrice*qty;
+        var total = itemPrice * qty;
         //alert(total);
-        var discTotal = (total - total*discPer/100).toFixed(2);
+        var discTotal = (total - total * discPer / 100).toFixed(2);
         // alert(discTotal);
         $row.find("td:nth-child(7)").text(discTotal);
         // $row.find(".discountVal").text(discPer+"%");
         updateSubTol();
+        updateAmountDue();
       });
 
-      $("#salesTable tbody").on("keyup", '.qtyTable', function() {      
+      $("#salesTable tbody").on("keyup", '.qtyTable', function() {
 
-      
+
         var $row = $(this).closest("tr");
         var qty = parseFloat($row.find(".qtyTable").val());
         var itemPrice = parseFloat($row.find("td:nth-child(4)").text());
-        var total = (itemPrice*qty).toFixed(2);
+        var total = (itemPrice * qty).toFixed(2);
         // alert(total);
         $row.find(".subTol").text(total);
-        updateSubTol()
+        updateSubTol();
+        updateAmountDue();
+      });
+
+      $("#salesTable tfoot").on("keyup", '.amountPaid', function() {
+        // alert("gg");
+        var balance = 0;
+        var amountPaid = $(".amountPaid").val();
+        var subTotal = parseFloat($(".subTotal").text());
+        subTotal = subTotal.toFixed(2);
+        // alert(subTotal);
+        balance = subTotal - amountPaid;
+        balance = balance.toFixed(2);
+        $(".balanceVal").text(balance);
+        $(".amountPaid").text(subTotal);
       });
       $('#salesTable tbody').on('click', '.fa-trash-o', function() {
 
@@ -730,6 +808,8 @@ getItemPrice()
               'success'
             );
             $(this).closest('tr').remove();
+            updateSubTol();
+            updateAmountDue();
           }
         })
 
@@ -738,6 +818,7 @@ getItemPrice()
       $(".fa-trash-o").click(function() {
         myTable.row(".selected").remove().draw(false);
         alert('sda');
+
         // myTable.row('.selected').remove().draw( false );
       });
 
@@ -885,7 +966,22 @@ getItemPrice()
 
       // if($("#purchaseform").valid()) {
       d = new FormData($("#salesform")[0]);
-      alert(d);
+      //alert(d);
+      var subTol = $("#subTotal").text();
+      var balanceVal = $("#balanceVal").text();    
+      var balanceValFloat = parseFloat(balanceVal);
+      var amountPaid = $('#amountPaid').val();
+      var cusid = $('#salesCustomer').val();
+      var salesDate = $('#salesDate').val();
+      
+      
+      alert(subTol);
+        
+        d.append("cusid",cusid); 
+        d.append("subTol",subTol); 
+        d.append("amountPaid",amountPaid); 
+        d.append("salesDate",salesDate); 
+        d.append("balanceVal",balanceValFloat); 
       $.ajax({
         url: "../controllers/controller_sales.php?type=save_stock",
         method: "POST",
@@ -900,26 +996,7 @@ getItemPrice()
           // $("#poid").append(data);
           var salesId = jQuery.parseJSON(data);
 
-          function storeTblValues() {
-            var TableData = new Array();
-
-            $('#salesTableBody tr').each(function(row, tr) {
-              TableData[row] = {
-                "item_id": $(tr).find('td:eq(0)').text(),
-                "item_name": $(tr).find('td:eq(1)').text(),
-                "item_batch": $(tr).find('td:eq(2)').text(),
-                "item_qty": $(tr).find('td:eq(3)').text(),
-                "salesId": salesId
-              }
-              //   poid    
-              // TableData.push("Kiwi");
-            });
-            // TableData.shift();  // first row will be empty - so remove
-
-            return TableData;
-          }
-
-          TableData = storeTblValues()
+          TableData = storeTblValues(salesId)
           TableData = JSON.stringify(TableData);
           alert(TableData);
           $.ajax({
@@ -928,7 +1005,7 @@ getItemPrice()
             data: "pTableData=" + TableData,
             success: function(msg) {
               alert(msg);
-              $('#salesForm')[0].reset();
+              // $('#salesform').reset();
               location.reload(true);
 
             }

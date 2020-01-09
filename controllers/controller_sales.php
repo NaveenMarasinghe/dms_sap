@@ -31,6 +31,9 @@ if (isset($_GET["type"])) {
 		case "calculate_linetotal":
 			calculate_linetotal();
 			break;
+		case "loadSalesman";
+			loadSalesman();
+			break;
 	}
 }
 function get_route()
@@ -206,11 +209,29 @@ function save_stock()
 	}
 
 	$salesDate = $_POST["salesDate"];
-	$salesCustomer = $_POST["salesCustomer"];
+	$subTol = $_POST["subTol"];
+	$cusid = $_POST["cusid"];
+	$balanceVal = $_POST["balanceVal"];
+	$amountPaid = $_POST["amountPaid"];
 
-	$sql2 = "INSERT INTO tbl_sales_order(sales_id,sales_date,cus_id)
-		VALUES('$salesId','$salesDate','$salesCustomer');";
+	$sql2 = "INSERT INTO tbl_sales_order(sales_id,sales_date,cus_id,sales_total,sales_paid,sales_balance)
+		VALUES('$salesId','$salesDate','$cusid','$subTol','$amountPaid','$balanceVal');";
 
+	$salesBalanceSql = "SELECT sales_balance FROM tbl_customers WHERE cus_id='$cusid'";
+
+			$balanceResult=$con->query($salesBalanceSql);
+			$nor=$balanceResult->num_rows;
+
+			if($nor>0){
+				$balanceRec=$balanceResult->fetch_assoc();
+				$balanceNow=$balanceRec["sales_balance"];
+				$balanceVal=$balanceVal+$balanceNow;
+				$balanceUpdate="UPDATE tbl_customers
+							SET sales_balance = '$balanceVal'
+							WHERE cus_id = '$cusid';";
+				$con->query($balanceUpdate);		
+			}
+			
 	$result2 = $con->query($sql2);
 	if ($con->error) {
 		echo ("SQL error " . $con->error);
@@ -238,17 +259,17 @@ function salesDetailsSave()
 
 
 	for ($x = 0; $x < $tblDataLength; $x++) {
-		$item_id = $tableData[$x]['item_id'];
-		$item_name = $tableData[$x]['item_name'];
-		$item_batch = $tableData[$x]['item_batch'];
+		$batch_id = $tableData[$x]['batch_id'];
+		$item_price = $tableData[$x]['item_price'];
+		$item_dis = $tableData[$x]['item_dis'];
 		$item_qty = $tableData[$x]['item_qty'];
 		$salesId = $tableData[$x]['salesId'];
 
 		$db = new Connection();
 		$con = $db->db_con();
 
-		$sql2 = "INSERT INTO tbl_sales_details(sales_id,item_id,sales_qty)
-			VALUES('$salesId','$item_id','$item_qty');";
+		$sql2 = "INSERT INTO tbl_sales_details(sales_id,batch_id,item_price,sales_qty,sale_disrate)
+			VALUES('$salesId','$batch_id','$item_price','$item_qty','$item_dis');";
 
 		// $result=$con->query($sql);
 		$result2 = $con->query($sql2);
@@ -316,6 +337,32 @@ function calculate_linetotal(){
 		$rec = $result->fetch_assoc();
 		$line_tot = $txtOrdDtQty * $rec["item_mrp"];
 		echo json_encode($line_tot);
+	}
+	$con->close();
+}
+
+function loadSalesman(){
+	$schedate = $_POST["schedate"];
+	
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT DISTINCT usr.emp_fname, usr.emp_lname, usr.emp_id FROM tbl_user_details usr, tbl_route_sche rt where rt.route_date<>'$schedate' and rt.salesman=usr.emp_id";
+
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	//alert('func');
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("empty");
+	} else {
+		//fetch all the records
+		while ($rec = $result->fetch_assoc()) {
+			//merge province ID and name with HTML
+			echo ("<option value='" . $rec["emp_id"] . "'>" . $rec["emp_fname"] ." ".$rec["emp_lname"]. "</option>");
+		}
 	}
 	$con->close();
 }

@@ -209,7 +209,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label for="exampleInputEmail1">Vehicle</label>
-												<select name="selectSupplier" id="selectSupplier" class="form-control selcet-filter">
+												<select name="selectVehicle" id="selectVehicle" class="form-control selcet-filter">
 													<option value="0">--Select Vehicle--</option>
 												</select>
 											</div>
@@ -217,7 +217,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label for="exampleInputEmail1">Driver</label>
-												<select name="selectSupplier" id="selectSupplier" class="form-control selcet-filter">
+												<select name="selectDriver" id="selectDriver" class="form-control selcet-filter">
 													<option value="0">--Select Driver--</option>
 												</select>
 											</div>
@@ -225,7 +225,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label for="exampleInputEmail1">Salesman</label>
-												<select name="selectSupplier" id="selectSupplier" class="form-control selcet-filter">
+												<select name="selectSalesman" id="selectSalesman" class="form-control selcet-filter">
 													<option value="0">--Select Salesman--</option>
 												</select>
 											</div>
@@ -482,6 +482,50 @@
 				});
 
 		});
+
+		$('#rtscheDate').change(function() {
+			var rtscheDate = $('#rtscheDate').val(); // get option's value
+			// var procatval = $('#rtscheProCat').val();
+			//alert(proid);
+			//change product name select box options
+			$.post("../controllers/controller_routeSche.php?type=selectSalesman", {
+				rtscheDate: rtscheDate
+				},
+				function(data, status) {
+					if (status == "success") {
+						//alert(data);
+						$("#selectSalesman").empty();
+						$("#selectSalesman").append("<option value=''>--Select Salesman--</option>");
+						$("#selectSalesman").append(data);
+					}
+				});
+
+				$.post("../controllers/controller_routeSche.php?type=selectVehicle", {
+				rtscheDate: rtscheDate
+				},
+				function(data, status) {
+					if (status == "success") {
+						//alert(data);
+						$("#selectVehicle").empty();
+						$("#selectVehicle").append("<option value=''>--Select Vehicle--</option>");
+						$("#selectVehicle").append(data);
+					}
+				});
+
+				$.post("../controllers/controller_routeSche.php?type=selectDriver", {
+				rtscheDate: rtscheDate
+				},
+				function(data, status) {
+					if (status == "success") {
+						//alert(data);
+						$("#selectDriver").empty();
+						$("#selectDriver").append("<option value=''>--Select Driver--</option>");
+						$("#selectDriver").append(data);
+					}
+				});
+
+		});
+
 		var rtscheTable2 = $('#rtscheTable').DataTable({
 			aaSorting: []
 		});
