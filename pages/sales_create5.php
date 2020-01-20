@@ -23,336 +23,267 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-6">
-                            <form id="salesform" method="post">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                            <h4 class="page-header"><b>Select Products</b></h4>
-                                    </div>
-                            <div class="col-xs-8">
-                                    <div class="col-xs-2">
-                                        <div class="form-group">
-                                        <button type='button' class='btn btn-primary' id='salesChangeCus'>Change Customer</button>
+                                <form id="salesForm" method="post">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <h4 class="page-header"><b>Select Products</b></h4>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <div class="col-xs-12" id='salesChangeCusDiv'>
+                                                <div class="form-group">
+                                                    <button type='button' class='btn btn-primary' id='salesChangeCus' style="float: right;">Change Customer</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12" id='salesSelectPrdDiv'>
+                                                <div class="form-group">
+                                                    <button type='button' class='btn btn-primary' id='salesSelectPrd' style="float: right;">Add Products</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12" id='createSales'>
+                                                <div class="form-group">
+                                                    <button type='button' class='btn btn-primary' id='createSales' style="float: right;">Create Sales</button>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
-                                        <div class="form-group">
-                                        <button type='button' class='btn btn-primary' id='salesSelectPrd'>Select Products</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
 
-                            <div id="selectCustomer" style="display: block;">
-                            <div class="row">
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="salesid">Sales ID</label>
-                                        <input readonly type="text" class="form-control" id="salesid" name="salesid">
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="salesDate">Date</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar bigger-110"></i>
-                                            </span>
-                                            <input class="form-control date-picker" id="salesDate" name="salesDate" readonly type="text" data-date-format="dd-mm-yyyy" />
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>  
-                            
-                            <div class="row">
-                                <div class="col-md-4 form-group">
-                                    <div>
-                                        <label for="salesRoute">Route</label>
-                                        <select class="form-control selcet-filter select2gg" id="salesRoute" name="salesRoute">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 form-group">
-                                    <div>
-                                        <label for="salesCustomer">Customer</label>
-                                        <select class="form-control selcet-filter select2gg" id="salesCustomer" name="salesCustomer">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <div>
-                                        <label for="salesSupplier">Supplier</label>
-                                        <select class="form-control selcet-filter select2gg" id="salesSupplier" name="salesSupplier">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div id="selectProducts" style="display: none;">
-                            <div class="row">
-                            <div class="col-md-4 form-group">
-                                    <div>
-                                        <label for="salesCustomer">Customer</label>
-                                        <select class="form-control selcet-filter select2gg" id="salesCustomer" name="salesCustomer">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <div>
-                                        <label for="salesCustomer">Customer</label>
-                                        <select class="form-control selcet-filter select2gg" id="salesCustomer" name="salesCustomer">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <div>
-                                        <label for="salesCustomer">Customer</label>
-                                        <select class="form-control selcet-filter select2gg" id="salesCustomer" name="salesCustomer">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="salesProductCat">Product Category</label>
-                                        <select class="form-control selcet-filter select2gg" id="salesProductCat" name="salesProductCat">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div> -->
-
-                                <!-- <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="salesProductName">Product Name</label>
-                                        <select class="form-control selcet-filter select2gg" id="salesProductName" name="salesProductName">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="salesBatch">Batch</label>
-                                        <select class="form-control selcet-filter select2gg" id="salesBatch" name="salesBatch">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>                                 -->
-
-                            </div>
-                            <div class="row">
-
-                                <div class="col-md-2 form-group">
-                                    <div>
-                                        <div class="form-group">
-                                            <label for="itemPrice">Item Price</label>
-                                            <input type="text" class="form-control" name="itemPrice" id="itemPrice">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2 form-group">
-                                    <div>
-                                        <label for="qty">Qty</label>
-                                        <input type="text" class="form-control" name="qty" id="qty">
-
-                                    </div>
-                                </div>
-
-                                
-                                <div class="col-md-2 form-group">
-                                    <div>
-                                        <label for="grossTotal">Gross Total</label>
-                                        <input type="text" class="form-control" name="grossTotal" id="grossTotal">
-
-                                    </div>
-                                </div>
-                                <div class="col-xs-2">
-                                    <div class="col-xs-2">
-                                        <div class="form-group">
-                                        <label for="salesProductAdd">&nbsp;</label>
-                                            <button type='button' class='btn btn-primary' id='salesProductAdd'>Add Items</button>
-                                        </div>
-                                    </div>
-                                </div>                                
-
-                            </div>
-                            </div>
-                            <div class="row">
-
-
-                            </div>                            
-                            </div>
-                            <div class="col-md-6">
-                            <h4 class="page-header"><b>Products Table</b></h4>
-
-                            <div class="row">
-                                <div class="col-xs-12">
-
-                                    <div class="form-group">
+                                    <div id="selectCustomer">
                                         <div class="row">
-                                            <div class="col-xs-12">
-                                                <!--                     <h3 class="header smaller lighter blue">jQuery dataTables</h3> -->
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="salesid">Sales ID</label>
+                                                    <input readonly type="text" class="form-control" id="salesid" name="salesid">
+                                                </div>
+                                            </div>
 
 
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="salesDate">Date</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar bigger-110"></i>
+                                                        </span>
+                                                        <input class="form-control date-picker" id="salesDate" name="salesDate" readonly type="text" data-date-format="dd-mm-yyyy" />
+                                                    </div>
+                                                </div>
+                                            </div>
 
 
-                                                <!-- div.table-responsive -->
+                                        </div>
 
-                                                <!-- div.dataTables_borderWrap -->
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
                                                 <div>
-                                                    <table id="salesTable" class="table table-striped table-bordered table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <!--                             <th class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </th> -->
-                                                                <th style="width:10%"></th>
-                                                                <th style="width:10%">Batch ID</th>
-                                                                <th style="width:300%">Product Name</th>
-                                                                <th style="width:10%">Item Price</th>
-                                                                <th style="width:10%">Quantity</th>
-                                                                <th style="width:15%">Discount %</th>
-                                                                <th style="width:15%">Total</th>
+                                                    <label for="salesRoute" style="display:block;">Route</label>
+                                                    <select class="form-control selcet-filter select2gg" id="salesRoute" name="salesRoute" style="width:100%;">
+                                                        <option></option>
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                                                            </tr>
-                                                        </thead>
-
-                                                        <tbody id="salesTableBody">
-
-                                                            <!-- <tr class="selected"> -->
-                                                            <!--                             <td class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </td> -->
-
-                                                            <!--                             <td>GG</td>
-                            <td>GoodGame</td>
-                            <td class="hidden-480">30</td>
-
-                            <td>
-                              <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="blue" href="#">
-                                  <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                </a>
-
-                                <a class="green" href="#">
-                                  <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                </a>
-
-                                <a class="red" href="#">
-                                  <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                </a>
-                              </div>
-
-                            </td>
-                          </tr> -->
-                                                        </tbody>
-                                                        <tfoot>
-                                                            <tr>
-
-                                                                <td colspan="5" class="blank"> </td>
-                                                                <td colspan="1">Sub Total</td>
-                                                                <td class="subTotal" id="subTotal">
-                                                                    0.00
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-
-                                                                <td colspan="5" class="blank"> </td>
-                                                                <td colspan="1">Amount Paid</td>
-                                                                <td>
-                                                                    <div id="total"><input class="amountPaid" id="amountPaid" style="border:0px; width:50%" value="" /></div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-
-                                                                <td colspan="5" class="blank"> </td>
-                                                                <td colspan="1">Balance due</td>
-                                                                <td class="balanceVal" id="balanceVal">
-                                                                    0.00
-                                                                </td>
-                                                            </tr>
-                                                        </tfoot>
-                                                    </table>
+                                            <div class="col-md-4 form-group">
+                                                <div>
+                                                    <label for="salesCustomer" style="display:block;">Customer</label>
+                                                    <select class="form-control selcet-filter select2gg" id="salesCustomer" name="salesCustomer" style="width:100%;">
+                                                        <option></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <div>
+                                                    <label for="salesSupplier" style="display:block;">Supplier</label>
+                                                    <select class="form-control selcet-filter select2gg" id="salesSupplier" name="salesSupplier" style="width:100%;">
+                                                        <option></option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div id="selectProducts">
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <div>
+                                                    <label for="salesProductCat" style="display:block;">Product Category</label>
+                                                    <select class="form-control selcet-filter select2gg" id="salesProductCat" name="salesProductCat" style="width:100%;">
+                                                        <option></option>
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                                        <!-- <div id="grid-pager"></div> -->
+                                            <div class="col-md-4 form-group">
+                                                <div>
+                                                    <label for="salesProductName" style="display:block;">Product Name</label>
+                                                    <select class="form-control selcet-filter select2gg" id="salesProductName" name="salesProductName" style="width:100%;">
+                                                        <option></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <div>
+                                                    <label for="salesBatch" style="display:block;">Product Batch</label>
+                                                    <select class="form-control selcet-filter select2gg" id="salesBatch" name="salesBatch" style="width:100%;">
+                                                        <option></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-md-2 form-group">
+                                                <div>
+                                                    <div class="form-group">
+                                                        <label for="itemPrice">Item Price</label>
+                                                        <input type="text" readonly class="form-control" name="itemPrice" id="itemPrice">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2 form-group">
+                                                <div>
+                                                    <label for="qty">Qty</label>
+                                                    <input type="text" class="form-control" name="qty" id="qty">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 form-group">
+                                                <div>
+                                                    <label for="disVal">Discount %</label>
+                                                    <input type="text" class="form-control" name="disVal" id="disVal">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2 form-group">
+                                                <div>
+                                                    <label for="grossTotal">Gross Total</label>
+                                                    <input type="text" readonly class="form-control" name="grossTotal" id="grossTotal">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <div class="col-xs-2">
+                                                    <div class="form-group">
+                                                        <label for="salesProductAdd">&nbsp;</label>
+                                                        <button type='button' class='btn btn-primary' id='salesProductAdd'>Add Items</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="page-header"><b>Products Table</b></h4>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <!--                     <h3 class="header smaller lighter blue">jQuery dataTables</h3> -->
+
+
+
+
+                                                    <!-- div.table-responsive -->
+
+                                                    <!-- div.dataTables_borderWrap -->
+                                                    <div>
+                                                        <table id="salesTable" class="table table-striped table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    <th style="width:10%"></th>
+                                                                    <th style="width:10%">List No</th>
+                                                                    <th style="width:30%">Product Name</th>
+                                                                    <th style="width:10%">Item Price</th>
+                                                                    <th style="width:10%">Quantity</th>
+                                                                    <th style="width:15%">Discount %</th>
+                                                                    <th style="width:15%">Total</th>
+
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody id="salesTableBody">
+
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+
+                                                                    <td colspan="5" class="blank"> </td>
+                                                                    <td colspan="1">Sub Total</td>
+                                                                    <td class="subTotal" id="subTotal">
+                                                                        0.00
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td colspan="5" class="blank"> </td>
+                                                                    <td colspan="1">Amount Paid</td>
+                                                                    <td>
+                                                                        <div id="total"><input class="amountPaid" id="amountPaid" style="border:0px; width:50%" value="" /></div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td colspan="5" class="blank"> </td>
+                                                                    <td colspan="1">Balance due</td>
+                                                                    <td class="balanceVal" id="balanceVal">
+                                                                        0.00
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div id="grid-pager"></div> -->
+                                        </div>
                                     </div>
                                 </div>
-                            </div>                            
+                                <div>
+                                <div class="col-md-4">
+
+                                
+                                <button type="button" class="btn btn-danger btn-block btn-flat" id="payment">Cancel</button>   
+                                </div>
+                                <div class="col-md-4">
+                                <button type="button" class="btn btn-warning btn-block btn-flat" id="payment">Hold</button>
+                                </div>
+                                <div class="col-md-4">
+                                <button type="button" class="btn btn-success btn-block btn-flat" id="payment">Submit</button>
+                                </div>
+                                </div>
+                                <!-- <div class="clearfix form-actions">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <div class="pull-right">
+
+
+                                            &nbsp; &nbsp; &nbsp;
+                                            <button class="btn btn-info" type="button" id="salessave">
+                                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div> -->
                             </div>
                         </div>
 
-                        
-
-
-  
-
-                            <!--                     <table id="product_table" class="table table-bordered table-striped">
-                        <thead>
-                          <tr>
-                            <th>Product Name</th>
-                            <th>Quantity</th>                  
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody id="ttt">
-                          <tr>
-                            <td>Test1</td>
-                            <td>Test1</td>
-                            <td>Test1</td>
-                          </tr>
-                        </tbody>
-                      </table> -->
-                            <!-- 
-<div class="row">
-              <div class="col-sm-3 pull-right" style="margin-right: 50px;">
-  <div class="col-sm-6"><h4>Sub Total :</h4></div><div class="col-sm-6"><h4 class="subTotal"></h4></div>
-  <div class="col-sm-6"><h4>Amount paid :</h4></div><div class="col-sm-6"><h4><input class="amountPaid" style='border:0px' value="0.00"/></h4></div>
-  <div class="col-sm-6"><h4>Balance Due :</h4></div><div class="col-sm-6"><h4 class="balance">0.00</h4></div>
-              </div>
-
-          </div> -->
-
-                            <div class="clearfix form-actions">
-                                <div class="col-md-offset-3 col-md-9">
-                                    <div class="pull-right">
-
-
-                                        &nbsp; &nbsp; &nbsp;
-                                        <button class="btn btn-info" type="button" id="salessave">
-                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                            Submit
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </form>
 
-                        <!--             <div class="col-md-offset-10 col-md-2">
-              <div class="pull-right">
-              <button type="button" class="btn btn-success" id="pobtnSave">Create</button>
-              <button type="button" class="btn btn-primary" id="pobtncancel" onclick="$('#frmStudntEdit')[0].reset();">Cancel</button>
-            </div>
-            </div> -->
                     </div>
                 </div>
             </div>
@@ -408,10 +339,73 @@
             });
     }
 
+    function calGrossTol() {
+        var itemPrice = $("#itemPrice").val();
+        var disVal = parseInt($("#disVal").val());
+        var qty = $("#qty").val();
+
+        var grossTol = (itemPrice * qty) - (itemPrice * qty) * disVal / 100;
+        grossTol = grossTol.toFixed(2);
+        $("#grossTotal").val(grossTol);
+
+    }
+
+    function updateSubTol() {
+
+        // $("#salesTable tbody").on("change", '.discountVal', function() { 
+        var $row = $(this).closest("tr");
+        var subTotal = 0;
+
+        $('#salesTableBody tr').each(function(row, tr) {
+            var $row = $(this).closest("tr");
+            // var rows = $("#invoice-table tbody").children('tr');
+            var rowTotalVal = parseFloat($row.find("td:nth-child(7)").text());
+            rowTotalVal = rowTotalVal;
+            subTotal = subTotal + rowTotalVal;
+            // alert(subTotal);
+
+        });
+        $("#subTotal").text(subTotal.toFixed(2));
+
+        // });
+    }
+
+    function updateAmountDue() {
+        // alert("gg");
+        // var balance = 0;
+        var amountPaid = $(".amountPaid").val();
+        var subTotal = parseFloat($(".subTotal").text());
+        subTotal = subTotal.toFixed(2);
+        // alert(subTotal);
+        balance = subTotal - amountPaid;
+        balance = balance.toFixed(2);
+        $(".balanceVal").text(balance);
+        $(".amountPaid").text(subTotal);
+    }
+
+    function updateTableRow() {
+        $.post("../controllers/controller_sales.php?type=updateTableRow", {
+                salesid: salesid,
+                listNo: listNo,
+                qty: qty,
+                dis: dis,
+                grossTotal: grossTotal
+            },
+            function(data, status) {
+                if (status == "success") {
+                    alert('gg');
+
+                }
+            });
+    }
+
     $(document).ready(function() {
 
-        // $('#salesChangeCus').hide();
-        // $('#selectProducts').hide();
+        // $('#salesChangeCusDiv').hide();
+        $('#selectProducts').hide();
+        $('#salesChangeCusDiv').hide();
+        $('#salesSelectPrdDiv').hide();
+        $("#salesid").val("");
 
         $.noConflict();
         // load supplier select box
@@ -437,18 +431,26 @@
             });
     });
 
-    $('#salesSelectPrd').click(function(){
+    $('#createSales').click(function() {
         $('#selectCustomer').hide();
-        $('#salesSelectPrd').hide();
+        $('#createSales').hide();
         $('#selectProducts').show();
-        $('#salesChangeCus').show();
+        $('#salesChangeCusDiv').show();
     });
 
-    $('#salesChangeCus').click(function(){
+    $('#salesChangeCus').click(function() {
         $('#selectProducts').hide();
-        $('#salesChangeCus').hide();
+        $('#salesChangeCusDiv').hide();
         $('#selectCustomer').show();
-        $('#salesSelectPrd').show();
+        $('#salesSelectPrdDiv').show();
+
+    });
+
+    $('#salesSelectPrd').click(function() {
+        $('#selectCustomer').hide();
+        $('#salesSelectPrdDiv').hide();
+        $('#selectProducts').show();
+        $('#salesChangeCusDiv').show();
     });
 
     $('#salesRoute').change(function() {
@@ -463,9 +465,7 @@
                 if (status == "success") {
                     // alert(data);
                     $("#salesCustomer").empty();
-
                     $("#salesCustomer").append("<option value=''>--Select Product Category--</option>");
-
                     $("#salesCustomer").append(data);
                     // $("#poSupplier").attr("disabled", "disabled");
                 }
@@ -486,9 +486,7 @@
                 if (status == "success") {
                     //alert(data);
                     $("#salesProductCat").empty();
-
                     $("#salesProductCat").append("<option value=''>--Select Product Category--</option>");
-
                     $("#salesProductCat").append(data);
                     // $("#poSupplier").attr("disabled", "disabled");
                 }
@@ -554,61 +552,41 @@
 
     $.noConflict();
     jQuery(function($) {
-        //   $('#purchaseform').validate({
-        //   errorElement: 'div',
-        //   errorClass: 'help-block',
-        //   focusInvalid: false,
-        //   ignore: "",
-        //   rules: {
-        //     qty: {
-        //       required: true,
-        //       number: true
-        //     },
-        //     poProductList: {
-        //       required: true
-        //     },
-        //     poProductCat: {
-        //       required: false
-        //     }
-        //   },
 
-        //   messages: {
-        //     qty: {
-        //     number: "Please select a supplier.",
-        //     required: "Please enter valid quantity."
-        //   },
-        //     poProductList: "Please select a product"
-        //   },
+        $("#createSales").click(function() {
+            d = new FormData($("#salesForm")[0]);
+            $.ajax({
+                url: "../controllers/controller_sales.php?type=salesCreate",
+                method: "post",
+                data: d,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    var salesId = data;
+                    $("#salesid").val(data);
+                    $.post("../controllers/controller_sales.php?type=salesCreateTable", {
+                            salesId: salesId
+                        },
+                        function(data, status) {
+                            if (status == "success") {
+                                $("#salesTable tbody").empty();
+                                $("#salesTable tbody").append(data);
+                                updateSubTol();
+                                updateAmountDue();
+                            }
+                        });
 
+                }
+            });
+        });
 
-        //   highlight: function (e) {
-        //     $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-        //   },
-
-        //   success: function (e) {
-        //     $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
-        //     $(e).remove();
-        //   },
-
-        //   errorPlacement: function (error, element) {
-        //     if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
-        //       var controls = element.closest('div[class*="col-"]');
-        //       if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
-        //       else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-        //     }
-        //     else if(element.is('.select2')) {
-        //       error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
-        //     }
-        //     else if(element.is('.chosen-select')) {
-        //       error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-        //     }
-        //     else error.insertAfter(element.parent());
-        //   },
-
-        // });
         $(document).ready(function() {
 
             $(".amountPaid").val("0.00");
+            $("#itemPrice").val("0.00");
+            $("#grossTotal").val("0.00");
+            $("#qty").val("0");
+            $("#disVal").val("0%");
             $(".balanceVal").text("0.00");
             // $('.date-picker').datepicker('setDate', 'today');
             $('.date-picker').datepicker({
@@ -661,86 +639,29 @@
             //   "info": false
             // });
 
-
-
-
-
-            $("#qty").change(function() {
+            $("#qty").keyup(function() {
                 getItemPrice();
+                calGrossTol();
             });
 
-            function updateSubTol() {
-
-                // $("#salesTable tbody").on("change", '.discountVal', function() { 
-                var $row = $(this).closest("tr");
-                var subTotal = 0;
-
-                $('#salesTableBody tr').each(function(row, tr) {
-                    var $row = $(this).closest("tr");
-                    // var rows = $("#invoice-table tbody").children('tr');
-                    var rowTotalVal = parseFloat($row.find(".subTol").text());
-                    rowTotalVal = rowTotalVal;
-                    subTotal = subTotal + rowTotalVal;
-                    // alert(subTotal);
-                    // totalVal = totalVal.toFixed(2);
-
-                    // TableData[row] = {
-                    //   "item_id": $(tr).find('td:eq(0)').text(),
-                    //   "item_name": $(tr).find('td:eq(1)').text(),
-                    //   "item_batch": $(tr).find('td:eq(2)').text(),
-                    //   "item_qty": $(tr).find('td:eq(3)').text(),
-                    //   "salesId": salesId
-                    // }
-                    //   poid    
-                    // TableData.push("Kiwi");
-                });
-                $(".subTotal").text(subTotal.toFixed(2));
-
-                // });
-            }
-
-            function updateAmountDue() {
-                // alert("gg");
-                // var balance = 0;
-                var amountPaid = $(".amountPaid").val();
-                var subTotal = parseFloat($(".subTotal").text());
-                subTotal = subTotal.toFixed(2);
-                // alert(subTotal);
-                balance = subTotal - amountPaid;
-                balance = balance.toFixed(2);
-                $(".balanceVal").text(balance);
-                $(".amountPaid").text(subTotal);
-            }
+            $("#disVal").keyup(function() {
+                calGrossTol();
+            });
 
             $('#salesProductAdd').on('click', function() {
 
                 var batch = $("#salesBatch option:selected").text();
                 var proid = $('#salesProductName').val();
 
-                $.post("../controllers/controller_sales.php?type=get_itemPrice", {
-                        proid: proid,
-                        batch: batch
-                    },
-                    function(data, status) {
-                        if (status == "success") {
-                            //alert(data);
 
-                            // $('#item_cost').val(data);
-                            $('#itemPrice').val(data);
-                            // var item_mrp = data;
-                            //   $('.select2gg').select2({
-                            //   placeholder: "Select a Product",
-                            //   allowClear: true
-                            // });
-                        }
-                    });
 
                 var proname = $("#salesProductName option:selected").text();
                 var qnty = $('#qty').val();
-                var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div>"
+                var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button></div>"
                 var item_cost = $('#itemPrice').val();
                 // alert(item_cost); 
-                var discount = parseInt($('.discountVal').text());
+                var discount = parseInt($('#disVal').val());
+                var subTotal = parseInt($("#grossTotal").val());
                 var total = item_cost * qnty;
                 var discTol = total;
                 var subTol = discTol.toFixed(2);
@@ -752,11 +673,36 @@
                 // if(batch!=""){
                 // alert(item_cost);
                 // $("#salesTable").DataTable().destroy();
-                $("#salesTable tbody").append(tablerow);
+                // $("#salesTable tbody").append(tablerow);
                 // $("#salesTable").DataTable();
-                updateSubTol();
-                updateAmountDue();
 
+                // updateAmountDue();
+                var salesId = $("#salesid").val();
+                $.post("../controllers/controller_sales.php?type=salesAddRow", {
+                        proname: proname,
+                        item_cost: item_cost,
+                        qnty: qnty,
+                        discount: discount,
+                        subTotal: subTotal,
+                        salesId: salesId,
+                        batch: batch
+                    },
+                    function(data, status) {
+                        if (status == "success") {
+                            var salesId = $("#salesid").val();
+                            $.post("../controllers/controller_sales.php?type=salesCreateTable", {
+                                    salesId: salesId
+                                },
+                                function(data, status) {
+                                    if (status == "success") {
+                                        $("#salesTable tbody").empty();
+                                        $("#salesTable tbody").append(data);
+                                        updateSubTol();
+                                        updateAmountDue();
+                                    }
+                                });
+                        }
+                    });
                 // } else{
                 //   Swal.fire({
                 //     icon: 'error',
@@ -765,10 +711,15 @@
 
                 //   });
                 // }
+                // $("#subTotal").text("0");
 
                 $("#salesProductName").empty();
-                $("#qty").val("");
+                $("#itemPrice").val("0.00");
+                $("#grossTotal").val("0.00");
+                $("#qty").val("0");
+                $("#disVal").val("0%");
                 $("#salesBatch").empty();
+
                 $('.select2gg').select2({
                     placeholder: "--Select a Product--",
                     allowClear: true
@@ -814,37 +765,69 @@
 
 
 
-            $("#salesTable tbody").on("keyup", '.discountVal', function() {
-
-                var discPer = $(this).val();
+            $("#salesTable tbody").on("keyup", '.tableDis', function() {
+                var salesid = $("#salesid").val();
+                var dis = $(this).val();
                 var $row = $(this).closest("tr");
                 var itemPrice = parseFloat($row.find("td:nth-child(4)").text());
-                var qty = parseFloat($row.find(".qtyTable").val());
+                var listNo = parseFloat($row.find("td:nth-child(2)").text());
+                var qty = parseFloat($row.find(".tableQty").val());
                 // alert(qty);
 
                 //alert(discPer);
                 // var $row = $(this).closest("tr"); // Find the row
                 var total = itemPrice * qty;
                 //alert(total);
-                var discTotal = (total - total * discPer / 100).toFixed(2);
+                var grossTotal = (total - total * dis / 100).toFixed(2);
                 // alert(discTotal);
-                $row.find("td:nth-child(7)").text(discTotal);
+                $row.find("td:nth-child(7)").text(grossTotal);
                 // $row.find(".discountVal").text(discPer+"%");
                 updateSubTol();
                 updateAmountDue();
+                // updateTableRow();
+                $.post("../controllers/controller_sales.php?type=updateTableRow", {
+                        salesid: salesid,
+                        listNo: listNo,
+                        qty: qty,
+                        dis: dis,
+                        grossTotal: grossTotal
+                    },
+                    function(data, status) {
+                        if (status == "success") {
+
+
+                        }
+                    });
             });
 
-            $("#salesTable tbody").on("keyup", '.qtyTable', function() {
 
+            $("#salesTable tbody").on("keyup", '.tableQty', function() {
 
                 var $row = $(this).closest("tr");
-                var qty = parseFloat($row.find(".qtyTable").val());
+                var salesid = $("#salesid").val();
+                var qty = parseFloat($row.find(".tableQty").val());
+                var dis = parseFloat($row.find(".tableDis").val());
                 var itemPrice = parseFloat($row.find("td:nth-child(4)").text());
+                var listNo = parseFloat($row.find("td:nth-child(2)").text());
                 var total = (itemPrice * qty).toFixed(2);
-                // alert(total);
-                $row.find(".subTol").text(total);
+                var grossTotal = (total - total * dis / 100).toFixed(2);
+                $row.find("td:nth-child(7)").text(grossTotal);
                 updateSubTol();
                 updateAmountDue();
+                // updateTableRow();
+                $.post("../controllers/controller_sales.php?type=updateTableRow", {
+                        salesid: salesid,
+                        listNo: listNo,
+                        qty: qty,
+                        dis: dis,
+                        grossTotal: grossTotal
+                    },
+                    function(data, status) {
+                        if (status == "success") {
+
+
+                        }
+                    });
             });
 
             $("#salesTable tfoot").on("keyup", '.amountPaid', function() {
@@ -859,16 +842,17 @@
                 $(".balanceVal").text(balance);
                 $(".amountPaid").text(subTotal);
             });
-            $('#salesTable tbody').on('click', '.fa-trash-o', function() {
+            $('#salesTable tbody').on('click', '.fa-minus-circle', function() {
 
                 var btn = this;
 
                 var $row = $(this).closest("tr"); // Find the row
-                var proname = $row.find("td:nth-child(2)").text();
-                var proqty = $row.find("td:nth-child(4)").text();
+                var proname = $row.find("td:nth-child(3)").text();
+                var proqty = parseInt($row.find("td:nth-child(4)").text());
                 // alert(proqty);
                 // alert(proname);
-
+                var salesid = $('#salesid').val();
+                var listNo = parseInt($row.find("td:nth-child(2)").text());
                 Swal.fire({
                     title: 'Remove following items?',
                     text: proname + " - " + proqty + " units",
@@ -885,8 +869,30 @@
                             'success'
                         );
                         $(this).closest('tr').remove();
-                        updateSubTol();
-                        updateAmountDue();
+                        $.post("../controllers/controller_sales.php?type=deleteTableRow", {
+                                salesid: salesid,
+                                listNo: listNo
+                            },
+                            function(data, status) {
+                                if (status == "success") {}
+                            });
+                        $.post("../controllers/controller_sales.php?type=salesCreateTable", {
+                                salesId: salesid
+                            },
+                            function(data, status) {
+                                if (status == "success") {
+                                    $("#salesTable tbody").empty();
+                                    $("#salesTable tbody").append(data);
+                                    updateSubTol();
+                                    updateAmountDue();
+                                }
+                            });
+                    } else {
+                        Swal.fire(
+                            'Items not removed!',
+                            '',
+                            'info'
+                        );
                     }
                 })
 
@@ -903,7 +909,24 @@
                 var btn = this;
                 // alert("gg");
                 var $row = $(this).closest("tr"); // Find the row
-                var proname = $row.find("td:nth-child(3)").text();
+                var listNo = $row.attr("id");
+                var salesId = $("#salesid").text();
+                $.post("../controllers/controller_sales.php?type=getItemInfo", {
+                        listNo: listNo,
+                        salesId: salesId
+                    },
+                    function(data, status) {
+                        if (status == "success") {
+                            // alert(data);
+                            $("#salesProductName").empty();
+                            $("#salesProductName").append("<option></option>");
+                            $("#salesProductName").append(data);
+                            //   $('.select2gg').select2({
+                            //   placeholder: "Select a Product",
+                            //   allowClear: true
+                            // });
+                        }
+                    });
                 // bootbox.prompt("What is your name?", function(result) {
                 //   if (result === null) {
 
@@ -912,29 +935,29 @@
                 //   }
                 // });
 
-                const {
-                    value: newQty
-                } = Swal.fire({
-                    title: proname,
-                    input: 'text',
-                    inputPlaceholder: 'Change quantity',
-                    inputAttributes: {
-                        maxlength: 10,
-                        autocapitalize: 'off',
-                        autocorrect: 'off'
-                    }
-                }).then((newQty) => {
-                    var noval = "''";
-                    var newQty2 = newQty['value'];
-                    if (newQty2) {
-                        $row.find("td:nth-child(5)").empty();
-                        $row.find("td:nth-child(5)").append(newQty2);
-                        Swal.fire(`Quantity changed to: ${newQty2}`);
+                // const {
+                //     value: newQty
+                // } = Swal.fire({
+                //     title: proname,
+                //     input: 'text',
+                //     inputPlaceholder: 'Change quantity',
+                //     inputAttributes: {
+                //         maxlength: 10,
+                //         autocapitalize: 'off',
+                //         autocorrect: 'off'
+                //     }
+                // }).then((newQty) => {
+                //     var noval = "''";
+                //     var newQty2 = newQty['value'];
+                //     if (newQty2) {
+                //         $row.find("td:nth-child(5)").empty();
+                //         $row.find("td:nth-child(5)").append(newQty2);
+                //         Swal.fire(`Quantity changed to: ${newQty2}`);
 
-                        // alert(newQty2);
+                //         // alert(newQty2);
 
-                    }
-                });
+                //     }
+                // });
                 // myTable.row('.selected').remove().draw( false );
             });
             // // Automatically add a first row of data
@@ -1037,61 +1060,61 @@
 
     });
 
-    jQuery(function($) {
+    // jQuery(function($) {
 
-        $("#salessave").click(function() {
+    //     $("#salessave").click(function() {
 
-            // if($("#purchaseform").valid()) {
-            d = new FormData($("#salesform")[0]);
-            //alert(d);
-            var subTol = $("#subTotal").text();
-            var balanceVal = $("#balanceVal").text();
-            var balanceValFloat = parseFloat(balanceVal);
-            var amountPaid = $('#amountPaid').val();
-            var cusid = $('#salesCustomer').val();
-            var salesDate = $('#salesDate').val();
+    //         // if($("#purchaseform").valid()) {
+    //         d = new FormData($("#salesform")[0]);
+    //         //alert(d);
+    //         var subTol = $("#subTotal").text();
+    //         var balanceVal = $("#balanceVal").text();
+    //         var balanceValFloat = parseFloat(balanceVal);
+    //         var amountPaid = $('#amountPaid').val();
+    //         var cusid = $('#salesCustomer').val();
+    //         var salesDate = $('#salesDate').val();
 
 
-            alert(subTol);
+    //         alert(subTol);
 
-            d.append("cusid", cusid);
-            d.append("subTol", subTol);
-            d.append("amountPaid", amountPaid);
-            d.append("salesDate", salesDate);
-            d.append("balanceVal", balanceValFloat);
-            $.ajax({
-                url: "../controllers/controller_sales.php?type=save_stock",
-                method: "POST",
-                data: d,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    // $('#purchaseform')[0].reset();
-                    // location.reload(true);
-                    alert(data);
+    //         d.append("cusid", cusid);
+    //         d.append("subTol", subTol);
+    //         d.append("amountPaid", amountPaid);
+    //         d.append("salesDate", salesDate);
+    //         d.append("balanceVal", balanceValFloat);
+    //         $.ajax({
+    //             url: "../controllers/controller_sales.php?type=save_stock",
+    //             method: "POST",
+    //             data: d,
+    //             processData: false,
+    //             contentType: false,
+    //             success: function(data) {
+    //                 // $('#purchaseform')[0].reset();
+    //                 // location.reload(true);
+    //                 alert(data);
 
-                    // $("#poid").append(data);
-                    var salesId = jQuery.parseJSON(data);
+    //                 // $("#poid").append(data);
+    //                 var salesId = jQuery.parseJSON(data);
 
-                    TableData = storeTblValues(salesId)
-                    TableData = JSON.stringify(TableData);
-                    alert(TableData);
-                    $.ajax({
-                        type: "POST",
-                        url: "../controllers/controller_sales.php?type=salesDetailsSave",
-                        data: "pTableData=" + TableData,
-                        success: function(msg) {
-                            alert(msg);
-                            // $('#salesform').reset();
-                            location.reload(true);
+    //                 TableData = storeTblValues(salesId)
+    //                 TableData = JSON.stringify(TableData);
+    //                 alert(TableData);
+    //                 $.ajax({
+    //                     type: "POST",
+    //                     url: "../controllers/controller_sales.php?type=salesDetailsSave",
+    //                     data: "pTableData=" + TableData,
+    //                     success: function(msg) {
+    //                         alert(msg);
+    //                         // $('#salesform').reset();
+    //                         location.reload(true);
 
-                        }
-                    });
-                }
-            });
-            // }
-        });
-    });
+    //                     }
+    //                 });
+    //             }
+    //         });
+    //         // }
+    //     });
+    // });
 </script>
 
 

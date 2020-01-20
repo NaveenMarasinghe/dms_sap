@@ -25,6 +25,9 @@ if (isset($_GET["type"])) {
 		case "salesDetailsSave":
 			salesDetailsSave();
 			break;
+		case "salesCreate":
+			salesCreate();
+			break;			
 		case "get_itemPrice":
 			get_itemPrice();
 			break;
@@ -34,6 +37,19 @@ if (isset($_GET["type"])) {
 		case "loadSalesman";
 			loadSalesman();
 			break;
+		case "salesCreateTable";
+			salesCreateTable();
+			break;
+		case "salesAddRow"; 
+			salesAddRow();
+			break;
+		case "updateTableRow"; 
+			updateTableRow();
+			break;
+		case "deleteTableRow"; 
+			deleteTableRow();
+			break;
+	
 	}
 }
 function get_route()
@@ -366,4 +382,235 @@ function loadSalesman(){
 	}
 	$con->close();
 }
+
+function salesCreate(){
+
+	$db = new Connection();
+	$con = $db->db_con();
+
+	//query
+	$sql = "SELECT sales_id FROM tbl_sales_order ORDER BY sales_id DESC LIMIT 1;";
+
+	//execute the query
+	$result = $con->query($sql);
+
+	//error handling
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+
+	//checks the number of rows in the result 
+	$nor = $result->num_rows;
+
+
+	if ($nor > 0) {
+		//fetch the result
+		$rec = $result->fetch_assoc();
+		//assign ID to variable $num
+		$num = $rec["sales_id"];
+		//eliminate string S and get remaining ID no
+		$num = substr($num, 2);
+		//increment the ID
+		$num++;
+		//merge zeros to left side of ID (total length of ID should be 4)
+		$no = str_pad($num, 4, '0', STR_PAD_LEFT);
+		//merge string S to new sID
+		$salesId = "SL" . $no;
+	} else {
+		//first ID of student
+		$salesId = "SL0001";
+	}
+
+	$salesDate = $_POST["salesDate"];
+	$salesRoute = $_POST["salesRoute"];
+	$salesCustomer = $_POST["salesCustomer"];
+	$salesSupplier = $_POST["salesSupplier"];
+	$salesEditStatus ="1";
+	
+	$sql2 = "INSERT INTO tbl_sales_order(sales_id,sales_date,cus_id,sup_id,sales_status)
+		VALUES('$salesId','$salesDate','$salesCustomer','$salesSupplier','$salesEditStatus');";
+
+	$lastEdit = "SELECT sales_status,sales_id FROM tbl_sales_order WHERE cus_id='$salesCustomer' ORDER BY sales_id DESC LIMIT 1";
+
+			$lastEditResult=$con->query($lastEdit);
+			$nor=$lastEditResult->num_rows;
+
+			if($nor>0){
+				$lastEditRec=$lastEditResult->fetch_assoc();
+				$status=$lastEditRec["sales_status"];
+				$id=$lastEditRec["sales_id"];
+				// echo($status);
+
+				if($status==0){
+					// create new sales order
+					$resultsql2 = $con->query($sql2);	
+					if ($con->error) {
+						echo ("SQL error " . $con->error);
+						exit;						
+					}
+					echo($salesId);
+				} elseif($status==1) {
+					// existing sales order
+					// $sql3="SELECT * FROM tbl_sales_order WHERE sales_id='$id'";
+					// $salesDetailsResult=$con->query($sql3);
+					// while ($salesDetailsRec=$salesDetailsResult->fetch_assoc()){
+					// 	echo("gg");
+					// }
+					echo($id);
+				}
+		
+			} else {
+				$resultsql2 = $con->query($sql2);	
+				if ($con->error) {
+					echo ("SQL error " . $con->error);
+					exit;					
+				}
+				echo($salesId);
+			}
+			
+}
+
+function salesCreateTable(){
+	$salesId = $_POST["salesId"];
+	$db=new Connection();
+	$con=$db->db_con();
+	$sql="SELECT *
+			FROM tbl_sales_details
+			WHERE sales_id = '$salesId' ORDER BY list_no";
+	$result = $con->query($sql);
+	if($con->errno)
+	{
+		echo("SQL Error: ".$con->error);
+		exit;
+	}
+	$nor=$result->num_rows;
+	if($nor==0){
+		echo("<tr>");
+		echo("<td>No Record</td>");
+		echo("<td>No Record</td>");
+		echo("<td>No Record</td>");
+		echo("<td>No Record</td>");
+		echo("<td>No Record</td>");
+		echo("<td>No Record</td>");
+		echo("<td>No Record</td>");
+		echo("</tr>");
+		exit;
+	
+	}
+	while($rec=$result->fetch_assoc()){
+	// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
+	// </tr>";	
+		// sql2 ="select sum(stock_qty) from tbl_stock where pro_id='.$rec["pro_id"].';";
+		// $result2 = $con->query($sql2);
+		// // $rec2=$result2->fetch_assoc();
+
+		echo("<tr id='".$rec["list_no"]."'>");
+		echo("<td><div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-danger' style='margin: auto'><i class='ace-icon fa fa-minus-circle bigger-120'></i></button></div></td>");
+		echo("<td>".$rec["list_no"]."</td>");
+		echo("<td>".$rec["item_name"]."</td>");
+		echo("<td>".$rec["item_price"]."</td>");
+		echo("<td><div><input class='tableQty' style='border:0px; width:50%' value='".$rec["sales_qty"]."'/></div></td>");
+		echo("<td><div><input class='tableDis' style='border:0px; width:50%' value='".$rec["sale_disrate"]."'/></div></td>");
+		echo("<td class='subTolRow'>".$rec["sub_total"]."</td>");
+		// echo("<td>".$rec2["sum(stock_qty)"]."</td>");
+		echo("</tr>");
+		
+	}
+	
+	$con->close();	
+}
+
+function salesAddRow(){
+	$proname = $_POST["proname"];
+	$salesId = $_POST["salesId"];
+	$item_cost = $_POST["item_cost"];
+	$batch = $_POST["batch"];
+	$qnty = $_POST["qnty"];
+	$discount = $_POST["discount"];
+	$subTotal = $_POST["subTotal"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+
+	$sql = "SELECT * FROM tbl_sales_details WHERE sales_id='$salesId'";
+	$result = $con->query($sql);
+	$nor=$result->num_rows;
+	$nor=$nor+1;
+
+	$sql2 = "INSERT INTO tbl_sales_details(sales_id,list_no,batch_id,item_name,item_price,sales_qty,sale_disrate,sub_total)
+		VALUES('$salesId','$nor','$batch','$proname','$item_cost','$qnty','$discount','$subTotal');";
+
+	// $result=$con->query($sql);
+	$result2 = $con->query($sql2);
+	if ($con->error) {
+		echo ("SQL error " . $con->error);
+		exit;
+	}
+	if ($result2 > 0) {
+		echo ("success2");
+	} else {
+		echo ("error");
+	}
+}
+
+function updateTableRow(){
+	$salesid = $_POST["salesid"];
+	$listNo = $_POST["listNo"];
+	$qty = $_POST["qty"];
+	$dis = $_POST["dis"];
+	$rowTotalVal = $_POST["grossTotal"];
+
+
+	$db=new Connection();
+	$con=$db->db_con();
+	$sql="UPDATE tbl_sales_details 
+			SET sales_qty='$qty', sale_disrate='$dis', sub_total='$rowTotalVal'
+			WHERE sales_id='$salesid' and list_no='$listNo'";
+	$result=$con->query($sql);
+	if($con->errno)
+	{
+		echo("SQL Error: ".$con->error);
+		exit;
+	}
+	
+	$con->close();	
+}
+
+function deleteTableRow(){
+	$salesid = $_POST["salesid"];
+	$listNo = $_POST["listNo"];
+
+	$db=new Connection();
+	$con=$db->db_con();
+	$sql="DELETE
+			FROM tbl_sales_details 
+			WHERE sales_id='$salesid' and list_no='$listNo'";
+	$result=$con->query($sql);
+	if($con->errno)
+	{
+		echo("SQL Error: ".$con->error);
+		exit;
+	}
+	$sql2="SELECT * FROM tbl_sales_details WHERE sales_id='$salesid'";
+	$result2=$con->query($sql2);
+	// $nor=$result2->num_rows;
+	$count=0;
+	while($rec=$result2->fetch_assoc()){
+			$count=$count+1;
+			$itemName=$rec['item_name'];
+			$sql3="UPDATE tbl_sales_details SET list_no='$count' WHERE item_name='$itemName'";
+			$con->query($sql3);
+			
+		}
+
+	$con->close();	
+
+}
+
+// function updateListNo(){
+// 	$db=new Connection();
+// 	$con=$db->db_con();
+	
+// }
 ?>
