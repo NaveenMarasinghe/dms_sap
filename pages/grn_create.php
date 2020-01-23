@@ -111,9 +111,7 @@
 								<div class="step-pane" data-step="2">
 									<form id="productListForm" method="get">
 										<div class="row">
-											<div class="col-md-3">
-												<a href="../pages/product_add.php" id="id-btn-dialog1" class="btn btn-purple btn-sm" style='margin-bottom: 10px;'>Add New Product</a>
-											</div>
+
 										</div>
 										<div class="row">
 											<div class="col-md-4 form-group">
@@ -132,37 +130,41 @@
 													</select>
 												</div>
 											</div>
+											<div class="col-md-2">
+												<label for="grnAddProduct" style="color: white;">&nbsp;</label>
+												<button type='button' class='btn btn-purple btn-sm btn-block' id='grnAddProduct'>Add New Product</button>
 
-											<div class="col-md-4 form-group">
+											</div>
+
+
+
+										</div>
+										<div class="row">
+											<div class="col-md-2 form-group">
 												<div>
 													<label for="grnQty">Qty</label>
 													<input type="text" class="form-control" name="grnQty" id="grnQty">
 
 												</div>
 											</div>
-
-										</div>
-										<div class="row">
-											<div class="col-md-4 form-group">
+											<div class="col-md-2 form-group">
 												<div>
 													<label for="grnCost">Item Cost</label>
 													<input type="text" class="form-control" name="grnCost" id="grnCost">
 
 												</div>
 											</div>
-											<div class="col-md-4 form-group">
+											<div class="col-md-2 form-group">
 												<div>
 													<label for="grnMRP">Item MRP</label>
 													<input type="text" class="form-control" name="grnMRP" id="grnMRP">
 
 												</div>
 											</div>
-											<div class="col-md-4 form-group">
-												<div>
-													<label for="grnBatchID">Batch ID</label>
-													<input type="text" class="form-control" name="grnBatchID" id="grnBatchID">
 
-												</div>
+											<div class="col-md-2">
+												<label for="grnAddItems" style="color: white;">&nbsp;</label>
+												<button type='button' class='btn btn-primary btn-block' id='grnAddItems'>Add Items</button>
 											</div>
 
 										</div>
@@ -173,14 +175,7 @@
 											<div class="col-xs-4">
 
 											</div>
-											<div class="col-xs-4">
 
-
-												<!-- <label for="grnAddItems" style="color: white;">&nbsp;</label> -->
-												<button type='button' class='btn btn-primary btn-block' id='grnAddItems'>Add Items</button>
-
-
-											</div>
 										</div>
 
 										<div class="row">
@@ -199,14 +194,14 @@
 														<table id="grnTable" class="table table-striped table-bordered table-hover" style="width:100%">
 															<thead>
 																<tr>
+																	<th style="width:10%">Select</th>
+																	<th style="width:10%">Product ID</th>
+																	<th style="width:30%">Product Name</th>
 
-																	<th>Product ID</th>
-																	<th>Product Name</th>
-																	<th>Batch ID</th>
-																	<th>Quantity</th>
-																	<th>Item Cost</th>
-																	<th>Item MRP</th>
-																	<th>Actions</th>
+																	<th style="width:10%">Quantity</th>
+																	<th style="width:10%">Item Cost</th>
+																	<th style="width:10%">Item MRP</th>
+																	<th style="width:10%">Actions</th>
 																</tr>
 															</thead>
 
@@ -381,8 +376,8 @@
 					if (status == "success") {
 						//alert(data);
 						$("#grnPOID").empty();
-						$("#grnPOID").append("<option value='0'>--Select Purchase Order--</option>");
-						$("#grnPOID").append("<option value='1'>Without Purchase Order</option>");
+						$("#grnPOID").append("<option value=''>--Select Purchase Order--</option>");
+						$("#grnPOID").append("<option value='0'>Without Purchase Order</option>");
 						$("#grnPOID").append(data);
 						// $("#poSupplier").attr("disabled", "disabled");
 					}
@@ -404,12 +399,42 @@
 		});
 
 		var grnTable2 = $('#grnTable').DataTable({
-				"aaSorting": []
-			});
-		
-		// var grnTable2 = $('#grnTable').DataTable({
-		// 	"aaSorting": []
-		// });	
+			"aaSorting": [],
+			"columnDefs": [{
+					"width": "10%",
+					"targets": 6
+				},
+				{
+					"width": "10%",
+					"targets": 5
+				},
+				{
+					"width": "10%",
+					"targets": 4
+				},
+				{
+					"width": "10%",
+					"targets": 3
+				},
+				{
+					"width": "10%",
+					"targets": 2
+				},
+				{
+					"width": "40%",
+					"targets": 1
+				},
+				{
+					"width": "10%",
+					"targets": 0
+				}
+			]
+			// select: {
+			// 	style: 'multi'
+			// }
+		});
+
+
 		$('#grnPOID').change(function() {
 
 			var poidVal = $('#grnPOID').val(); // get option's value
@@ -423,16 +448,42 @@
 						$("#grnTable").DataTable().destroy();
 						$("#grnTable tbody").empty();
 						$("#grnTable tbody").append(data);
-						$('#grnTable').DataTable({"aaSorting": []});
-						// $("#grnTable").DataTable({
-						// 	// "order": [[ 0, "dsec" ]],
-						// 	// "columnDefs": [
-						// 	//     { "width": "25%", "targets": 3 },
-						// 	//     { "width": "25%", "targets": 2 },
-						// 	//     { "width": "25%", "targets": 1 },
-						// 	//     { "width": "25%", "targets": 0 }
-						// 	// ]
-						// });				      
+						$('#grnTable').DataTable({
+							"aaSorting": [],
+							"columnDefs": [{
+									"width": "10%",
+									"targets": 6
+								},
+								{
+									"width": "10%",
+									"targets": 5
+								},
+								{
+									"width": "10%",
+									"targets": 4
+								},
+								{
+									"width": "10%",
+									"targets": 3
+								},
+								{
+									"width": "10%",
+									"targets": 2
+								},
+								{
+									"width": "40%",
+									"targets": 1
+								},
+								{
+									"width": "10%",
+									"targets": 0
+								}
+							]
+							// select: {
+							// 	style: 'multi'
+							// }
+						});
+
 					}
 				});
 		});
@@ -470,35 +521,49 @@
 			var qnty = $('#grnQty').val();
 			var cost = $('#grnCost').val();
 			var mrp = $('#grnMRP').val();
-			var batch = $('#grnBatchID').val();
+			var chkbox = '<td class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></td>';
 			var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-success' id='btn_modelView'><i class='ace-icon fa fa-info-circle bigger-120'></i></button><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button><button type='button' class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div>"
-			var tablerow = "<tr><td>" + proid + "</td><td>" + proname + "</td><td>" + batch + "</td><td>" + qnty + "</td><td>" + cost + "</td><td>" + mrp + "</td><td>" + buttons + "</td></tr>";
-			
+			var tablerow = "<tr>" + chkbox + "<td>" + proid + "</td><td>" + proname + "</td><td style='text-align:center'><div><input class='tableQty' style='border:0px; text-align:center' value='" + qnty + "'/></div></td><td style='text-align:center'><div><input class='tableCost' style='border:0px; text-align:center' value='" + cost + "'/></div></td><td style='text-align:center'><div><input class='tableMRP' style='border:0px; text-align:center' value='" + mrp + "'/></div></td><td>" + buttons + "</td></tr>";
+
+
 			$("#grnTable").DataTable().destroy();
+
 			$("#grnTable tbody").append(tablerow);
 			$('#grnTable').DataTable({
-				"aaSorting": []
+				"aaSorting": [],
+				"columnDefs": [{
+						"width": "10%",
+						"targets": 6
+					},
+					{
+						"width": "10%",
+						"targets": 5
+					},
+					{
+						"width": "10%",
+						"targets": 4
+					},
+					{
+						"width": "10%",
+						"targets": 3
+					},
+					{
+						"width": "40%",
+						"targets": 2
+					},
+					{
+						"width": "10%",
+						"targets": 1
+					},
+					{
+						"width": "10%",
+						"targets": 0
+					}
+				]
+				// select: {
+				// 	style: 'multi'
+				// }
 			});
-
-			//   if(proid!=0){
-			//       grnTable2.row.add( [
-			//           proid,
-			//           proname,
-			//           batch,           
-			//           qnty,
-			//           cost,
-			//           mrp,
-			//           buttons
-			//       ] ).draw( false );
-			//   } else{
-			//     Swal.fire({
-			//       icon: 'error',
-			//       title: 'Oops...',
-			//       text: 'Please select a product!'
-
-			//     });
-			//   }
-
 
 			$("#grnQty").val("");
 			$("#grnCost").val("");
@@ -558,6 +623,55 @@
 			})
 
 		});
+
+		//select code
+		// grnTable2.on('select', function(e, dt, type, index) {
+		// 	if (type === 'row') {
+		// 		$(grnTable2.row(index).node()).find('input:checkbox').prop('checked', true);
+		// 	}
+		// });
+		// grnTable2.on('deselect', function(e, dt, type, index) {
+		// 	if (type === 'row') {
+		// 		$(grnTable2.row(index).node()).find('input:checkbox').prop('checked', false);
+		// 	}
+		// });
+		// $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
+
+		// $('#grnTable > thead > tr > th input[type=checkbox], #grntable_wrapper input[type=checkbox]').eq(0).on('click', function() {
+		// 	var th_checked = this.checked; //checkbox inside "TH" table header
+
+		// 	$('#grnTable').find('tbody > tr').each(function() {
+		// 		var row = this;
+		// 		if (th_checked) grnTable2.row(row).select();
+		// 		else grnTable2.row(row).deselect();
+		// 	});
+		// });
+
+		// //select/deselect a row when the checkbox is checked/unchecked
+		// $('#grnTable').on('click', 'td input[type=checkbox]', function() {
+		// 	var row = $(this).closest('tr').get(0);
+		// 	if (this.checked) grnTable2.row(row).deselect();
+		// 	else grnTable2.row(row).select();
+		// });
+
+		var active_class = 'active';
+		$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function() {
+			var th_checked = this.checked; //checkbox inside "TH" table header
+
+			$(this).closest('table').find('tbody > tr').each(function() {
+				var row = this;
+				if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+				else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+			});
+		});
+		$('#grnTable').on('click', 'td input[type=checkbox]', function() {
+			var $row = $(this).closest('tr');
+			if ($row.is('.detail-row ')) return;
+			if (this.checked) $row.addClass(active_class);
+			else $row.removeClass(active_class);
+		});
+		//select code end
+
 		$('.date-picker').datepicker({
 			autoclose: true,
 			minDate: 0,
@@ -584,8 +698,8 @@
 				//buttons: '.wizard-actions:eq(0)'
 			})
 			.on('actionclicked.fu.wizard', function(e, info) {
-				if (info.step == 1 && $validation) {
-					if (!$('#validation-form').valid()) e.preventDefault();
+				if (info.step == 1) {
+
 				}
 			})
 			//.on('changed.fu.wizard', function() {
@@ -609,18 +723,22 @@
 						var grnidddata = jQuery.parseJSON(data);
 
 						function storeTblValues() {
+							var poId = $('#grnPOID').val();
 							var TableData = new Array();
-
+							
 							$('#grnTable tr').each(function(row, tr) {
-								TableData[row] = {
-									"grnpid": $(tr).find('td:eq(0)').text(),
-									"grnpname": $(tr).find('td:eq(1)').text(),
-									"grnbatch": $(tr).find('td:eq(2)').text(),
-									"grnpqty": $(tr).find('td:eq(3)').text(),
-									"itcost": $(tr).find('td:eq(4)').text(),
-									"itmrp": $(tr).find('td:eq(5)').text(),
-									"grnid": grnidddata
+								if ($(tr).hasClass('active')) {
+									TableData[row] = {
+										"grnpid": $(tr).find('td:eq(1)').text(),
+										"grnpname": $(tr).find('td:eq(2)').text(),
+										"grnpqty": $(tr).find('.tableQty').val(),
+										"itcost": $(tr).find('.tableCost').val(),
+										"itmrp": $(tr).find('.tableMRP').val(),
+										"grnid": grnidddata,
+										"poId": poId
+									}
 								}
+
 								//   poid    
 								// TableData.push("Kiwi");
 							});
@@ -639,7 +757,7 @@
 							success: function(msg) {
 								alert(msg);
 								// $('#purchaseform')[0].reset();
-								location.reload(true);
+								// location.reload(true);
 
 							}
 						});

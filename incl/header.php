@@ -17,6 +17,7 @@
     	<link rel="stylesheet" href="../assets/css/bootstrap-datepicker3.min.css" />
 <!-- 		<link rel="stylesheet" href="../assets/jqueryui/jquery-ui.min.css" /> -->
 		<link rel="stylesheet" href="../assets/css/ui.jqgrid.min.css" />
+		<link rel="stylesheet" href="../assets/css/fullcalendar.min.css" />
 
 		<!-- page specific plugin styles -->
 
@@ -45,6 +46,7 @@
 		<script src="../assets/jquery/js/jquery.js"></script>
 		<script src="../assets/jquery/js/jquery.min.js"></script>
 		<script src="../assets/jqueryui/jquery-ui.min.js"></script>
+		<script src="../assets/datatables.min.js"></script>
         <script src="../assets/js/jquery.dataTables.min.js"></script>
         <script src="../assets/js/jquery.dataTables.bootstrap.min.js"></script>
 		<script src="../assets/datatables/js/dataTables.bootstrap.min.js"></script>
@@ -53,15 +55,31 @@
 
 <!-- 		<script src="../assets/js/bootstrap.min.js"></script> -->
 		<script src="../assets/sweetalert2/sweetalert2.all.min.js"></script>
-		<script src="../assets/js/dataTables.buttons.min.js"></script>
-		<script src="../assets/js/buttons.flash.min.js"></script>
-		<script src="../assets/js/buttons.html5.min.js"></script>
-		<script src="../assets/js/buttons.print.min.js"></script>
-		<script src="../assets/js/buttons.colVis.min.js"></script>
+		
+		<script src="../assets/Buttons-1.6.0/js/dataTables.buttons.min.js"></script>
+		<script src="../assets/Buttons-1.6.0/js/buttons.flash.min.js"></script>
+		<script src="../assets/Buttons-1.6.0/js/buttons.html5.min.js"></script>
+		<script src="../assets/Buttons-1.6.0/js/buttons.print.min.js"></script>
+		<script src="../assets/Buttons-1.6.0/js/buttons.colVis.min.js"></script>
 		<script src="../assets/js/dataTables.select.min.js"></script>
 		<script src="../assets/js/jquery.validate.min.js"></script>
-		<!-- <script src="../assets/js/bootstrap-datepicker.min.js"></script> -->		
+		<!-- <script src="../assets/js/bootstrap-datepicker.min.js"></script>	 -->
+		<script src="../assets/js/moment.min.js"></script>	
+		<script src="../assets/js/fullcalendar.min.js"></script>	
+		<!-- <script src="../assets/js/fullcalendar.print.min.css"></script>	 -->
+		<!-- <script src="../assets/js/fullcalendar.min.js"></script>	 -->
 		<script src="../assets/js/bootbox.js"></script>
+
+		<!--  -->
+<!-- <script src="../assets/js/buttons/datatables.min.js"></script>
+<script src="../assets/js/jquery.dataTables.bootstrap.min.js"></script>
+<script src="../assets/js/dataTables.buttons.min.js"></script>
+<script src="../assets/js/buttons.flash.min.js"></script>
+<script src="../assets/js/buttons.html5.min.js"></script>
+<script src="../assets/js/buttons.print.min.js"></script>
+<script src="../assets/js/buttons.colVis.min.js"></script>
+<script src="../assets/js/dataTables.select.min.js"></script> -->
+		<!--  -->
 
 
 

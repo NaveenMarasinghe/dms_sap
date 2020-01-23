@@ -148,9 +148,18 @@
 							</li>
 
 							<li class="">
-								<a href="../pages/sales_create3.php">
+								<a href="../pages/sales_create5.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Create Sales
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a href="../pages/sales_return.php">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Sales Return
 								</a>
 
 								<b class="arrow"></b>
@@ -180,7 +189,7 @@
 							</li>
 
 							<li class="">
-								<a href="../pages/purchase_create.php">
+								<a href="../pages/purchase_create1.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Create Purchase Order
 								</a>
@@ -191,37 +200,6 @@
 						</ul>
 					</li>
 
-					<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-credit-card"></i>
-							<span class="menu-text"> Payments </span>
-
-							<b class="arrow fa fa-angle-down"></b>
-						</a>
-
-						<b class="arrow"></b>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="form-elements.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									View Payments
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="form-elements-2.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Create Payments
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-						</ul>
-					</li>
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
@@ -247,15 +225,6 @@
 								<a href="../pages/grn_create.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Create GRN
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="form-elements-2.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Purchase Order Returns
 								</a>
 
 								<b class="arrow"></b>
@@ -305,38 +274,6 @@
 						</ul>
 					</li>
 
-					<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-exchange"></i>
-							<span class="menu-text"> Stock Manage </span>
-
-							<b class="arrow fa fa-angle-down"></b>
-						</a>
-
-						<b class="arrow"></b>
-
-						<ul class="submenu">
-
-							<li class="">
-								<a href="form-elements.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Return
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="form-elements-2.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Stock Adjestments
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-						</ul>
-					</li>
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
@@ -350,7 +287,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="form-elements.html">
+								<a href="../pages/customer_add.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									View Customers
 								</a>
@@ -359,7 +296,7 @@
 							</li>
 
 							<li class="">
-								<a href="">
+								<a href="../pages/customer_add.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Add New Customer
 								</a>
@@ -413,14 +350,7 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
-								<a href="form-elements.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									View Warehouses
-								</a>
 
-								<b class="arrow"></b>
-							</li>
 
 							<li class="">
 								<a href="../pages/stock_issue.php">
@@ -432,13 +362,22 @@
 							</li>							
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a href="../pages/stock_receive.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Manage Warehouses
+									Receive Stock
 								</a>
 
 								<b class="arrow"></b>
 							</li>
+
+							<li class="">
+								<a href="">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Stock Adjestment
+								</a>
+
+								<b class="arrow"></b>
+							</li>	
 
 						</ul>
 					</li>
@@ -455,7 +394,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="form-elements.html">
+								<a href="../pages/employee_view.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									View Employee
 								</a>
@@ -464,7 +403,7 @@
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a href="../pages/employee_add.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Add New Employee
 								</a>

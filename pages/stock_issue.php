@@ -53,11 +53,7 @@
                 </div>
 
               </div>
-                <div class="row">
-                <div class="col-md-3">
-                <a href="" id="id-btn-dialog1" class="btn btn-purple btn-sm" style='margin-bottom: 10px;'>Add More Product</a>
-                </div>
-              </div>              
+
 
 
 
@@ -87,9 +83,10 @@
                                 <span class="lbl"></span>
                               </label>
                             </th> -->
+                                <th>Check</th>
                                 <th>Product ID</th>
                                 <th>Product Name</th>
-                                <th>Batch ID</th>                                
+                                <th>Batch ID</th>
                                 <th>Quantity</th>
                                 <th>Actions</th>
 
@@ -192,11 +189,11 @@
     $.noConflict();
     var routeStockTable = $('#routeStockTable').DataTable({
       bAutoWidth: false,
-      aoColumns: [null, null, null, null, null],
+      aoColumns: [null, null, null, null, null, null],
       aaSorting: [],
-      select: {
-        style: 'multi'
-      }
+      // select: {
+      //   style: 'multi'
+      // }
     });
 
     $(document).ready(function() {
@@ -249,22 +246,37 @@
           }
         });
 
-        //   f = new FormData($("#purchaseform")[0]);
-        //  $.ajax({
-        //     method: "POST",
-        //     url: "../controllers/controller_stock.php?type=RouteStockSalesman",
-        //     data: f,
-        //     processData: false,
-        //     contentType: false
-        // })
-        //   .done(function(data) {
-        //       var testdata = JSON.parse(data);
-        //       //console.log(data);
-        //      $("#routeSalesman").val(testdata.emp_fname + ' ' + testdata.emp_lname);
-        //      $("#routeVehicle").val(testdata.veh_number);
-        //       // $("#eq_name").val(testdata[0].name);
-             
-        //       });    
+      $.post("../controllers/controller_stock.php?type=RouteStockSalesman", {
+          selectRouteSche: selectRouteSche
+        },
+        function(data, status) {
+          if (status == "success") {
+            //alert(data);
+            var testdata = JSON.parse(data);
+            //console.log(data);
+            $("#routeSalesman").val(testdata.emp_fname + ' ' + testdata.emp_lname);
+            $("#routeVehicle").val(testdata.vehicle);
+            // $("#eq_name").val(testdata[0].name);
+          }
+        });
+
+      // f = new FormData($("#issueStock")[0]);
+      // alert(f);
+      // $.ajax({
+      //     method: "POST",
+      //     url: "../controllers/controller_stock.php?type=RouteStockSalesman",
+      //     data: f,
+      //     processData: false,
+      //     contentType: false
+      //   })
+      //   .done(function(data) {
+      //     var testdata = JSON.parse(data);
+      //     //console.log(data);
+      //     $("#routeSalesman").val(testdata.emp_fname + ' ' + testdata.emp_lname);
+      //     $("#routeVehicle").val(testdata.veh_number);
+      //     // $("#eq_name").val(testdata[0].name);
+
+      //   });
 
     });
 
@@ -274,6 +286,23 @@
   jQuery(function($) {
 
     $(document).ready(function() {
+
+      var active_class = 'active';
+      $('#routeStockTable > thead > tr > th input[type=checkbox]').eq(0).on('click', function() {
+        var th_checked = this.checked; //checkbox inside "TH" table header
+
+        $(this).closest('table').find('tbody > tr').each(function() {
+          var row = this;
+          if (th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+          else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+        });
+      });
+      $('#routeStockTable').on('click', 'td input[type=checkbox]', function() {
+        var $row = $(this).closest('tr');
+        if ($row.is('.detail-row ')) return;
+        if (this.checked) $row.addClass(active_class);
+        else $row.removeClass(active_class);
+      });
 
 
       // $('.date-picker').datepicker('setDate', 'today');
@@ -383,13 +412,7 @@
         // alert("gg");
         var $row = $(this).closest("tr"); // Find the row
         var proname = $row.find("td:nth-child(2)").text();
-        // bootbox.prompt("What is your name?", function(result) {
-        //   if (result === null) {
 
-        //   } else {
-        //     $row.find("td:nth-child(2)").append(result);
-        //   }
-        // });
 
         const {
           value: newQty
@@ -423,26 +446,6 @@
 
 
   jQuery(function($) {
-
-    // var myTable = $('#purchaseTable').DataTable({
-    //   bAutoWidth: false,
-    //   aoColumns: [null, null,null, null],
-    //   aaSorting: [],
-    //   select: {style: 'multi'}
-    //   });
-
-
-
-
-
-    // $('#stockTable').on( 'click', 'tbody tr', function () {
-    //   myTable.row( this ).delete( {
-    //       buttons: [
-    //           { label: 'Cancel', fn: function () { this.close(); } },
-    //           'Delete'
-    //       ]
-    //     });
-    //   });
 
 
     $(document).ready(function() {
@@ -510,61 +513,42 @@
 
       });
 
-
-
-
-
-
     });
 
 
   });
 
-  // $('#addproductbutton').click(function(){
-  //   var proname = $("#id_label_multiple option:selected").text();
-  //   var proid = $('#id_label_multiple').val();
-  //   var qnty = $('#qty').val();
-  //   var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
-
-
-  //     // $('#tablebody').append("<tr><td>"+ proid +"</td><td>" + proname + "</td><td>" + qnty + "</td> '<td><div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div> </td>' </tr>" );
-
-  //     $('#id_label_multiple').val("");
-  //     $('#qty').val("");
-  //     $('#productname').focus();
-
-  //   });
 
   jQuery(function($) {
 
     $("#issueProduct").click(function() {
 
       // if ($("#issueStock").valid()) {
-        d = new FormData($("#issueStock")[0]);
-        alert(d);
-        $.ajax({
-          url: "../controllers/controller_stock.php?type=issueStock",
-          method: "POST",
-          data: d,
-          processData: false,
-          contentType: false,
-          success: function(data) {
-            // $('#purchaseform')[0].reset();
-            // location.reload(true);
-            alert(data);
+      var rtsche = $("#selectRouteSche").val()
 
-            // $("#poid").append(data);
+      $.post("../controllers/controller_stock.php?type=issueStock", {
+          rtsche: rtsche
+        },
+        function(data, status) {
+          if (status == "success") {
             var issueStockId = jQuery.parseJSON(data);
+            var rtsche = $("#selectRouteSche").val();
+            var vehnum = $("#routeVehicle").val();
 
             function storeTblValues() {
               var TableData = new Array();
 
               $('#routeStockTable tr').each(function(row, tr) {
-                TableData[row] = {
-                  "pid": $(tr).find('td:eq(0)').text(),
-                  "pname": $(tr).find('td:eq(1)').text(),
-                  "pqty": $(tr).find('td:eq(2)').text(),
-                  "poid": issueStockId
+                if ($(tr).hasClass('active')) {
+                  TableData[row] = {
+                    "pid": $(tr).find('td:eq(1)').text(),
+                    "pname": $(tr).find('td:eq(2)').text(),
+                    "pbatch": $(tr).find('td:eq(3)').text(),
+                    "pqty": $(tr).find('td:eq(4)').text(),
+                    "isid": issueStockId,
+                    "rtsche": rtsche,
+                    "vehnum": vehnum
+                  }
                 }
                 //   poid    
                 // TableData.push("Kiwi");
@@ -579,17 +563,69 @@
             alert(TableData);
             $.ajax({
               type: "POST",
-              url: "../controllers/controller_stock.php?type=issueStockDetails",
+              url: "../controllers/controller_stock.php?type=vehicleStock",
               data: "pTableData=" + TableData,
               success: function(msg) {
                 alert(msg);
                 $('#issueStock')[0].reset();
-                location.reload(true);
+                // location.reload(true);
 
               }
             });
           }
         });
+
+
+      // $.ajax({
+      //   url: "../controllers/controller_stock.php?type=issueStock",
+      //   method: "POST",
+      //   data: d,
+      //   processData: false,
+      //   contentType: false,
+      //   success: function(data) {
+      //     // $('#purchaseform')[0].reset();
+      //     // location.reload(true);
+      //     alert(data);
+
+      //     // $("#poid").append(data);
+      //     var issueStockId = jQuery.parseJSON(data);
+
+      //     function storeTblValues() {
+      //       var TableData = new Array();
+
+      //       $('#routeStockTable tr').each(function(row, tr) {
+      //         if ($(tr).hasClass('active')) {
+      //           TableData[row] = {
+      //             "pid": $(tr).find('td:eq(0)').text(),
+      //             "pname": $(tr).find('td:eq(1)').text(),
+      //             "pqty": $(tr).find('td:eq(2)').text(),
+      //             "poid": issueStockId
+      //           }
+      //         }
+      //         //   poid    
+      //         // TableData.push("Kiwi");
+      //       });
+      //       // TableData.shift();  // first row will be empty - so remove
+
+      //       return TableData;
+      //     }
+
+      //     TableData = storeTblValues()
+      //     TableData = JSON.stringify(TableData);
+      //     alert(TableData);
+      //     $.ajax({
+      //       type: "POST",
+      //       url: "../controllers/controller_stock.php?type=issueStockDetails",
+      //       data: "pTableData=" + TableData,
+      //       success: function(msg) {
+      //         alert(msg);
+      //         $('#issueStock')[0].reset();
+      //         location.reload(true);
+
+      //       }
+      //     });
+      //   }
+      // });
       // }
     });
   });

@@ -35,7 +35,7 @@
 				<select class="col-xs-10 col-sm-5" id="pro_supplier" name="pro_supplier">
 					<option value="">Select Supplier</option>
 				</select>
-				<button class="btn btn-xs btn-success" type="button" id="addSupplier" name="addSupplier" data-toggle="modal" style="margin-left: 10px:" href="#modelAddSupplier">
+				<button class="btn btn-xs btn-success" type="button" id="addSupplier" name="addSupplier" data-toggle="modal" style="margin-left: 10px;" href="#modelAddSupplier">
 					<i class="ace-icon fa fa-plus bigger-120"></i>
 				</button>
 				</div>
@@ -51,7 +51,7 @@
 					<option value="">Select Product Category</option>
 				</select>
 				<button class="btn btn-xs btn-success" type="button" id="addProductCat" name="addProductCat" data-toggle='modal'
-					href="#modelAddProductCat" style="margin-left: 10px:">
+					href="#modelAddProductCat" style="margin-left: 10px;">
 					<i class="ace-icon fa fa-plus bigger-120"></i>
 				</button>
 				</div>
@@ -68,7 +68,7 @@
 					</select>
 
 					<button class="btn btn-xs btn-success" type="button" id="addProductSubCat" name="addProductSubCat" data-toggle='modal'
-						href="#modelAddProductSubCat" style="margin-left: 10px:">
+						href="#modelAddProductSubCat" style="margin-left: 10px;">
 						<i class="ace-icon fa fa-plus bigger-120"></i>
 					</button>
 					</div>
@@ -917,19 +917,7 @@
 					focusInvalid: false,
 					ignore: "",
 					rules: {
-						// email: {
-						// 	required: true,
-						// 	email:true
-						// },
-						// password: {
-						// 	required: true,
-						// 	minlength: 5
-						// },
-						// password2: {
-						// 	required: true,
-						// 	minlength: 5,
-						// 	equalTo: "#password"
-						// },
+
 						sup_id: {
 							required: false
 						},

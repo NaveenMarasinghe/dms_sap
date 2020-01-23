@@ -1,124 +1,112 @@
 <?php
 require_once("../controllers/class_dbconnection.php");
 
-if(isset($_GET["type"])){
-		$type=$_GET["type"];
-		switch($type){			// checks the type addNewProductCat
-			case "get_poid":
-				get_poid(); 		
-				break;
-			case "get_po":
-				get_po(); 		
-				break;	
-			case "grnProductTable":
-				grnProductTable(); 		
-				break;		
-			case "grnSave":
-				grnSave(); 		
-				break;		
-			case "purchaseSaveDetails":
-				purchaseSaveDetails(); 		
-				break;													
-				
-				case "poLoad":
-					poLoad(); 		
-					break;													
-					}
-			}
-function get_poid(){
-		$supplierval=$_POST["supplierval"];
-		$db=new Connection();
-		$con=$db->db_con();
-		$sql="SELECT DISTINCT pur_id FROM tbl_po where sup_id='$supplierval' and pur_status='Pending'";
-		
-		$result=$con->query($sql);
-		if($con->errno)
-		{
-			echo("SQL Error: ".$con->error);
-			exit;
+if (isset($_GET["type"])) {
+	$type = $_GET["type"];
+	switch ($type) {			// checks the type addNewProductCat
+		case "get_poid":
+			get_poid();
+			break;
+		case "get_po":
+			get_po();
+			break;
+		case "grnProductTable":
+			grnProductTable();
+			break;
+		case "grnSave":
+			grnSave();
+			break;
+		case "purchaseSaveDetails":
+			purchaseSaveDetails();
+			break;
+
+		case "poLoad":
+			poLoad();
+			break;
+	}
+}
+function get_poid()
+{
+	$supplierval = $_POST["supplierval"];
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT DISTINCT pur_id FROM tbl_po where sup_id='$supplierval' and (pur_status='3' OR pur_status='2')";
+
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	//alert('func');
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("");
+	} else {
+		//fetch all the records
+		while ($rec = $result->fetch_assoc()) {
+			//merge province ID and name with HTML
+			echo ("<option value='" . $rec["pur_id"] . "'>" . $rec["pur_id"] . "</option>");
 		}
-		//alert('func');
-		$nor=$result->num_rows;
-		if($nor==0){
-			echo("");
-		}
-		else{
-			//fetch all the records
-			while($rec=$result->fetch_assoc())
-			{
-				//merge province ID and name with HTML
-				echo("<option value='".$rec["pur_id"]."'>".$rec["pur_id"]."</option>");
-			}
-		}
-		$con->close();
+	}
+	$con->close();
 }
 
-function get_po(){
-		$supplierval=$_POST["supplierval"];
-		$db=new Connection();
-		$con=$db->db_con();
-		$sql="SELECT DISTINCT pur_id FROM tbl_po where sup_id='$supplierval' and pur_status='Pending'";
-		
-		$result=$con->query($sql);
-		if($con->errno)
-		{
-			echo("SQL Error: ".$con->error);
-			exit;
+function get_po()
+{
+	$supplierval = $_POST["supplierval"];
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT DISTINCT pur_id FROM tbl_po where sup_id='$supplierval' and pur_status='2' ";
+
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	//alert('func');
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("");
+	} else {
+		//fetch all the records
+		while ($rec = $result->fetch_assoc()) {
+			//merge province ID and name with HTML
+			echo ("<option value='" . $rec["pur_id"] . "'>" . $rec["pur_id"] . "</option>");
 		}
-		//alert('func');
-		$nor=$result->num_rows;
-		if($nor==0){
-			echo("");
-		}
-		else{
-			//fetch all the records
-			while($rec=$result->fetch_assoc())
-			{
-				//merge province ID and name with HTML
-				echo("<option value='".$rec["pur_id"]."'>".$rec["pur_id"]."</option>");
-			}
-		}
-		$con->close();
+	}
+	$con->close();
 }
 
-function grnProductTable(){
-		$poidVal=$_POST["poidVal"];
-		$db=new Connection();
-		$con=$db->db_con();
-		$sql="SELECT pod.pro_id, pro.pro_name, pod.pur_qty
+function grnProductTable()
+{
+	$poidVal = $_POST["poidVal"];
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT pod.pro_id, pro.pro_name, pod.pur_qty
 				FROM tbl_products pro, tbl_po_details pod
-				WHERE pod.pro_id=pro.pro_id and pod.purod_id='$poidVal'";
-		$result = $con->query($sql);
-		if($con->errno)
-		{
-			echo("SQL Error: ".$con->error);
-			exit;
-		}
-		$nor=$result->num_rows;
-		if($nor==0){
-			echo("<tr>");
-			echo("<td class='novalue'>No Record</td>");
-			echo("<td>No Record</td>");
-			echo("<td>No Record</td>");
-			echo("<td>No Record</td>");
-			echo("<td>No Record</td>");
-			echo("<td>No Record</td>");
-			echo("<td>No Record</td>");
-			echo("</tr>");
-			exit;
-		
-		}
-		while($rec=$result->fetch_assoc()){
+				WHERE pod.pro_id=pro.pro_id and pod.purod_id='$poidVal' AND pur_prostatus='1'";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+
+		exit;
+	}
+	while ($rec = $result->fetch_assoc()) {
 		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
 		// </tr>";	
-			echo("<tr id='".$rec["pro_id"]."'>");
-			echo("<td>".$rec["pro_id"]."</td>");
-			echo("<td>".$rec["pro_name"]."</td>");
-			echo("<td>".$rec["pur_qty"]."</td>");
-			echo("<td>".$rec["pur_qty"]."</td>");
-			echo("<td></td>");
-			echo("<td></td>");
-			echo('<td><div class="hidden-sm hidden-xs btn-group">
+		echo ("<tr class='' id='" . $rec["pro_id"] . "'>");
+		echo ('<td class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></td>');
+		echo ("<td>" . $rec["pro_id"] . "</td>");
+		echo ("<td>" . $rec["pro_name"] . "</td>");
+
+		echo ("<td style='text-align:center'><div><input class='tableQty' style='border:0px; text-align:center' value='" . $rec["pur_qty"] . "'/></div></td>");
+		echo ("<td style='text-align:center'><div><input class='tableCost' style='border:0px; text-align:center' value=''/></div></td>");
+		echo ("<td style='text-align:center'><div><input class='tableMRP' style='border:0px; text-align:center' value=''/></div></td>");
+		echo ('<td><div class="hidden-sm hidden-xs btn-group">
 				<button class="btn btn-xs btn-success">
 					<i class="ace-icon fa fa-info-circle bigger-120"></i>
 				</button>
@@ -131,183 +119,258 @@ function grnProductTable(){
 					<i class="ace-icon fa fa-trash-o bigger-120"></i>
 				</button>
 
-				<button class="btn btn-xs btn-warning">
-					<i class="ace-icon fa fa-flag bigger-120"></i>
-				</button>
 			</div></td>');
-			echo("</tr>");
-			
-		}
-		
-		$con->close();
+		echo ("</tr>");
+	}
+
+	$con->close();
 }
 
-function grnSave(){
-		$db=new Connection();
-		$con=$db->db_con();
-		
-		//query
-		$sql="SELECT grn_id FROM tbl_grn ORDER BY grn_id DESC LIMIT 1;";
-		
-		//execute the query
-		$result=$con->query($sql);
-		
-		//error handling
-		if($con->errno)
-		{
-			echo("SQL Error: ".$con->error);
-			exit;
-		}
-		
-		//checks the number of rows in the result 
-		$nor=$result->num_rows;
-		
-	
-		if($nor>0){
-			//fetch the result
-			$rec=$result->fetch_assoc();
-			//assign ID to variable $num
-			$num=$rec["grn_id"];
-			//eliminate string GRN and get remaining ID no
-			$num=substr($num,3);
-			//increment the ID
-			$num++;
-			//merge zeros to left side of ID (total length of ID should be 4)
-			$no=str_pad($num,4,'0',STR_PAD_LEFT);
-			//merge string S to new sID
-			$grnid="GRN".$no;
-		}
-		else{
-			//first ID of student
-			$grnid="GRN0001";
-		}		
+function grnSave()
+{
+	$db = new Connection();
+	$con = $db->db_con();
 
-		$grndate=$_POST["grndate"];
-		$grnSupplier=$_POST["grnSupplier"];
-		$grnremarks=$_POST["grnRemarks"];
-		$purid=$_POST["grnPOID"];		
-		$postatus="Pending";
+	//query
+	$sql = "SELECT grn_id FROM tbl_grn ORDER BY grn_id DESC LIMIT 1;";
 
-		if($purid=='1'){
-			$purid="Without PO";
-		} else{
-			$sqlupdate="UPDATE tbl_po
-						SET pur_status = 'Received'
-						WHERE pur_id = '$purid';";
-			$resultupdate=$con->query($sqlupdate);
-		}
+	//execute the query
+	$result = $con->query($sql);
 
-		$sql2="INSERT INTO tbl_grn(grn_id,sup_id,pur_id,grn_date,remarks)
+	//error handling
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+
+	//checks the number of rows in the result 
+	$nor = $result->num_rows;
+
+
+	if ($nor > 0) {
+		//fetch the result
+		$rec = $result->fetch_assoc();
+		//assign ID to variable $num
+		$num = $rec["grn_id"];
+		//eliminate string GRN and get remaining ID no
+		$num = substr($num, 3);
+		//increment the ID
+		$num++;
+		//merge zeros to left side of ID (total length of ID should be 4)
+		$no = str_pad($num, 4, '0', STR_PAD_LEFT);
+		//merge string S to new sID
+		$grnid = "GRN" . $no;
+	} else {
+		//first ID of student
+		$grnid = "GRN0001";
+	}
+
+	$grndate = $_POST["grndate"];
+	$grnSupplier = $_POST["grnSupplier"];
+	$grnremarks = $_POST["grnRemarks"];
+	$purid = $_POST["grnPOID"];
+	$postatus = "Pending";
+
+	if ($purid == '0') {
+		$purid = "Without PO";
+	} else {
+
+		$sqlupdate = "UPDATE tbl_po
+			SET pur_status = '3'
+			WHERE pur_id = '$purid';";
+		$resultupdate = $con->query($sqlupdate);
+	}
+
+	$sql2 = "INSERT INTO tbl_grn(grn_id,sup_id,pur_id,grn_date,remarks)
 		VALUES('$grnid','$grnSupplier','$purid','$grndate','$grnremarks');";
 
-		$result2=$con->query($sql2);
-		
-		if($con->error){
-			echo("SQL error ".$con->error);
-			exit;
-		}
-		if($result2>0){
-			echo(json_encode($grnid));
+	$result2 = $con->query($sql2);
 
-		}
-		else{
-			echo("error");
-		}
-
+	if ($con->error) {
+		echo ("SQL error " . $con->error);
+		exit;
+	}
+	if ($result2 > 0) {
+		echo (json_encode($grnid));
+	} else {
+		echo ("error");
+	}
 }
 
-function purchaseSaveDetails(){
-		// Unescape the string values in the JSON array
-		$tableData = stripcslashes($_POST['pTableData']);
+function purchaseSaveDetails()
+{
+	// Unescape the string values in the JSON array
+	$tableData = stripcslashes($_POST['pTableData']);
 
-		// Decode the JSON array
-		$tableData = json_decode($tableData,TRUE);
+	// Decode the JSON array
+	$tableData = json_decode($tableData, TRUE);
 
-		// now $tableData can be accessed like a PHP array
-		//echo $tableData[1]['pname'];
-		$tblDataLength = count($tableData);
-		
-
-
-		for ($x=1; $x<$tblDataLength; $x++){
-			$grnpid = $tableData[$x]['grnpid'];
-			$grnpqty = $tableData[$x]['grnpqty'];
-			$itcost = $tableData[$x]['itcost'];
-			$itmrp = $tableData[$x]['itmrp'];						
-			$grnid = $tableData[$x]['grnid'];
-			$grnbatch = $tableData[$x]['grnbatch'];
-
-			$db=new Connection();
-			$con=$db->db_con();
-
-			$sql="INSERT INTO tbl_grn_details(grn_id,pro_id,grn_batch,qty,item_cost,item_mrp)
-			VALUES('$grnid','$grnpid','$grnbatch','$grnpqty','$itcost','$itmrp');";
+	// now $tableData can be accessed like a PHP array
+	//echo $tableData[1]['pname'];
+	$tblDataLength = count($tableData);
 
 
-			$stocksql="SELECT stock_qty
-					FROM tbl_stock
-					WHERE batch_id='$grnbatch' and pro_id='$grnpid';";
 
-			$rec=$con->query($stocksql);
-			$nor=$rec->num_rows;
+	for ($x = 1; $x < $tblDataLength; $x++) {
+		$grnpid = $tableData[$x]['grnpid'];
+		$grnpqty = $tableData[$x]['grnpqty'];
+		$itcost = $tableData[$x]['itcost'];
+		$itmrp = $tableData[$x]['itmrp'];
+		$grnid = $tableData[$x]['grnid'];
+		$poId = $tableData[$x]['poId'];
 
-			if($nor>0){
-				$num=$rec->fetch_assoc();
-				$stock=$num["stock_qty"];
-				$grnpqty==$grnpqty+$stock;
-				$sqlupdate="UPDATE tbl_stock
-							SET stock_qty = '$grnpqty'
-							WHERE batch_id = '$grnbatch';";
-				$resultupdate=$con->query($sqlupdate);				
-		
-			} else{
-				$sql2="INSERT INTO tbl_stock(batch_id,pro_id,stock_qty,item_cost,item_mrp)
-				VALUES('$grnbatch','$grnpid','$grnpqty','$itcost','$itmrp');";		
-				$result2=$con->query($sql2);						
-			}			
+		$db = new Connection();
+		$con = $db->db_con();
+		// check whether the product exist in the stock
+		$sqlPrice = "SELECT item_cost, item_mrp FROM tbl_stock WHERE item_cost='$itcost' AND item_mrp='$itmrp' AND pro_id='$grnpid'";
+		$resPrice = $con->query($sqlPrice);
+		$norPrice = $resPrice->num_rows;
 
-			// $result=$con->query($sql);
-			$result=$con->query($sql);
-			
-			if($con->error){
-				echo("SQL error ".$con->error);
+		//if product not exist in stock
+		if ($norPrice == 0) {
+
+			// create new batch id
+			$sqlbatchid = "SELECT batch_id
+			FROM tbl_stock
+			WHERE pro_id='$grnpid' ORDER BY batch_id DESC LIMIT 1";
+
+			//execute the query
+			$resultbatchid = $con->query($sqlbatchid);
+
+			//error handling
+			if ($con->errno) {
+				echo ("SQL Error: " . $con->error);
 				exit;
 			}
-			if($result>0){
-				echo("success2");
-				
-			}
-			else{
-				echo("error");
-			}
 
+			//checks the number of rows in the result 
+			$nor = $resultbatchid->num_rows;
+
+
+			if ($nor > 0) {
+				//fetch the result
+				$rec = $resultbatchid->fetch_assoc();
+				//assign ID to variable $num
+				$num = $rec["batch_id"];
+				//eliminate string GRN and get remaining ID no
+				$num = substr($num, 7);
+				//increment the ID
+				$num++;
+				//merge zeros to left side of ID (total length of ID should be 4)
+				$no = str_pad($num, 3, '0', STR_PAD_LEFT);
+				//merge string S to new sID
+				$grnbatch = $grnpid . "BT" . $no;
+			} else {
+				//first ID of student
+				$grnbatch = $grnpid . "GT001";
+			}
+			// insert data to grn details table
+			$sql = "INSERT INTO tbl_grn_details(grn_id,pro_id,grn_batch,qty,item_cost,item_mrp)
+				VALUES('$grnid','$grnpid','$grnbatch','$grnpqty','$itcost','$itmrp');";
+			$con->query($sql);
+			// insert new row to stock table
+			$sql2 = "INSERT INTO tbl_stock(batch_id,pro_id,stock_qty,item_cost,item_mrp)
+				VALUES('$grnbatch','$grnpid','$grnpqty','$itcost','$itmrp');";
+			$con->query($sql2);
+			// update purchase order product status to received
+			$sqlStatus = "UPDATE tbl_po_details SET pur_prostatus='0' WHERE purod_id='$poId' AND pro_id='$grnpid'";
+			$con->query($sqlStatus);
+		} else {
+			//if product exist in stock table
+			$stocksql = "SELECT batch_id, stock_qty
+				FROM tbl_stock
+				WHERE item_cost='$itcost' AND item_mrp='$itmrp' AND pro_id='$grnpid';";
+
+			$rec = $con->query($stocksql);
+			$nor = $rec->num_rows;
+			$num = $rec->fetch_assoc();
+			$stock = $num["stock_qty"]; 	//get current stock value
+			$grnbatch2 = $num["batch_id"];
+			$grnpqty = $grnpqty + $stock;	//add current stock value to new value
+			//update stock table with new value
+			$sqlupdate = "UPDATE tbl_stock	
+					SET stock_qty = '$grnpqty'
+					WHERE batch_id = '$grnbatch2';";
+			$con->query($sqlupdate);
+			//insert data to grn details table
+			$sql = "INSERT INTO tbl_grn_details(grn_id,pro_id,grn_batch,qty,item_cost,item_mrp)
+			VALUES('$grnid','$grnpid','$grnbatch2','$grnpqty','$itcost','$itmrp');";
+			$con->query($sql);
+			// update purchase order product status to received
+			$sqlStatus = "UPDATE tbl_po_details SET pur_prostatus='0' WHERE purod_id='$poId' AND pro_id='$grnpid'";
+			$con->query($sqlStatus);
 		}
+		// check all products in purchase order are received
+		$sqlcount = "SELECT pro_id FROM tbl_po_details WHERE pur_prostatus='0' AND purod_id='$poId'";
+		$countResult = $con->query($sqlcount);
+		$norCount = $countResult->num_rows;
+
+		if ($norCount>0) {
+			//set purchase order status to received
+			$sqlupdate = "UPDATE tbl_po
+			SET pur_status = '4'
+			WHERE pur_id = '$poId';";
+			$resultupdate = $con->query($sqlupdate);
+		}
+
+
+		// $stocksql = "SELECT stock_qty
+		// 			FROM tbl_stock
+		// 			WHERE batch_id='$grnbatch' and pro_id='$grnpid';";
+
+		// $rec = $con->query($stocksql);
+		// $nor = $rec->num_rows;
+
+		// if ($nor > 0) {
+		// 	$num = $rec->fetch_assoc();
+		// 	$stock = $num["stock_qty"];
+		// 	$grnpqty == $grnpqty + $stock;
+		// 	$sqlupdate = "UPDATE tbl_stock
+		// 					SET stock_qty = '$grnpqty'
+		// 					WHERE batch_id = '$grnbatch';";
+		// 	$resultupdate = $con->query($sqlupdate);
+		// } else {
+		// 	$sql2 = "INSERT INTO tbl_stock(batch_id,pro_id,stock_qty,item_cost,item_mrp)
+		// 		VALUES('$grnbatch','$grnpid','$grnpqty','$itcost','$itmrp');";
+		// 	$result2 = $con->query($sql2);
+		// }
+
+		// $result=$con->query($sql);
+		// $result = $con->query($sql);
+
+		// if ($con->error) {
+		// 	echo ("SQL error " . $con->error);
+		// 	exit;
+		// }
+		// if ($result > 0) {
+		// 	echo ("success2");
+		// } else {
+		// 	echo ("error");
+		// }
+	}
 }
-function poLoad(){
-	$db=new Connection();
-	$con=$db->db_con();
-	$sql="SELECT DISTINCT pur_id FROM tbl_po WHERE pur_status='Pending';";
-	$result=$con->query($sql);
-	if($con->errno)
-	{
-		echo("SQL Error: ".$con->error);
+function poLoad()
+{
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT DISTINCT pur_id FROM tbl_po WHERE pur_status='1'";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
 		exit;
 	}
 	//alert('func');
-	$nor=$result->num_rows;
-	if($nor==0){
-		echo("No records");
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("No records");
 		exit;
-	}
-	else{
+	} else {
 		//fetch all the records
-		while($rec=$result->fetch_assoc())
-		{
+		while ($rec = $result->fetch_assoc()) {
 			//merge province ID and name with HTML <option value="">--Select Supplier--</option>
 
-			echo("<option value='".$rec["pur_id"]."'>".$rec["pur_id"]."</option>");
+			echo ("<option value='" . $rec["pur_id"] . "'>" . $rec["pur_id"] . "</option>");
 		}
 	}
 	$con->close();
 }
-?>

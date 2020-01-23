@@ -217,20 +217,7 @@ var myTable = $('#productTable').DataTable({
         }
       });  
 
-    // load supplier select box
-    //   $.ajax({
-    //   url:"../controllers/controller_products.php?type=selectSupplierLoad",
-    //   method:"POST",
-    //   processData: false,
-    //   contentType: false,
-    // success: function(data){
-    //   //alert(data); 
-    //   $("#selectSupplier").empty();
-    //   $("#selectSupplier").append("<option value=''>--Select Supplier--</option>");
-    //   $("#selectSupplier").append(data);
       
-    //   }
-    // });
 
      
 

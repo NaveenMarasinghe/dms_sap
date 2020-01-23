@@ -48,7 +48,10 @@
 		<script src="../assets/js/bootstrap.min.js"></script>
 
 		<!-- page specific plugin scripts -->
-
+		<script src="../assets/js/jquery-ui.custom.min.js"></script>
+		<script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="../assets/js/moment.min.js"></script>
+		<script src="../assets/js/fullcalendar.min.js"></script>
 		<!-- ace scripts -->
 		<script src="../assets/js/ace-elements.min.js"></script>
 		<script src="../assets/js/ace.min.js"></script>

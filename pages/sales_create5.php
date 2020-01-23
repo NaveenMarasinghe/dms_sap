@@ -1,3 +1,11 @@
+<?php
+  session_start();
+    if(!isset($_SESSION["user"])|| $_SESSION["user"]["utype"]!="1"){
+      header("location:../index.php");
+    }
+
+?>
+
 <?php require_once("../incl/header.php"); ?>
 <link href="../assets/css/select2.min.css" rel="stylesheet" />
 <script src="../assets/js/select2.min.js"></script>
@@ -39,7 +47,7 @@
                                                     <button type='button' class='btn btn-primary' id='salesSelectPrd' style="float: right;">Add Products</button>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12" id='createSales'>
+                                            <div class="col-xs-12" id='createSalesDiv'>
                                                 <div class="form-group">
                                                     <button type='button' class='btn btn-primary' id='createSales' style="float: right;">Create Sales</button>
                                                 </div>
@@ -57,7 +65,12 @@
                                                     <input readonly type="text" class="form-control" id="salesid" name="salesid">
                                                 </div>
                                             </div>
-
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="rtsche">Route Schedule ID</label>
+                                                    <input readonly type="text" class="form-control" id="rtsche" name="rtsche" value='<?php echo $_SESSION["rtsche"]["rtscheid"] ?>'>
+                                                </div>
+                                            </div>
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
@@ -221,25 +234,33 @@
                                                             <tfoot>
                                                                 <tr>
 
-                                                                    <td colspan="5" class="blank"> </td>
-                                                                    <td colspan="1">Sub Total</td>
-                                                                    <td class="subTotal" id="subTotal">
+                                                                    <td colspan="4" class="blank"> </td>
+                                                                    <td colspan="2">Sub Total</td>
+                                                                    <td class="subTotal" id="subTotal" style='text-align:right'>
                                                                         0.00
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
 
-                                                                    <td colspan="5" class="blank"> </td>
-                                                                    <td colspan="1">Amount Paid</td>
-                                                                    <td>
-                                                                        <div id="total"><input class="amountPaid" id="amountPaid" style="border:0px; width:50%" value="" /></div>
+                                                                    <td colspan="4" class="blank"> </td>
+                                                                    <td colspan="2">Amount Paid</td>
+                                                                    <td style='text-align:right'>
+                                                                        <div id="total"><input class="amountPaid" id="amountPaid" style="border:0px; width:50%; text-align:right" value="" /></div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
 
-                                                                    <td colspan="5" class="blank"> </td>
-                                                                    <td colspan="1">Balance due</td>
-                                                                    <td class="balanceVal" id="balanceVal">
+                                                                    <td colspan="4" class="blank"> </td>
+                                                                    <td colspan="2">Previous Balance</td>
+                                                                    <td class="preBalance" id="preBalance" style='text-align:right'>
+                                                                        0.00
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+
+                                                                    <td colspan="4" class="blank"> </td>
+                                                                    <td colspan="2">Balance due</td>
+                                                                    <td class="balanceVal" id="balanceVal" style='text-align:right'>
                                                                         0.00
                                                                     </td>
                                                                 </tr>
@@ -253,18 +274,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                <div class="col-md-4">
+                                <div id="btnSet">
+                                    <div class="col-md-4">
 
-                                
-                                <button type="button" class="btn btn-danger btn-block btn-flat" id="payment">Cancel</button>   
-                                </div>
-                                <div class="col-md-4">
-                                <button type="button" class="btn btn-warning btn-block btn-flat" id="payment">Hold</button>
-                                </div>
-                                <div class="col-md-4">
-                                <button type="button" class="btn btn-success btn-block btn-flat" id="payment">Submit</button>
-                                </div>
+
+                                        <button type="button" class="btn btn-danger btn-block btn-flat" id="salesCancel">Cancel</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-warning btn-block btn-flat" id="salesHold">Hold</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-success btn-block btn-flat" id="salesSubmit">Submit</button>
+                                    </div>
                                 </div>
                                 <!-- <div class="clearfix form-actions">
                                     <div class="col-md-offset-3 col-md-9">
@@ -294,27 +315,6 @@
 </div><!-- /.page-content -->
 
 <script type="text/javascript">
-    function storeTblValues(test) {
-        var TableData = new Array();
-
-        $('#salesTableBody tr').each(function(row, tr) {
-            TableData[row] = {
-                "batch_id": $(tr).find('td:eq(1)').text(),
-                "item_name": $(tr).find('td:eq(2)').text(),
-                "item_price": $(tr).find('td:eq(3)').text(),
-                "item_qty": $(tr).find('.qtyTable').val(),
-                "item_dis": $(tr).find('.discountVal').val(),
-                "item_total": $(tr).find('.subTol').val(),
-                "salesId": test
-            }
-            //   poid    
-            // TableData.push("Kiwi");
-        });
-        // TableData.shift();  // first row will be empty - so remove
-
-        return TableData;
-    }
-
     jQuery(function($) {
         function toFixedFunction(numb) {
             // var num = 5.56789;
@@ -359,10 +359,10 @@
         $('#salesTableBody tr').each(function(row, tr) {
             var $row = $(this).closest("tr");
             // var rows = $("#invoice-table tbody").children('tr');
-            var rowTotalVal = parseFloat($row.find("td:nth-child(7)").text());
-            rowTotalVal = rowTotalVal;
+            var rowTotalVal = $row.find("td:nth-child(7)").text();
+            rowTotalVal = parseFloat(rowTotalVal);
             subTotal = subTotal + rowTotalVal;
-            // alert(subTotal);
+            subTotal = parseFloat(subTotal);
 
         });
         $("#subTotal").text(subTotal.toFixed(2));
@@ -373,14 +373,29 @@
     function updateAmountDue() {
         // alert("gg");
         // var balance = 0;
-        var amountPaid = $(".amountPaid").val();
-        var subTotal = parseFloat($(".subTotal").text());
-        subTotal = subTotal.toFixed(2);
-        // alert(subTotal);
-        balance = subTotal - amountPaid;
-        balance = balance.toFixed(2);
-        $(".balanceVal").text(balance);
-        $(".amountPaid").text(subTotal);
+        var selectCustomer = $("#salesCustomer").val();
+
+        $.post("../controllers/controller_sales.php?type=getSalesBalance", {
+                selectCustomer: selectCustomer
+            },
+            function(data, status) {
+                if (status == "success") {
+                    var prebalance = parseFloat(data);
+                    $("#preBalance").text(prebalance.toFixed(2));
+                    var amountPaid = $(".amountPaid").val();
+                    var subTotal = parseFloat($("#subTotal").text());
+
+                    subTotal = subTotal.toFixed(2);
+                    balance = subTotal - amountPaid + prebalance;
+                    balance = balance.toFixed(2);
+                    $(".balanceVal").text(balance);
+                    $(".amountPaid").text(subTotal);
+
+                }
+            });
+
+
+
     }
 
     function updateTableRow() {
@@ -401,14 +416,14 @@
 
     $(document).ready(function() {
 
-        // $('#salesChangeCusDiv').hide();
         $('#selectProducts').hide();
         $('#salesChangeCusDiv').hide();
         $('#salesSelectPrdDiv').hide();
+        $('#btnSet').hide();
         $("#salesid").val("");
 
         $.noConflict();
-        // load supplier select box
+
         $.post("../controllers/controller_sales.php?type=get_route",
             function(data, status) {
                 if (status == "success") {
@@ -419,6 +434,8 @@
 
                 }
             });
+
+
         $.post("../controllers/controller_sales.php?type=get_suppliers",
             function(data, status) {
                 if (status == "success") {
@@ -433,16 +450,18 @@
 
     $('#createSales').click(function() {
         $('#selectCustomer').hide();
-        $('#createSales').hide();
+        $('#createSalesDiv').hide();
         $('#selectProducts').show();
         $('#salesChangeCusDiv').show();
+        $('#btnSet').show();
     });
 
     $('#salesChangeCus').click(function() {
         $('#selectProducts').hide();
         $('#salesChangeCusDiv').hide();
         $('#selectCustomer').show();
-        $('#salesSelectPrdDiv').show();
+        $('#createSalesDiv').show();
+        $('#btnSet').hide();
 
     });
 
@@ -492,6 +511,22 @@
                 }
             });
 
+        var supplierval = $('#salesSupplier').val();
+        
+        // get filtered data to datatable
+        $.post("../controllers/controller_sales.php?type=getFullProductList", {
+                supplierval: supplierval
+            },
+            function(data, status) {
+                if (status == "success") {
+                    // alert(data);
+                    $("#salesProductName").empty();
+                    $("#salesProductName").append("<option></option>");
+                    $("#salesProductName").append(data);
+                
+                }
+            });
+
     });
 
     $('#salesProductCat').change(function() {
@@ -510,10 +545,6 @@
                     $("#salesProductName").empty();
                     $("#salesProductName").append("<option></option>");
                     $("#salesProductName").append(data);
-                    //   $('.select2gg').select2({
-                    //   placeholder: "Select a Product",
-                    //   allowClear: true
-                    // });
                 }
             });
 
@@ -581,7 +612,7 @@
         });
 
         $(document).ready(function() {
-
+            $(".subTotal").text("0.00");
             $(".amountPaid").val("0.00");
             $("#itemPrice").val("0.00");
             $("#grossTotal").val("0.00");
@@ -653,8 +684,6 @@
                 var batch = $("#salesBatch option:selected").text();
                 var proid = $('#salesProductName').val();
 
-
-
                 var proname = $("#salesProductName option:selected").text();
                 var qnty = $('#qty').val();
                 var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button></div>"
@@ -678,6 +707,7 @@
 
                 // updateAmountDue();
                 var salesId = $("#salesid").val();
+
                 $.post("../controllers/controller_sales.php?type=salesAddRow", {
                         proname: proname,
                         item_cost: item_cost,
@@ -746,6 +776,8 @@
                             // });
                         }
                     });
+
+
 
             });
             var oldVal = "";
@@ -832,15 +864,16 @@
 
             $("#salesTable tfoot").on("keyup", '.amountPaid', function() {
                 // alert("gg");
-                var balance = 0;
-                var amountPaid = $(".amountPaid").val();
-                var subTotal = parseFloat($(".subTotal").text());
-                subTotal = subTotal.toFixed(2);
-                // alert(subTotal);
-                balance = subTotal - amountPaid;
-                balance = balance.toFixed(2);
-                $(".balanceVal").text(balance);
-                $(".amountPaid").text(subTotal);
+                updateAmountDue();
+                // var balance = 0;
+                // var amountPaid = $(".amountPaid").val();
+                // var subTotal = parseFloat($(".subTotal").text());
+                // subTotal = subTotal.toFixed(2);
+                // // alert(subTotal);
+                // balance = subTotal - amountPaid;
+                // balance = balance.toFixed(2);
+                // $(".balanceVal").text(balance);
+                // $(".amountPaid").text(subTotal);
             });
             $('#salesTable tbody').on('click', '.fa-minus-circle', function() {
 
@@ -848,7 +881,7 @@
 
                 var $row = $(this).closest("tr"); // Find the row
                 var proname = $row.find("td:nth-child(3)").text();
-                var proqty = parseInt($row.find("td:nth-child(4)").text());
+                var proqty = parseFloat($row.find(".tableQty").val());
                 // alert(proqty);
                 // alert(proname);
                 var salesid = $('#salesid').val();
@@ -875,18 +908,19 @@
                             },
                             function(data, status) {
                                 if (status == "success") {}
+                                $.post("../controllers/controller_sales.php?type=salesCreateTable", {
+                                        salesId: salesid
+                                    },
+                                    function(data, status) {
+                                        if (status == "success") {
+                                            $("#salesTable tbody").empty();
+                                            $("#salesTable tbody").append(data);
+                                            updateSubTol();
+                                            updateAmountDue();
+                                        }
+                                    });
                             });
-                        $.post("../controllers/controller_sales.php?type=salesCreateTable", {
-                                salesId: salesid
-                            },
-                            function(data, status) {
-                                if (status == "success") {
-                                    $("#salesTable tbody").empty();
-                                    $("#salesTable tbody").append(data);
-                                    updateSubTol();
-                                    updateAmountDue();
-                                }
-                            });
+
                     } else {
                         Swal.fire(
                             'Items not removed!',
@@ -959,6 +993,49 @@
                 //     }
                 // });
                 // myTable.row('.selected').remove().draw( false );
+            });
+
+            $('#salesSubmit').click(function() {
+                var salesid = $("#salesid").val();
+
+                var subTotal = $('#subTotal').text();
+                var amountPaid = $('#amountPaid').val();
+                var salesCustomer = $('#salesCustomer').val();
+                var preBalance = $('#preBalance').text();
+                var balanceVal = $('#balanceVal').text();
+
+                $.post("../controllers/controller_sales.php?type=salesSubmit", {
+                        salesid: salesid,
+                        subTotal: subTotal,
+                        amountPaid: amountPaid,
+                        balanceVal: balanceVal,
+                        preBalance: preBalance,
+                        salesCustomer: salesCustomer
+                    },
+                    function(data, status) {
+                        if (status == "success") {
+
+                            window.location.href = "sales_create_invoice.php?salesid=" + salesid;
+                        }
+                    });
+
+            });
+            $('#salesCancel').click(function() {
+                var salesid = $("#salesid").val();
+                $.post("../controllers/controller_sales.php?type=salesCancel", {
+                        salesid: salesid
+                    },
+                    function(data, status) {
+                        if (status == "success") {
+
+                            window.location.href = "sales_create5.php?";
+                        }
+                    });
+            });
+
+            $('#salesHold').click(function() {
+                var salesid = $("#salesid").val();
+                window.location.href = "sales_create5.php";
             });
             // // Automatically add a first row of data
             // $('#addRow').click();

@@ -25,8 +25,10 @@
 			if($rec["emp_status"]=="1")
 			{
 				session_start();
+
 				$_SESSION["user"]["uname"]=$uname;
 				$_SESSION["user"]["utype"]=$rec["emp_type"];
+				$_SESSION["user"]["emp_id"]=$rec["emp_id"];
 				echo("3");
 			}
 			else

@@ -20,6 +20,15 @@ if (isset($_GET["type"])) {
 		case "viewStockReport":
 			viewStockReport();
 			break;
+		case "vehicleStock":
+			vehicleStock();
+			break;
+		case "receiveRouteStock":
+			receiveRouteStock();
+			break;
+			case "receiveStock":
+				receiveStock();
+				break;
 	}
 }
 
@@ -57,7 +66,7 @@ function viewRouteStock()
 	$con = $db->db_con();
 	$sql = "SELECT rtsche.rtsche_proid, pd.pro_name, rtsche.rtsche_batch, rtsche.rtsche_qty
 				FROM tbl_route_sche_details rtsche, tbl_products pd
-				WHERE pd.pro_id=rtsche.rtsche_proid and rtsche.rtsche_id='$selectRouteSche'";
+				WHERE pd.pro_id=rtsche.rtsche_proid and rtsche.rtsche_id='$selectRouteSche' AND rtsche.rtsche_dstatus='1'";
 	$result = $con->query($sql);
 	if ($con->errno) {
 		echo ("SQL Error: " . $con->error);
@@ -66,6 +75,7 @@ function viewRouteStock()
 	$nor = $result->num_rows;
 	if ($nor == 0) {
 		echo ("<tr>");
+		echo ("<td>No Record</td>");
 		echo ("<td>No Record</td>");
 		echo ("<td>No Record</td>");
 		echo ("<td>No Record</td>");
@@ -91,6 +101,7 @@ function viewRouteStock()
 		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
 		// </tr>";	
 		echo ("<tr id='" . $rec["rtsche_proid"] . "'>");
+		echo ('<td class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></td>');
 		echo ("<td>" . $rec["rtsche_proid"] . "</td>");
 		echo ("<td>" . $rec["pro_name"] . "</td>");
 		echo ("<td>" . $rec["rtsche_batch"] . "</td>");
@@ -122,7 +133,7 @@ function RouteStockSalesman()
 	$db = new Connection();
 	$con = $db->db_con();
 	$sql = "SELECT usr.emp_fname, usr.emp_lname FROM tbl_route_sche rt, tbl_user_details usr where rt.routesche_id='$selectRouteSche' and rt.salesman=usr.emp_id";
-	$sql2 = "SELECT veh.veh_number FROM tbl_route_sche rt, tbl_vehicles veh where rt.routesche_id='$selectRouteSche' and veh.veh_id=rt.vehicle";
+	$sql2 = "SELECT vehicle FROM tbl_route_sche where routesche_id='$selectRouteSche'";
 
 	$result = $con->query($sql);
 	$result2 = $con->query($sql2);
@@ -139,12 +150,12 @@ function RouteStockSalesman()
 
 function issueStock()
 {
-
+	$rtsche = $_POST["rtsche"];
 	$db = new Connection();
 	$con = $db->db_con();
 
 	//query
-	$sql = "SELECT pur_id FROM tbl_po ORDER BY pur_id DESC LIMIT 1;";
+	$sql = "SELECT issue_stock_id FROM tbl_issue_stock ORDER BY issue_stock_id DESC LIMIT 1;";
 
 	//execute the query
 	$result = $con->query($sql);
@@ -163,27 +174,25 @@ function issueStock()
 		//fetch the result
 		$rec = $result->fetch_assoc();
 		//assign ID to variable $num
-		$num = $rec["pur_id"];
+		$num = $rec["issue_stock_id"];
 		//eliminate string S and get remaining ID no
-		$num = substr($num, 1);
+		$num = substr($num, 2);
 		//increment the ID
 		$num++;
 		//merge zeros to left side of ID (total length of ID should be 4)
 		$no = str_pad($num, 4, '0', STR_PAD_LEFT);
 		//merge string S to new sID
-		$poid = "P" . $no;
+		$isid = "IS" . $no;
 	} else {
 		//first ID of student
-		$poid = "PO0001";
+		$isid = "IS0001";
 	}
 
-	$podate = $_POST["podate"];
-	$poSupplier = $_POST["poSupplier"];
-	$remarks = $_POST["poremarks"];
-	$postatus = "Pending";
 
-	$sql2 = "INSERT INTO tbl_po(pur_id,pur_date,sup_id,pur_remarks,pur_status)
-		VALUES('$poid','$podate','$poSupplier','$remarks','$postatus');";
+
+
+	$sql2 = "INSERT INTO tbl_issue_stock(issue_stock_id,issue_routesche)
+		VALUES('$isid','$rtsche');";
 
 	$result2 = $con->query($sql2);
 	if ($con->error) {
@@ -191,7 +200,7 @@ function issueStock()
 		exit;
 	}
 	if ($result2 > 0) {
-		echo (json_encode($poid));
+		echo (json_encode($isid));
 	} else {
 		echo ("error");
 	}
@@ -235,4 +244,151 @@ function viewStockReport()
 	}
 
 	$con->close();
+}
+
+function vehicleStock()
+{
+	// Unescape the string values in the JSON array
+	$tableData = stripcslashes($_POST['pTableData']);
+
+	// Decode the JSON array
+	$tableData = json_decode($tableData, TRUE);
+
+	// now $tableData can be accessed like a PHP array
+	//echo $tableData[1]['pname'];
+	$tblDataLength = count($tableData);
+
+	for ($x = 1; $x < $tblDataLength; $x++) {
+
+
+		$pname = $tableData[$x]["pname"];
+		$pid = $tableData[$x]["pid"];
+		$pbatch = $tableData[$x]["pbatch"];
+		$isid = $tableData[$x]["isid"];
+		$vehnum = $tableData[$x]["vehnum"];
+		$pqty = $tableData[$x]["pqty"];
+		$rtsche = $tableData[$x]["rtsche"];
+
+		$db = new Connection();
+		$con = $db->db_con();
+
+		$sqlStock = "SELECT * FROM tbl_stock WHERE batch_id='$pbatch'";
+		$stockResult = $con->query($sqlStock);
+		$stockCount = $stockResult->num_rows;
+
+		if ($stockCount > 0) {
+			$stockRec = $stockResult->fetch_assoc();
+			$stockQty = $stockRec['stock_qty'];
+			$stockQty = $stockQty - $pqty;
+			$sqlUpdate = "UPDATE tbl_stock SET stock_qty='$stockQty' WHERE batch_id='$pbatch'";
+			$con->query($sqlUpdate);
+			echo ($stockQty);
+
+			$sqlrtst = "UPDATE tbl_route_sche_details SET rtsche_dstatus='0' WHERE rtsche_batch='$pbatch' AND rtsche_id='$rtsche'";
+			$con->query($sqlrtst);
+
+			$sqlVehStock = "SELECT * FROM tbl_vehicle_products WHERE batch_id='$pbatch' AND veh_id='$vehnum'";
+			$vehStockResult = $con->query($sqlVehStock);
+			$vehStockCount = $vehStockResult->num_rows;
+			if ($vehStockCount > 0) {
+				$vehStockRec = $vehStockResult->fetch_assoc();
+				$vehStockQty = $vehStockRec['qty'];
+				$vehStockQty = $vehStockQty + $pqty;
+				$sqlVehUpdate = "UPDATE tbl_vehicle_products SET qty='$vehStockQty' WHERE batch_id='$pbatch' AND veh_id='$vehnum'";
+				$con->query($sqlVehUpdate);
+				echo ($vehStockQty);
+			} else {
+				$sqlVehicle = "INSERT INTO tbl_vehicle_products(veh_id,pro_id,batch_id,qty)
+				VALUES('$vehnum','$pid','$pbatch','$pqty')";
+				$con->query($sqlVehicle);
+				echo ("stock added success");
+			}
+		} else {
+			echo ($pbatch);
+		}
+		$con->close();
+	}
+}
+function receiveRouteStock()
+{
+	$routeVehicle = $_POST["routeVehicle"];
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT st.pro_id, pro.pro_name, veh.batch_id, veh.qty
+				FROM tbl_vehicle_products veh, tbl_products pro, tbl_stock st
+				WHERE veh.veh_id='$routeVehicle' AND veh.batch_id=st.batch_id AND st.pro_id=pro.pro_id";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("<tr>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+		echo ("</tr>");
+		exit;
+	}
+	while ($rec = $result->fetch_assoc()) {
+		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
+		// </tr>";	
+		echo ("<tr>");
+		echo ('<td class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></td>');
+		echo ("<td>" . $rec["pro_id"] . "</td>");
+		echo ("<td>" . $rec["pro_name"] . "</td>");
+		echo ("<td>" . $rec["batch_id"] . "</td>");
+		echo ("<td>" . $rec["qty"] . "</td>");
+		echo ("</tr>");
+	}
+
+	$con->close();
+}
+
+function receiveStock(){
+		// Unescape the string values in the JSON array
+		$tableData = stripcslashes($_POST['pTableData']);
+
+		// Decode the JSON array
+		$tableData = json_decode($tableData, TRUE);
+	
+		// now $tableData can be accessed like a PHP array
+		//echo $tableData[1]['pname'];
+		$tblDataLength = count($tableData);
+	
+		for ($x = 1; $x < $tblDataLength; $x++) {
+	
+	
+			$batch = $tableData[$x]["batch"];
+			$qty = $tableData[$x]["qty"];
+			$routeVehicle = $tableData[$x]["routeVehicle"];
+
+			
+	
+			$db = new Connection();
+			$con = $db->db_con();
+	
+			$sql1="SELECT stock_qty FROM tbl_stock WHERE batch_id='$batch' ";
+			$stockResult = $con->query($sql1);
+			$stockCount = $stockResult->num_rows;
+
+			if($stockCount>0){
+				$rec = $stockResult->fetch_assoc();
+				$stockqty = $rec["stock_qty"];
+				$stockqty=$stockqty+$qty;
+				$sqlupdate="UPDATE tbl_stock SET stock_qty='$stockqty' WHERE batch_id='$batch'";
+				$con->query($sqlupdate);
+				echo($stockqty);
+
+				$sqlveh="DELETE FROM tbl_vehicle_products WHERE veh_id='$routeVehicle' AND batch_id='$batch'";
+				$con->query($sqlveh);
+				echo('removed');
+			}			
+	
+
+			$con->close();
+		}
 }
