@@ -68,11 +68,11 @@ if (isset($_GET["type"])) {
 			salesInvoiceTable();
 			break;
 		case "getTodayRouteSche";
-		getTodayRouteSche();
+			getTodayRouteSche();
 			break;
-		// case "getTodayRouteSche";
-		// 	getTodayRouteSche();
-		// 	break;
+		case "viewSales";
+			viewSales();
+			break;
 	}
 }
 function get_route()
@@ -797,3 +797,46 @@ function getTodayRouteSche()
 	$con->close();
 }
 
+function viewSales()
+{
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT sl.sales_id, cus.cus_name, sup.sup_name, sl.sales_total, sl.sales_paid
+			FROM tbl_sales_order sl, tbl_customers cus, tbl_suppliers sup
+			WHERE sl.cus_id=cus.cus_id AND sl.sup_id=sup.sup_id";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("<tr>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+
+		echo ("</tr>");
+		exit;
+	}
+	while ($rec = $result->fetch_assoc()) {
+
+		echo ("<tr id='" . $rec["sales_id"] . "'>");
+		echo ("<td>" . $rec["sales_id"] . "</td>");
+		echo ("<td>" . $rec["cus_name"] . "</td>");
+		echo ("<td>" . $rec["sales_total"] . "</td>");
+		echo ("<td>" . $rec["sales_paid"] . "</td>");
+		echo ('<td style="text-align:center"><div class="hidden-sm hidden-xs btn-group">
+		<a href="sales_create_invoice.php?salesid='. $rec["sales_id"] . '">
+		<button class="btn btn-xs btn-info">
+			<i class="ace-icon fa fa-info-circle bigger-120"></i>
+		</button></a>
+
+	</div></td>');
+		echo ("</tr>");
+	}
+
+	$con->close();
+}

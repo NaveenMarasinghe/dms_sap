@@ -1,6 +1,8 @@
 			<div id="sidebar" class="sidebar                  responsive                    ace-save-state">
 				<script type="text/javascript">
-					try{ace.settings.loadState('sidebar')}catch(e){}
+					try {
+						ace.settings.loadState('sidebar')
+					} catch (e) {}
 				</script>
 
 				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
@@ -139,7 +141,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="">
+								<a href="../pages/sales_view.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									View Sales
 								</a>
@@ -213,7 +215,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="form-elements.html">
+								<a href="../pages/grn_view.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									View GRN
 								</a>
@@ -287,7 +289,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="../pages/customer_add.php">
+								<a href="../pages/customer_view.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									View Customers
 								</a>
@@ -359,7 +361,7 @@
 								</a>
 
 								<b class="arrow"></b>
-							</li>							
+							</li>
 
 							<li class="">
 								<a href="../pages/stock_receive.php">
@@ -377,7 +379,7 @@
 								</a>
 
 								<b class="arrow"></b>
-							</li>	
+							</li>
 
 						</ul>
 					</li>
@@ -444,7 +446,7 @@
 							</li>
 
 							<li class="">
-								<a href="form-elements.html">
+								<a href="../pages/stock_report2.php">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Stock Reports
 								</a>
@@ -463,6 +465,9 @@
 
 						</ul>
 					</li>
+
+
+			
 
 				</ul><!-- /.nav-list -->
 

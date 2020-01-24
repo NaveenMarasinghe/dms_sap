@@ -15,7 +15,7 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<!-- PAGE CONTENT BEGINS -->
-
+      <div class="form-actions">
           <div class="box-header with-border">
               <h3 class="box-title">View Products</h3>
           </div>
@@ -94,6 +94,7 @@
               </tfoot>
               </table>
             </div>
+		</div>
 <!--  View product details modal -->
     <div class="modal fade" id="modalEditProduct" tabindex="-1" >
       <div class="modal-dialog">

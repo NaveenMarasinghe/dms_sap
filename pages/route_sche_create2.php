@@ -39,38 +39,36 @@
 										<span class="title">Assign Resources</span>
 									</li>
 
-									<li data-step="4">
-										<span class="step">4</span>
-										<span class="title">Complete Schedule</span>
-									</li>
+
 								</ul>
 							</div>
 
 							<hr />
 
 							<div class="step-content pos-rel">
-								<div class="step-pane active" data-step="1">
-									<!-- <h3 class="lighter block green">Enter the following information</h3> -->
+								<form id="routeScheForm">
+									<div class="step-pane active" data-step="1">
+										<!-- <h3 class="lighter block green">Enter the following information</h3> -->
 
-									<form id="routeScheForm" method="post">
+
 										<div class="row">
-											<div class="col-md-3">
-												<div class="form-group" id="filter_col1" data-column="2">
+											<div class="col-md-3 form-group">
+												<div>
 													<label for="rtscheSupplier">Supplier</label>
 													<select name="rtscheSupplier" id="rtscheSupplier" class="form-control selcet-filter">
 														<option value="0">--Select Supplier--</option>
 													</select>
 												</div>
 											</div>
-
-											<div class="col-md-3">
-												<div class="form-group">
+											<div class="col-md-3 form-group">
+												<div>
 													<label for="rtscheTerritory">Territory</label>
 													<select name="rtscheTerritory" id="rtscheTerritory" class="form-control selcet-filter">
-														<option value="0">--Select Territory--</option>
+														<option value="0">--Select Terrritory--</option>
 													</select>
 												</div>
 											</div>
+
 											<div class="col-md-3 form-group">
 												<div>
 													<label for="rtscheRoute">Route</label>
@@ -104,163 +102,160 @@
 												</div>
 											</div>
 										</div>
-									</form>
+
+								</form>
+							</div>
+
+							<div class="step-pane" data-step="2">
+
+								<div class="row">
+									<div class="col-md-3 form-group">
+										<div>
+											<label for="rtscheProCat">Product Category</label>
+											<select name="rtscheProCat" id="rtscheProCat" class="form-control selcet-filter">
+												<option value="0">--Select Product Category--</option>
+											</select>
+										</div>
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col-md-3 form-group">
+										<div>
+											<label for="rtscheProName">Product Name</label>
+											<select class="form-control selcet-filter select2gg" style="width: 100%" id="rtscheProName" name="rtscheProName">
+												<option>--Select a Product--</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="col-md-3 form-group">
+										<div>
+											<label for="rtscheBatch">Batch</label>
+											<select name="rtscheBatch" id="rtscheBatch" class="form-control selcet-filter">
+												<option value="0">--Select Batch--</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-3 form-group">
+										<div>
+											<label for="rtscheQty">Qty</label>
+											<input type="text" class="form-control" name="rtscheQty" id="rtscheQty">
+
+										</div>
+									</div>
+									<div class="col-xs-3">
+
+										<div class="form-group">
+											<label for="rtscheQty">&nbsp;</label>
+											<button type='button' class='btn btn-primary btn-block' id='rtscheAddItems'>Add Items</button>
+										</div>
+
+									</div>
 
 								</div>
 
-								<div class="step-pane" data-step="2">
-									<form id="routeScheProductListForm" method="get">
-										<div class="row">
-											<div class="col-md-4 form-group">
-												<div>
-													<label for="rtscheProCat">Product Category</label>
-													<select name="rtscheProCat" id="rtscheProCat" class="form-control selcet-filter">
-														<option value="0">--Select Product Category--</option>
-													</select>
-												</div>
-											</div>
+								<div class="row">
+									<div class="col-xs-12">
 
-										</div>
-										<div class="row">
-											<div class="col-md-4 form-group">
-												<div>
-													<label for="rtscheProName">Product Name</label>
-													<select class="form-control selcet-filter select2gg" style="width: 100%" id="rtscheProName" name="rtscheProName">
-														<option>--Select a Product--</option>
-													</select>
-												</div>
-											</div>
 
-											<div class="col-md-4 form-group">
-												<div>
-													<label for="rtscheBatch">Batch</label>
-													<select name="rtscheBatch" id="rtscheBatch" class="form-control selcet-filter">
-														<option value="0">--Select Batch--</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-md-4 form-group">
-												<div>
-													<label for="rtscheQty">Qty</label>
-													<input type="text" class="form-control" name="rtscheQty" id="rtscheQty">
-
-												</div>
-											</div>
-
-										</div>
-										<div class="row">
-											<div class="col-xs-4">
-
-											</div>
-											<div class="col-xs-4">
-
-											</div>
-											<div class="col-xs-4">
-
-												<div class="form-group">
-
-													<button type='button' class='btn btn-primary btn-block' id='rtscheAddItems'>Add Items</button>
-												</div>
-
-											</div>
-										</div>
 										<div class="row">
 											<div class="col-xs-12">
 
-
-												<div class="row">
-													<div class="col-xs-12">
-
-														<div class="clearfix">
-															<div class="pull-right tableTools-container"></div>
-														</div>
-
-
-
-														<table id="rtscheTable" class="table table-striped table-bordered table-hover" style="width:100%">
-															<thead>
-																<tr>
-
-																	<th>Product ID</th>
-																	<th>Product Name</th>
-																	<th>Batch</th>
-																	<th>Quantity</th>
-																	<th>Actions</th>
-																</tr>
-															</thead>
-
-															<tbody id="rtscheTablebody">
-
-															</tbody>
-														</table>
-
-													</div>
+												<div class="clearfix">
+													<div class="pull-right tableTools-container"></div>
 												</div>
 
-												<div id="grid-pager"></div>
+
+
+												<table id="rtscheTable" class="table table-striped table-bordered table-hover" style="width:100%">
+													<thead>
+														<tr>
+
+															<th>Product ID</th>
+															<th>Product Name</th>
+															<th>Batch</th>
+															<th>Quantity</th>
+															<th>Actions</th>
+														</tr>
+													</thead>
+
+													<tbody id="rtscheTablebody">
+
+													</tbody>
+												</table>
 
 											</div>
 										</div>
-									</form>
+
+										<div id="grid-pager"></div>
+
+									</div>
 								</div>
 
-								<div class="step-pane" data-step="3">
-									<div class="row">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="exampleInputEmail1">Vehicle</label>
-												<select name="selectVehicle" id="selectVehicle" class="form-control selcet-filter">
-													<option value="0">--Select Vehicle--</option>
-												</select>
-											</div>
+							</div>
+
+							<div class="step-pane" data-step="3">
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="selectVehicle">Vehicle</label>
+											<select name="selectVehicle" id="selectVehicle" class="form-control selcet-filter">
+												<option value="0">--Select Vehicle--</option>
+											</select>
 										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="exampleInputEmail1">Driver</label>
-												<select name="selectDriver" id="selectDriver" class="form-control selcet-filter">
-													<option value="0">--Select Driver--</option>
-												</select>
-											</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="selectDriver">Driver</label>
+											<select name="selectDriver" id="selectDriver" class="form-control selcet-filter">
+												<option value="0">--Select Driver--</option>
+											</select>
 										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label for="exampleInputEmail1">Salesman</label>
-												<select name="selectSalesman" id="selectSalesman" class="form-control selcet-filter">
-													<option value="0">--Select Salesman--</option>
-												</select>
-											</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="selectSalesman">Salesman</label>
+											<select name="selectSalesman" id="selectSalesman" class="form-control selcet-filter">
+												<option value="0">--Select Salesman--</option>
+											</select>
 										</div>
 									</div>
 								</div>
 
-								<div class="step-pane" data-step="4">
-									<div class="center">
-										<h3 class="green">Route Schedule Completed!</h3>
+							</div>
 
-									</div>
+							<div class="step-pane" data-step="4">
+								<div class="center">
+									<h3 class="green">Route Schedule Completed!</h3>
+
 								</div>
 							</div>
+							</form>
+
 						</div>
+					</div>
 
-						<hr />
-						<div class="wizard-actions">
-							<button class="btn btn-prev">
-								<i class="ace-icon fa fa-arrow-left"></i>
-								Prev
-							</button>
+					<hr />
+					<div class="wizard-actions">
+						<button class="btn btn-prev">
+							<i class="ace-icon fa fa-arrow-left"></i>
+							Prev
+						</button>
 
-							<button class="btn btn-success btn-next" data-last="Finish">
-								Next
-								<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-							</button>
-						</div>
-					</div><!-- /.widget-main -->
-				</div><!-- /.widget-body -->
-			</div>
+						<button class="btn btn-success btn-next" data-last="Finish">
+							Next
+							<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+						</button>
+					</div>
+				</div><!-- /.widget-main -->
+			</div><!-- /.widget-body -->
+		</div>
 
-			<!-- PAGE CONTENT ENDS -->
-		</div><!-- /.col -->
-	</div><!-- /.row -->
+		<!-- PAGE CONTENT ENDS -->
+	</div><!-- /.col -->
+</div><!-- /.row -->
 </div><!-- /.page-content -->
 </div>
 </div><!-- /.main-content -->
@@ -330,7 +325,9 @@
 
 
 
+
 		$(document).ready(function() {
+
 
 			$.noConflict();
 			$("#rtscheTable").DataTable()
@@ -399,31 +396,6 @@
 
 		});
 
-		// $('#rtscheProGroup').change(function(){
-
-		//      var proGroup = $('#rtscheProGroup').val(); // get option's value
-
-		//      $.post("../controllers/controller_routeSche.php?type=rtscheProductTable",
-		//      {proGroup:proGroup},
-		//      function(data,status){
-		//      if(status=="success"){
-		//       //alert(data);
-		//         $("#rtscheTable").DataTable().destroy();
-		//       $("#rtscheTable tbody").empty();
-		//       $("#rtscheTable tbody").append(data);
-		//       $("#rtscheTable").DataTable({
-		// 	"order": [[ 0, "dsec" ]],
-		// 	// "columnDefs": [
-		// 	//     { "width": "25%", "targets": 3 },
-		// 	//     { "width": "25%", "targets": 2 },
-		// 	//     { "width": "25%", "targets": 1 },
-		// 	//     { "width": "25%", "targets": 0 }
-		// 	// ]
-		// });				      
-		//     }
-		//   });			
-
-		//    });		
 		$('#rtscheTerritory').change(function() {
 
 			var rtscheTerritory = $('#rtscheTerritory').val(); // get option's value
@@ -489,7 +461,7 @@
 			//alert(proid);
 			//change product name select box options
 			$.post("../controllers/controller_routeSche.php?type=selectSalesman", {
-				rtscheDate: rtscheDate
+					rtscheDate: rtscheDate
 				},
 				function(data, status) {
 					if (status == "success") {
@@ -500,8 +472,8 @@
 					}
 				});
 
-				$.post("../controllers/controller_routeSche.php?type=selectVehicle", {
-				rtscheDate: rtscheDate
+			$.post("../controllers/controller_routeSche.php?type=selectVehicle", {
+					rtscheDate: rtscheDate
 				},
 				function(data, status) {
 					if (status == "success") {
@@ -512,8 +484,8 @@
 					}
 				});
 
-				$.post("../controllers/controller_routeSche.php?type=selectDriver", {
-				rtscheDate: rtscheDate
+			$.post("../controllers/controller_routeSche.php?type=selectDriver", {
+					rtscheDate: rtscheDate
 				},
 				function(data, status) {
 					if (status == "success") {
@@ -529,6 +501,7 @@
 		var rtscheTable2 = $('#rtscheTable').DataTable({
 			aaSorting: []
 		});
+
 		$('#rtscheAddItems').on('click', function() {
 
 
@@ -582,6 +555,7 @@
 
 		});
 
+
 		$('#rtscheTable tbody').on('click', '.fa-trash-o', function() {
 
 			var btn = this;
@@ -620,81 +594,98 @@
 			dateFormat: 'yy-mm-dd'
 		});
 
-
-
-
-
 		var $validation = false;
 		$('#fuelux-wizard-container')
 			.ace_wizard({
-				//step: 2 //optional argument. wizard will jump to step "2" at first
-				//buttons: '.wizard-actions:eq(0)'
+
 			})
 
-			//.on('changed.fu.wizard', function() {
-			//})
+			.on('actionclicked.fu.wizard', function(e, info) {
+				if (info.step == 1) {
+
+					if (!$('#rtscheSupplier').valid()) e.preventDefault();
+					if (!$('#rtscheTerritory').valid()) e.preventDefault();
+					if (!$('#rtscheRoute').valid()) e.preventDefault();
+					if (!$('#rtscheDate').valid()) e.preventDefault();
+
+				}
+				if (info.step == 2) {
+
+				}
+			})
+
 			.on('finished.fu.wizard', function(e) {
 				//save to database
-				d = new FormData($("#routeScheForm")[0]);
-				alert(d);
-				$.ajax({
-					url: "../controllers/controller_routeSche.php?type=routeScheSave",
-					method: "POST",
-					data: d,
-					processData: false,
-					contentType: false,
-					success: function(data) {
-						// $('#purchaseform')[0].reset();
-						// location.reload(true);
-						alert(data);
+				// if (!$('#rtscheSupplier').valid()) e.preventDefault();
+				// 	if (!$('#selectSalesman').valid()) e.preventDefault();
+				// 	if (!$('#selectDriver').valid()) e.preventDefault();
+				// 	if (!$('#selectVehicle').valid()) e.preventDefault();
 
-						// $("#poid").append(data);
-						var rtscheid = jQuery.parseJSON(data);
+				var rtscheSupplier = $("#rtscheSupplier").val();
+				var rtscheTerritory = $("#rtscheTerritory").val();
+				var rtscheRoute = $("#rtscheRoute").val();
+				var rtscheDate = $("#rtscheDate").val();
+				var rtscheRemarks = $("#rtscheRemarks").val();
+				var selectSalesman = $("#selectSalesman").val();
+				var selectDriver = $("#selectDriver").val();
+				var selectVehicle = $("#selectVehicle").val();
 
-						function storeTblValues() {
-							var TableData = new Array();
+				$.post("../controllers/controller_routeSche.php?type=routeScheSave", {
+						rtscheSupplier: rtscheSupplier,
+						rtscheTerritory: rtscheTerritory,
+						rtscheRoute: rtscheRoute,
+						rtscheDate: rtscheDate,
+						rtscheRemarks: rtscheRemarks,
+						selectSalesman: selectSalesman,
+						selectDriver: selectDriver,
+						selectVehicle: selectVehicle
+					},
+					function(data, status) {
+						if (status == "success") {
+							//alert(data);
+							var rtscheid = jQuery.parseJSON(data);
 
-							$('#rtscheTable tr').each(function(row, tr) {
-								TableData[row] = {
-									"rtschepid": $(tr).find('td:eq(0)').text(),
-									"rtschpname": $(tr).find('td:eq(1)').text(),
-									"rtschebatch": $(tr).find('td:eq(2)').text(),
-									"rtscheqty": $(tr).find('td:eq(3)').text(),
-									"rtscheid": rtscheid
-								}
-								//   poid    
-								// TableData.push("Kiwi");
-							});
-							// TableData.shift();  // first row will be empty - so remove
+							function storeTblValues() {
+								var TableData = new Array();
 
-							return TableData;
-						}
+								$('#rtscheTable tr').each(function(row, tr) {
+									TableData[row] = {
+										"rtschepid": $(tr).find('td:eq(0)').text(),
+										"rtschpname": $(tr).find('td:eq(1)').text(),
+										"rtschebatch": $(tr).find('td:eq(2)').text(),
+										"rtscheqty": $(tr).find('td:eq(3)').text(),
+										"rtscheid": rtscheid
+									}
+									//   poid    
+									// TableData.push("Kiwi");
+								});
+								// TableData.shift();  // first row will be empty - so remove
 
-						TableData = storeTblValues()
-						TableData = JSON.stringify(TableData);
-						alert(TableData);
-						$.ajax({
-							type: "POST",
-							url: "../controllers/controller_routeSche.php?type=rtscheSaveDetails",
-							data: "pTableData=" + TableData,
-							success: function(msg) {
-								alert(msg);
-								// $('#purchaseform')[0].reset();
-								location.reload(true);
-
+								return TableData;
 							}
-						});
-					}
-				});
-				bootbox.dialog({
-					message: "GRN Saved!",
-					buttons: {
-						"success": {
-							"label": "OK",
-							"className": "btn-sm btn-primary"
+
+							TableData = storeTblValues()
+							TableData = JSON.stringify(TableData);
+							alert(TableData);
+							$.ajax({
+								type: "POST",
+								url: "../controllers/controller_routeSche.php?type=rtscheSaveDetails",
+								data: "pTableData=" + TableData,
+								success: function(msg) {
+									alert(msg);
+									// $('#purchaseform')[0].reset();
+									location.reload(true);
+
+								}
+							});
 						}
-					}
-				});
+					});
+
+				Swal.fire(
+					'Route Schedule Created!',
+					
+					'success'
+				)
 			}).on('stepclick.fu.wizard', function(e) {
 				//e.preventDefault();//this will prevent clicking and selecting steps
 			});
@@ -715,54 +706,41 @@
 			return this.optional(element) || /^\(\d{3}\) \d{3}\-\d{4}( x\d{1,6})?$/.test(value);
 		}, "Enter a valid phone number.");
 
-		$('#validation-form').validate({
+		$('#routeScheForm').validate({
 			errorElement: 'div',
 			errorClass: 'help-block',
 			focusInvalid: false,
 			ignore: "",
 			rules: {
-				email: {
-					required: true,
-					email: true
-				},
-				password: {
-					required: true,
-					minlength: 5
-				},
-				password2: {
-					required: true,
-					minlength: 5,
-					equalTo: "#password"
-				},
-				name: {
+				rtscheSupplier: {
 					required: true
 				},
-				phone: {
-					required: true,
-					phone: 'required'
+				rtscheTerritory: {
+					required: true
+
 				},
-				url: {
-					required: true,
-					url: true
+				rtscheRoute: {
+					required: true
+
 				},
-				comment: {
+				rtscheDate: {
 					required: true
 				},
-				state: {
+				rtscheProCat: {
 					required: true
 				},
-				platform: {
+				rtscheProName: {
 					required: true
+
 				},
-				subscription: {
+				rtscheBatch: {
 					required: true
+
 				},
-				gender: {
-					required: true,
-				},
-				agree: {
-					required: true,
+				rtscheQty: {
+					required: true
 				}
+
 			},
 
 			messages: {
@@ -805,9 +783,6 @@
 			submitHandler: function(form) {},
 			invalidHandler: function(form) {}
 		});
-
-
-
 
 		$('#modal-wizard-container').ace_wizard();
 		$('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');

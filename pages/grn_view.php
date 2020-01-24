@@ -10,7 +10,7 @@
       <!-- PAGE CONTENT BEGINS -->
       <div class="form-actions">
       <div class="box-header with-border">
-        <h3 class="box-title">View Stock</h3>
+        <h3 class="box-title">View Goods Received Note</h3>
       </div>
       <div class="clearfix">
         <div class="pull-right tableTools-container"></div>
@@ -18,11 +18,11 @@
       <table id="stockTable" class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th>Batch ID</th>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Item Cost</th>
-            <th>Item MRP</th>
+            <th>GRN ID</th>
+            <th>Purchase Order</th>
+            <th>Supplier Name</th>
+            <th>Date</th>            
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="viewStockBody">
@@ -64,7 +64,7 @@
     // var myTable = $("#stockTable").DataTable({});
     $.noConflict();
     $.ajax({
-      url: "../controllers/controller_products.php?type=viewStock",
+      url: "../controllers/controller_grn.php?type=viewGrn",
       method: "POST",
       processData: false,
       contentType: false,
@@ -82,6 +82,7 @@
         $('#stockTable')
         //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
         .DataTable({
+            "order": [[ 0, "desc" ]],
           bAutoWidth: true,
           "aoColumns": [
 
@@ -90,7 +91,7 @@
           ],
           "aaSorting": [],
           "columnDefs": [{
-              "width": "20%",
+              "width": "10%",
               "targets": 4
             },
             {
@@ -102,7 +103,7 @@
               "targets": 2
             },
             {
-              "width": "20%",
+              "width": "30%",
               "targets": 1
             },
             {

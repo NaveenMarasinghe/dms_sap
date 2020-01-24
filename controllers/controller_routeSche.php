@@ -34,9 +34,9 @@ if (isset($_GET["type"])) {
 		case "rtscheViewDatatable":
 			rtscheViewDatatable();
 			break;
-			// case "routeScheId":
-			// 	routeScheId();
-			// 	break;
+			case "getRouteScheDetails":
+				getRouteScheDetails();
+				break;
 		case "selectSalesman";
 			selectSalesman();
 			break;
@@ -291,9 +291,6 @@ function purchaseView()
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-warning">
-						<i class="ace-icon fa fa-flag bigger-120"></i>
-					</button>
 				</div></td>');
 		echo ("</tr>");
 	}
@@ -370,20 +367,14 @@ function routeScheSave()
 	$rtscheSupplier = $_POST["rtscheSupplier"];
 	$rtscheRoute = $_POST["rtscheRoute"];
 	$rtscheDate = $_POST["rtscheDate"];
+	$selectSalesman = $_POST["selectSalesman"];
+	$selectDriver = $_POST["selectDriver"];
+	$selectVehicle = $_POST["selectVehicle"];
 	$rtscheRemarks = $_POST["rtscheRemarks"];
 	$rtscheStatus = "Pending";
 
-	// if($purid=='1'){
-	// 	$purid="Without PO";
-	// } else{
-	// 	$sqlupdate="UPDATE tbl_po
-	// 				SET pur_status = 'Received'
-	// 				WHERE pur_id = '$purid';";
-	// 	$resultupdate=$con->query($sqlupdate);
-	// }
-
-	$sql2 = "INSERT INTO tbl_route_sche(routesche_id,route_id,route_date,sup_id,rtsche_remarks,rtsche_status)
-		VALUES('$rtscheid','$rtscheRoute','$rtscheDate','$rtscheSupplier','$rtscheRemarks','$rtscheStatus');";
+	$sql2 = "INSERT INTO tbl_route_sche(routesche_id,route_id,route_date,sup_id,rtsche_remarks,rtsche_status,vehicle,driver,salesman)
+		VALUES('$rtscheid','$rtscheRoute','$rtscheDate','$rtscheSupplier','$rtscheRemarks','$rtscheStatus','$selectSalesman','$selectDriver','$selectVehicle');";
 
 	$result2 = $con->query($sql2);
 
@@ -396,7 +387,27 @@ function routeScheSave()
 	} else {
 		echo ("error");
 	}
+
+	$sqlCalUpdate1 = "INSERT INTO tbl_user_calender(emp_id,cal_date,cal_remarks) VALUES('$selectSalesman','$rtscheDate','$rtscheid');";
+	$con->query($sqlCalUpdate1);
+	if ($con->error) {
+		echo ("SQL error " . $con->error);
+		exit;
+	}
+	$sqlCalUpdate2 = "INSERT INTO tbl_user_calender(emp_id,cal_date,cal_remarks) VALUES('$selectVehicle','$rtscheDate','$rtscheid');";
+	$con->query($sqlCalUpdate2);
+	if ($con->error) {
+		echo ("SQL error " . $con->error);
+		exit;
+	}
+	$sqlCalUpdate3 = "INSERT INTO tbl_user_calender(emp_id,cal_date,cal_remarks) VALUES('$selectDriver','$rtscheDate','$rtscheid');";
+	$con->query($sqlCalUpdate3);
+	if ($con->error) {
+		echo ("SQL error " . $con->error);
+		exit;
+	}
 }
+
 
 function rtscheSaveDetails()
 {
@@ -502,16 +513,12 @@ function selectRoute()
 function rtscheViewDatatable()
 {
 
-	$supplierval = $_POST["supplierval"];
-	$selectTerritory = $_POST["selectTerritory"];
-	$datestart = $_POST["datestart"];
-	$enddate = $_POST["enddate"];
 
 	$db = new Connection();
 	$con = $db->db_con();
 	$sql = "SELECT DISTINCT rtsch.routesche_id, rtsch.route_id, rt.route_name, rtsch.rtsche_status, rtsch.route_date
 				FROM tbl_route_sche rtsch, tbl_route rt, tbl_territory tr
-				WHERE rtsch.sup_id='$supplierval' and tr.trty_id='$selectTerritory' and rtsch.route_date>'$datestart' and rtsch.route_date<'$enddate' and rtsch.route_id=rt.route_id;";
+				WHERE rtsch.route_id=rt.route_id;";
 	$result = $con->query($sql);
 	if ($con->errno) {
 		echo ("SQL Error: " . $con->error);
@@ -567,9 +574,6 @@ function rtscheViewDatatable()
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-warning">
-						<i class="ace-icon fa fa-flag bigger-120"></i>
-					</button>
 				</div></td>');
 		echo ("</tr>");
 	}
@@ -603,7 +607,7 @@ function selectSalesman()
 
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "SELECT DISTINCT usr.emp_fname, usr.emp_lname, usr.emp_id FROM tbl_user_details usr, tbl_route_sche rt where rt.route_date<>'$rtscheDate' and rt.salesman=usr.emp_id";
+	$sql = "SELECT DISTINCT usr.emp_fullname, usr.emp_id FROM tbl_user_details usr, tbl_user_calender cal where cal.cal_date<>'$rtscheDate' and usr.emp_id=cal.emp_id AND usr.emp_type='3'";
 
 	$result = $con->query($sql);
 	if ($con->errno) {
@@ -618,7 +622,7 @@ function selectSalesman()
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
 			//merge province ID and name with HTML
-			echo ("<option value='" . $rec["emp_id"] . "'>" . $rec["emp_fname"] . " " . $rec["emp_lname"] . "</option>");
+			echo ("<option value='" . $rec["emp_id"] . "'>" . $rec["emp_fullname"] . "</option>");
 		}
 	}
 	$con->close();
@@ -631,7 +635,7 @@ function selectDriver()
 
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "SELECT DISTINCT usr.emp_fname, usr.emp_lname, usr.emp_id FROM tbl_user_details usr, tbl_route_sche rt where rt.route_date<>'$rtscheDate' and rt.driver=usr.emp_id and usr.emp_type='4'";
+	$sql = "SELECT DISTINCT usr.emp_fullname, usr.emp_id FROM tbl_user_details usr, tbl_user_calender cal where cal.cal_date<>'$rtscheDate' and usr.emp_id=cal.emp_id AND usr.emp_type='4'";
 
 	$result = $con->query($sql);
 	if ($con->errno) {
@@ -646,7 +650,7 @@ function selectDriver()
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
 			//merge province ID and name with HTML
-			echo ("<option value='" . $rec["emp_id"] . "'>" . $rec["emp_fname"] . " " . $rec["emp_lname"] . "</option>");
+			echo ("<option value='" . $rec["emp_id"] . "'>" . $rec["emp_fullname"] . "</option>");
 		}
 	}
 	$con->close();
@@ -659,7 +663,7 @@ function selectVehicle()
 
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "SELECT DISTINCT veh.veh_number FROM tbl_vehicles veh, tbl_route_sche rt where rt.route_date<>'$rtscheDate' and rt.vehicle=veh.veh_number";
+	$sql = "SELECT DISTINCT veh.veh_number FROM tbl_user_calender cal, tbl_vehicles veh where cal.cal_date<>'$rtscheDate' and veh.veh_number=cal.emp_id";
 
 	$result = $con->query($sql);
 	if ($con->errno) {
@@ -722,9 +726,14 @@ function getEventData()
 			} else {
 				echo "0 results";
 			}
-
-			// echo ("<option value='" . $rec["veh_number"] . "'>" . $rec["veh_number"] . "</option>");
 		}
 	}
 	$con->close();
+}
+
+function getRouteScheDetails(){
+	$routeScheId = $_POST['routeScheId'];
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT * FROM tbl_route_sche WHERE ";
 }

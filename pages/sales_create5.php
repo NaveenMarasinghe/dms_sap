@@ -1,8 +1,8 @@
 <?php
-  session_start();
-    if(!isset($_SESSION["user"])|| $_SESSION["user"]["utype"]!="1"){
-      header("location:../index.php");
-    }
+session_start();
+if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
+    header("location:../index.php");
+}
 
 ?>
 
@@ -512,7 +512,7 @@
             });
 
         var supplierval = $('#salesSupplier').val();
-        
+
         // get filtered data to datatable
         $.post("../controllers/controller_sales.php?type=getFullProductList", {
                 supplierval: supplierval
@@ -523,7 +523,7 @@
                     $("#salesProductName").empty();
                     $("#salesProductName").append("<option></option>");
                     $("#salesProductName").append(data);
-                
+
                 }
             });
 

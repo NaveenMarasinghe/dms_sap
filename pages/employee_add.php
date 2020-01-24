@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="cus_name"> Customer Name </label>
+                        <label class="col-sm-3 control-label no-padding-right" for="cus_name"> Username </label>
 
                         <div class="col-sm-9">
                             <div class="clearfix">
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="cus_name"> Customer Full Name </label>
+                        <label class="col-sm-3 control-label no-padding-right" for="cus_name"> Full Name </label>
 
                         <div class="col-sm-9">
                             <div class="clearfix">

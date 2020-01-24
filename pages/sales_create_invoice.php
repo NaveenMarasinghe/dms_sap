@@ -293,7 +293,7 @@
                         }
                     });
                 $("#btnBack").click(function() {
-                    window.location.href = "sales_create5.php";
+                    window.location.href = "sales_view.php";
                 });
 
             });

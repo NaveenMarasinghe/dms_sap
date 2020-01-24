@@ -23,6 +23,9 @@ if (isset($_GET["type"])) {
 		case "poLoad":
 			poLoad();
 			break;
+		case "viewGrn":
+			viewGrn();
+			break;
 	}
 }
 function get_poid()
@@ -305,7 +308,7 @@ function purchaseSaveDetails()
 		$countResult = $con->query($sqlcount);
 		$norCount = $countResult->num_rows;
 
-		if ($norCount>0) {
+		if ($norCount > 0) {
 			//set purchase order status to received
 			$sqlupdate = "UPDATE tbl_po
 			SET pur_status = '4'
@@ -372,5 +375,49 @@ function poLoad()
 			echo ("<option value='" . $rec["pur_id"] . "'>" . $rec["pur_id"] . "</option>");
 		}
 	}
+	$con->close();
+}
+
+function viewGrn()
+{
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT grn.grn_id, grn.grn_date, grn.pur_id, sup.sup_name
+			FROM tbl_grn grn, tbl_suppliers sup
+			WHERE grn.sup_id=sup.sup_id";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("<tr>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+		echo ("<td>No Record</td>");
+
+		echo ("</tr>");
+		exit;
+	}
+	while ($rec = $result->fetch_assoc()) {
+
+		echo ("<tr id='" . $rec["grn_id"] . "'>");
+		echo ("<td>" . $rec["grn_id"] . "</td>");
+		echo ("<td>" . $rec["pur_id"] . "</td>");
+		echo ("<td>" . $rec["sup_name"] . "</td>");
+		echo ("<td>" . $rec["grn_date"] . "</td>");
+		echo ('<td style="text-align:center"><div class="hidden-sm hidden-xs btn-group">
+		<a href="view_single_grn.php?grnid='. $rec["grn_id"] . '">
+		<button class="btn btn-xs btn-info">
+			<i class="ace-icon fa fa-info-circle bigger-120"></i>
+		</button></a>
+
+	</div></td>');
+		echo ("</tr>");
+	}
+
 	$con->close();
 }

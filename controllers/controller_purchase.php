@@ -393,17 +393,17 @@ function poCreate()
 		$poId = "PO0001";
 	}
 
-
+	//receive ajax post variables
 	$poDate = $_POST["poDate"];
 	$poSupplier = $_POST["poSupplier"];
 	$poRemarks = $_POST["poRemarks"];
+	
 	$poStatus = "1";
-
 	$sql2 = "INSERT INTO tbl_po(pur_id,pur_date,sup_id,pur_remarks,pur_status)
 		VALUES('$poId','$poDate','$poSupplier','$poRemarks','$poStatus')";
 
+	//get last edited purchase order
 	$lastEdit = "SELECT pur_status, pur_id FROM tbl_po WHERE sup_id='$poSupplier' ORDER BY pur_id DESC LIMIT 1";
-
 	$lastEditResult = $con->query($lastEdit);
 	$nor = $lastEditResult->num_rows;
 
@@ -411,28 +411,38 @@ function poCreate()
 		$lastEditRec = $lastEditResult->fetch_assoc();
 		$status = $lastEditRec["pur_status"];
 		$id = $lastEditRec["pur_id"];
-		// echo($status);
+		// check whether the last edit purchase is in pending status
 		if ($status == 1) {
 $sqlupdate="UPDATE tbl_po SET pur_remarks='$poRemarks' WHERE pur_id='$id'";
 $con->query($sqlupdate);
-			echo ($id);
+			// echo ($id);
+			$dataArray[0]["poid"] = $id;
+			$dataArray[0]["status"] = 1;
 		} else {
-			// create new sales order
+			// create new purchase order
 			$resultsql2 = $con->query($sql2);
 			if ($con->error) {
 				echo ("SQL error " . $con->error);
 				exit;
 			}
-			echo ($poId);
+			// echo ($poId);
+			$dataArray[0]["poid"] = $poId;
+			$dataArray[0]["status"] = 2;
+
 		} 
-	} else {
+	} else { // create first purchase order of supplier
 		$resultsql2 = $con->query($sql2);
 		if ($con->error) {
 			echo ("SQL error " . $con->error);
 			exit;
 		}
-		echo ($poId);
+		// echo ($poId);
+		$dataArray[0]["poid"] = $poId;
+		$dataArray[0]["status"] = 2;
 	}
+
+
+	echo json_encode($dataArray);
 }
 
 function purCreateTable()

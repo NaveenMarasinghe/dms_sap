@@ -14,7 +14,7 @@
     <div class="col-xs-12">
       <!-- PAGE CONTENT BEGINS -->
 
-      <div class="widget-box">
+      <div class="widget-box" style="height:100%">
         <div class="widget-header widget-header-blue widget-header-flat">
           <h4 class="widget-title lighter">Create Purchase Order</h4>
         </div>
@@ -193,54 +193,93 @@
                 </div>
 
                 <div class="step-pane" data-step="3">
-                  <div>
-                    <!-- <h3 class="blue lighter">GRN Created</h3> -->
+                  <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1">
+                      <div class="widget-box transparent">
+                        <div class="widget-header widget-header-large" style="margin-right: 20px">
+                          <h3 class="widget-title grey lighter">
 
-                    <div>
-                      <div>
-                        <div class="col-md-8">
-                        </div>
-                        <div class="col-md-2">
+                            Purchase Order
+                          </h3>
 
+                          <div class="widget-toolbar no-border invoice-info">
+                            <span class="invoice-info-label">Purchase ID:</span>
+                            <span class="red" id="purid"></span>
+
+                            <br />
+                            <span class="invoice-info-label">Date:</span>
+                            <span class="blue" id="purdate"></span>
+                          </div>
+
+                          <!-- <div class="widget-toolbar hidden-480">
+													<a href="#">
+														<i class="ace-icon fa fa-print"></i>
+													</a>
+												</div> -->
                         </div>
-                        <div class="col-md-2">
-                          <!-- <button type="button" class="btn btn-info btn-block btn-flat" id="btnHold">Complete Later</button> -->
+
+                        <div class="widget-body">
+                          <div class="widget-main padding-24">
+                            <div class="row">
+
+                              <div class="col-sm-3">
+                                <div class="row">
+                                  <div class="col-xs-11 label label-lg">
+                                    <b>Supplier</b>
+                                  </div>
+                                </div>
+
+                                <div id="supplierAddress" style="text-align: left; margin-left:10px ">
+
+                                </div>
+                              </div><!-- /.col -->
+                              <div class="col-sm-6"></div>
+
+                              <div class="col-sm-3">
+                                <div class="row">
+                                  <div class="col-xs-11 label label-lg">
+                                    <b>Buyer</b>
+                                  </div>
+                                </div>
+
+                                <div id="buyerAddress" style="text-align: right; margin-right:10px ">
+                                  S.A.P. Distributors,
+                                  Muthugala Road,
+                                  Bihalpola,
+                                  Nakkawaththa.
+
+                                </div>
+                              </div><!-- /.col -->
+
+                            </div><!-- /.row -->
+
+                            <div class="space"></div>
+
+                            <div>
+                              <table class="table table-striped table-bordered" id="purchaseViewData">
+                                <thead>
+                                  <tr>
+                                    <th>Product ID</th>
+                                    <th>Product Name</th>
+                                    <th class="hidden-xs">Quantity</th>
+
+                                  </tr>
+                                </thead>
+
+                                <tbody>
+
+                                </tbody>
+                              </table>
+                            </div>
+
+                            <!-- <div class="hr hr8 hr-double hr-dotted"></div> -->
+
+
+                            <div class="space-6"></div>
+
+                          </div>
                         </div>
                       </div>
-                      <table id="purchaseViewTable" class="table table-striped table-bordered table-hover" style="width:100%;">
-                        <table id="purchaseViewInfo" style="width:100%">
-                          <tbody>
-                            <tr>
-                              <td colspan="3" style="text-align: left">
-                                <h5>Purchase Order</h5>
-                              </td>
-                              <td style="text-align: right">
-                                <h5>S.A.P. Distributors</h5>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td></td>
-                              <td colspan="2"></td>
-                              <td id="supplier" style="text-align: right">gg</td>
-                            </tr>
-
-                          </tbody>
-
-                        </table>
-                        <table id="purchaseViewData" class="table table-striped table-bordered table-hover" style="width:100%;">
-                          <thead>
-                            <tr>
-                              <th style="width:20%">Product ID</th>
-                              <th style="width:60%">Product Name</th>
-                              <th style="width:20%">Quantity</th>
-                            </tr>
-                          </thead>
-
-                          <tbody id="tablebody">
-                          </tbody>
-                        </table>
-                      </table>
-
                     </div>
                   </div>
                 </div>
@@ -342,7 +381,7 @@
 
     $(document).ready(function() {
 
-     
+
 
       $.noConflict();
 
@@ -436,7 +475,7 @@
         },
         function(data, status) {
           if (status == "success") {
-            
+
             var poId = $("#poId").val();
             $.post("../controllers/controller_purchase.php?type=purCreateTable", {
                 poId: poId
@@ -597,20 +636,10 @@
             processData: false,
             contentType: false,
             success: function(data) {
-              var poId = data;
-              $("#poId").val(poId);
-              var poId = $("#poId").val();
-              $.post("../controllers/controller_purchase.php?type=purCreateTable", {
-                  poId: poId
-                },
-                function(data, status) {
-                  var btndata = "<tr><td colspan='4' style='text-align:center'>No Products Added</td></tr>";
-                  if (data == btndata) {
-
-                    // $("#purchaseTable").DataTable().destroy();
-                    $("#purchaseTable tbody").empty();
-                    $("#purchaseTable tbody").append(btndata);
-                    // $("#purchaseTable").DataTable();
+              var recData = JSON.parse(data);
+              var poId = (recData[0].poid);
+              var postatus = (recData[0].status);
+              if (postatus == 2) {                    
                     Swal.fire(
                       'New Purchase Order Created!',
                       "Purchase Order ID: " + poId,
@@ -623,11 +652,19 @@
                       'info'
                     );
 
-                    // $("#purchaseTable").DataTable().destroy();
-                    $("#purchaseTable tbody").empty();
-                    $("#purchaseTable tbody").append(data);
-                    // $("#purchaseTable").DataTable();
-                  }
+                  }              
+              $("#poId").val(poId);
+              var poId = $("#poId").val();
+              $.post("../controllers/controller_purchase.php?type=purCreateTable", {
+                  poId: poId
+                },
+                function(data, status) {
+                  // $("#purchaseTable").DataTable().destroy();
+                  $("#purchaseTable tbody").empty();
+                  $("#purchaseTable tbody").append(data);
+                  // $("#purchaseTable").DataTable();
+
+
                 });
 
             }
@@ -636,6 +673,9 @@
         }
         if (info.step == 2) {
           var poId = $("#poId").val();
+          var podate = $("#poDate").val();
+          $("#purid").text(poId);
+          $("#purdate").text(podate);
           $.post("../controllers/controller_purchase.php?type=purViewData", {
               poId: poId
             },
@@ -648,6 +688,7 @@
                 // $("#purchaseTable").DataTable();
               }
             });
+
         }
       })
       //.on('changed.fu.wizard', function() {

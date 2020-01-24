@@ -25,6 +25,12 @@ if (isset($_GET["type"])) {
         case "createRtscheSesson":
             createRtscheSesson();
             break;
+        case "viewEmpTable":
+            viewEmpTable();
+            break;
+        case "updateCustomer":
+            updateCustomer();
+            break;
     }
 }
 
@@ -60,21 +66,20 @@ function viewCustomerTable()
         echo ("<td>" . $rec["cus_tel"] . "</td>");
         echo ("<td>" . $rec["sales_balance"] . "</td>");
         echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
-					<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelViewProduct" onclick="modalViewProduct(\'' . $rec["pro_id"] . '\')">
-						<i class="ace-icon fa fa-info-circle bigger-120"></i>
+					
+                    
+                    <button class="btn btn-xs btn-info" onclick="editRecord(\''.$rec["cus_id"].'\')">
+                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                    </button>
+                    
+					<button class="btn btn-xs btn-success" >
+						<i class="ace-icon fa fa-info bigger-120"></i>
 					</button>
-
-					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelEditProduct">
-						<i class="ace-icon fa fa-pencil bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
+                    
+					<button class="btn btn-xs btn-danger" onclick="deleteRecord(\''.$rec["cus_id"].'\')">
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-warning">
-						<i class="ace-icon fa fa-flag bigger-120"></i>
-					</button>
 				</div></td>');
         echo ("</tr>");
     }
@@ -227,8 +232,8 @@ function viewEmpTable()
 {
     $db = new Connection();
     $con = $db->db_con();
-    $sql = "SELECT emp_id, emp_name, emp_lname, emp_tel, emp_add, emp_dob
-				FROM tbl_user_details ";
+    $sql = "SELECT usr.emp_id, usr.emp_fullname, usr.emp_tel, usr.emp_add, ut.user_typename
+				FROM tbl_user_details usr, tbl_user_type ut WHERE usr.emp_type=ut.user_type";
     $result = $con->query($sql);
     if ($con->errno) {
         echo ("SQL Error: " . $con->error);
@@ -250,11 +255,10 @@ function viewEmpTable()
 
         echo ("<tr id='" . $rec["emp_id"] . "'>");
         echo ("<td>" . $rec["emp_id"] . "</td>");
-        echo ("<td>" . $rec["emp_name"] . "</td>");
-        echo ("<td>" . $rec["emp_lname"] . "</td>");
-        echo ("<td>" . $rec["emp_tel"] . "</td>");
+        echo ("<td>" . $rec["emp_fullname"] . "</td>");
         echo ("<td>" . $rec["emp_add"] . "</td>");
-        echo ("<td>" . $rec["emp_dob"] . "</td>");
+        echo ("<td>" . $rec["emp_tel"] . "</td>");
+        echo ("<td>" . $rec["user_typename"] . "</td>");
         echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
 					<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelViewProduct" onclick="modalViewProduct(\'' . $rec["pro_id"] . '\')">
 						<i class="ace-icon fa fa-info-circle bigger-120"></i>
@@ -350,6 +354,9 @@ function createRtscheSesson()
     $rtscheid = $_POST["rtscheid"];
     session_start();
     $_SESSION["rtsche"]["rtscheid"] = $rtscheid;
-    
-    
+}
+
+function updateCustomer()
+{
+    echo ("gg");
 }

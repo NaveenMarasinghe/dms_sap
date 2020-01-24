@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Blank Page - Ace Admin</title>
+		<title id="titletext">Blank Page - Ace Admin</title>
 
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -70,6 +71,11 @@
 		<!-- <script src="../assets/js/fullcalendar.min.js"></script>	 -->
 		<script src="../assets/js/bootbox.js"></script>
 
+		<script src="../assets/jspdf/jspdf.js"></script>
+		<script src="../assets/jspdf/jspdf.debug.js"></script>
+		<script src="../assets/jspdf/jspdf.customfonts.min.js"></script>
+		<script src="../assets/jspdf/jspdf.plugin.autotable.min.js"></script>
+		<script src="../assets/jspdf/jquery.tabletojson.min.js"></script>
 		<!--  -->
 <!-- <script src="../assets/js/buttons/datatables.min.js"></script>
 <script src="../assets/js/jquery.dataTables.bootstrap.min.js"></script>
@@ -376,7 +382,7 @@
 								<img class="nav-user-photo" src="../assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									<?php echo $_SESSION["user"]["uname"]; ?>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
