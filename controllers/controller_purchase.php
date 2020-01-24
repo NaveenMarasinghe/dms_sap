@@ -43,6 +43,9 @@ if (isset($_GET["type"])) {
 		case "poComplete":
 			poComplete();
 			break;
+		case "getEditSup":
+			getEditSup();
+			break;
 	}
 }
 
@@ -195,69 +198,82 @@ function purchaseView()
 		echo ("<td>No Record</td>");
 		echo ("<td>No Record</td>");
 		echo ("<td>No Record</td>");
-		echo ('<td><div class="hidden-sm hidden-xs btn-group">
-				<button class="btn btn-xs btn-success">
-					<i class="ace-icon fa-info-circle bigger-120"></i>
-				</button>
+		echo ("<td>No Record</td>");
 
-				<button class="btn btn-xs btn-info">
-					<i class="ace-icon fa fa-pencil bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-danger">
-					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-warning">
-					<i class="ace-icon fa fa-flag bigger-120"></i>
-				</button>
-			</div></td>');
 		echo ("</tr>");
 		exit;
 	}
 	while ($rec = $result->fetch_assoc()) {
-		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
-		// </tr>";	
+
 		$status = $rec["pur_status"];
-            switch($status){
-                case "1":
-                    $statustd = "<span class='label label-sm label-warning'>Pending</span>";
-                    break;
-                case "2":
-                    $statustd = "<span class='label label-sm label-default arrowed arrowed-righ'>Sent</span>";
-                    break;
-                case "3":
-                    $statustd = "<span class='label label-sm label-info arrowed arrowed-righ'>Received</span>";
-                    break;
-                case "4":
-                    $statustd = "<span class='label label-sm label-success arrowed arrowed-righ'>Completed</span>";
-                    break;
-                case "5":
-                    $statustd = "Completed";
-                    break;
-            }
+		switch ($status) {
+			case "1":
+				$statustd = "<span class='label label-sm label-warning'>Pending</span>";
+				break;
+			case "2":
+				$statustd = "<span class='label label-sm label-default arrowed arrowed-righ'>Sent</span>";
+				break;
+			case "3":
+				$statustd = "<span class='label label-sm label-info arrowed arrowed-righ'>Received</span>";
+				break;
+			case "4":
+				$statustd = "<span class='label label-sm label-success arrowed arrowed-righ'>Completed</span>";
+				break;
+			case "5":
+				$statustd = "Completed";
+				break;
+		}
+
+		$buttons = $rec["pur_status"];
+		switch ($status) {
+			case "1":
+				$buttons = '<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelPoView" onclick="modalViewPo(\'' . $rec["pur_id"] . '\')">
+					<i class="ace-icon fa fa-info-circle bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-info" onclick="editPurchaseOrder(\'' . $rec["pur_id"] . '\')"">
+					<i class="ace-icon fa fa-pencil bigger-120"></i>
+				</button>
+
+				<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
+					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+				</button>';
+				break;
+			case "2":
+				$buttons = '<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelPoView" onclick="modalViewPo(\'' . $rec["pur_id"] . '\')">
+				<i class="ace-icon fa fa-info-circle bigger-120"></i>
+			</button>		
+
+			<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
+				<i class="ace-icon fa fa-trash-o bigger-120"></i>
+			</button>';
+				break;
+			case "3":
+				$buttons = '<button class="btn btn-xs btn-success" id="btn_modelView" onclick="modalViewPo(\'' . $rec["pur_id"] . '\')">
+					<i class="ace-icon fa fa-info-circle bigger-120"></i>
+				</button>		
+	
+				<button class="btn btn-xs btn-danger">
+					<i class="ace-icon fa fa-trash-o bigger-120"></i>
+				</button>';
+				break;
+			case "4":
+				$buttons = '<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelPoView" onclick="modalViewPo(\'' . $rec["pur_id"] . '\')">
+						<i class="ace-icon fa fa-info-circle bigger-120"></i>
+					</button>		
+		
+					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
+						<i class="ace-icon fa fa-trash-o bigger-120"></i>
+					</button>';
+				break;
+		}
+
 		echo ("<tr id='" . $rec["pur_id"] . "'>");
 		echo ("<td>" . $rec["pur_id"] . "</td>");
 		echo ("<td>" . $rec["sup_name"] . "</td>");
 		echo ("<td>" . $rec["pur_date"] . "</td>");
-		echo ("<td class='". $rec["pur_status"] ."'>" . $statustd . "</td>");
-		echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
-					<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelPoView" onclick="modalViewPo(\'' . $rec["pur_id"] . '\')">
-						<i class="ace-icon fa fa-info-circle bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelEditProduct">
-						<i class="ace-icon fa fa-pencil bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
-						<i class="ace-icon fa fa-trash-o bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-warning">
-						<i class="ace-icon fa fa-flag bigger-120"></i>
-					</button>
-				</div></td>');
+		echo ("<td class='" . $rec["pur_status"] . "'>" . $statustd . "</td>");
+		echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">' . $buttons . '</div></td>');
 		echo ("</tr>");
 	}
 
@@ -397,7 +413,7 @@ function poCreate()
 	$poDate = $_POST["poDate"];
 	$poSupplier = $_POST["poSupplier"];
 	$poRemarks = $_POST["poRemarks"];
-	
+
 	$poStatus = "1";
 	$sql2 = "INSERT INTO tbl_po(pur_id,pur_date,sup_id,pur_remarks,pur_status)
 		VALUES('$poId','$poDate','$poSupplier','$poRemarks','$poStatus')";
@@ -413,8 +429,8 @@ function poCreate()
 		$id = $lastEditRec["pur_id"];
 		// check whether the last edit purchase is in pending status
 		if ($status == 1) {
-$sqlupdate="UPDATE tbl_po SET pur_remarks='$poRemarks' WHERE pur_id='$id'";
-$con->query($sqlupdate);
+			$sqlupdate = "UPDATE tbl_po SET pur_remarks='$poRemarks' WHERE pur_id='$id'";
+			$con->query($sqlupdate);
 			// echo ($id);
 			$dataArray[0]["poid"] = $id;
 			$dataArray[0]["status"] = 1;
@@ -428,8 +444,7 @@ $con->query($sqlupdate);
 			// echo ($poId);
 			$dataArray[0]["poid"] = $poId;
 			$dataArray[0]["status"] = 2;
-
-		} 
+		}
 	} else { // create first purchase order of supplier
 		$resultsql2 = $con->query($sql2);
 		if ($con->error) {
@@ -490,8 +505,6 @@ function purAddRow()
 	$sqlPro = "SELECT * FROM tbl_po_details WHERE pro_id='$proid' AND purod_id='$poId'";
 	$proResult = $con->query($sqlPro);
 	$proCount = $proResult->num_rows;
-
-
 
 	if ($proCount > 0) {
 		$proRec = $proResult->fetch_assoc();
@@ -603,4 +616,30 @@ function poComplete()
 	}
 
 	$con->close();
+}
+
+function getEditSup(){
+	$poId = $_POST["poId"];
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT sup_id 
+			FROM tbl_po
+			WHERE pur_id='$poId'";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+
+		exit;
+	}
+	while ($rec = $result->fetch_assoc()) {
+		$poid=$rec["sup_id"];
+		echo ($poid);
+	}
+
+	$con->close();
+
 }

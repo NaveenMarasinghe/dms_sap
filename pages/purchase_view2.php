@@ -1,9 +1,8 @@
 <?php
   session_start();
-    if(!isset($_SESSION["user"])|| $_SESSION["user"]["utype"]!="1"){
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
       header("location:../index.php");
-    }
-
+    } 
 ?>
 <?php require_once("../incl/header.php");?>
 <?php require_once("../incl/sidebar.php");?>
@@ -64,12 +63,7 @@
                       <table id="purchaseModalTable" class="table table-striped table-bordered table-hover" style="width:100%;">
                         <thead>
                           <tr>
-<!--                             <th class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </th> -->
+
                             <th>Product ID</th>
                             <th>Product Name</th>
                             <th>Quantity</th>
@@ -79,35 +73,7 @@
 
                         <tbody id="purchaseModalTableBody">
  
-<!--                           <tr class="selected">
-                            <td class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </td>
 
-                            <td>GG</td>
-                            <td>GoodGame</td>
-                            <td class="hidden-480">30</td>
-
-                            <td>
-                              <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="blue" href="#">
-                                  <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                </a>
-
-                                <a class="green" href="#">
-                                  <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                </a>
-
-                                <a class="red" href="#">
-                                  <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                </a>
-                              </div>
-
-                            </td>
-                          </tr> -->
                         </tbody>
                       </table>
                     </div>
@@ -186,6 +152,10 @@ var myTable = $('#productTable').DataTable({
            }
         });
     
+      }
+
+      function editPurchaseOrder(purid){
+        window.location.href = "purchase_edit.php?purid="+purid;
       }
 
 

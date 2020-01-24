@@ -1,5 +1,8 @@
-<?php session_start();
-
+<?php
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
 ?>
 
 <?php require_once("../incl/header.php"); ?>

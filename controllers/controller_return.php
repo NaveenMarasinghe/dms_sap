@@ -7,27 +7,28 @@ if (isset($_GET["type"])) {
 		case "getItemBatch":
 			getItemBatch();
 			break;
-            case "getReturnVal":
-                getReturnVal();
-                break;
-                case "salesCreate":
-                    salesCreate();
-                    break;
-                    case "salesCreateTable":
-                        salesCreateTable();
-                        break;
-                        case "save_stock":
-                            save_stock();
-                            break;
-                            case "salesDetailsSave":
-                                salesDetailsSave();
-                                break;
+		case "getReturnVal":
+			getReturnVal();
+			break;
+		case "salesCreate":
+			salesCreate();
+			break;
+		case "salesCreateTable":
+			salesCreateTable();
+			break;
+		case "save_stock":
+			save_stock();
+			break;
+		case "salesDetailsSave":
+			salesDetailsSave();
+			break;
 	}
 }
 
-function getItemBatch(){
-    $proid = $_POST["proid"];
-    $itemPrice = $_POST["itemPrice"];
+function getItemBatch()
+{
+	$proid = $_POST["proid"];
+	$itemPrice = $_POST["itemPrice"];
 
 	$db = new Connection();
 	$con = $db->db_con();
@@ -45,16 +46,17 @@ function getItemBatch(){
 	} else {
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
-            //merge province ID and name with HTML
-            $batch=$rec["batch_id"];
+			//merge province ID and name with HTML
+			$batch = $rec["batch_id"];
 			echo ($batch);
 		}
 	}
 	$con->close();
 }
 
-function getReturnVal(){
-    $salesBatch = $_POST["salesBatch"];
+function getReturnVal()
+{
+	$salesBatch = $_POST["salesBatch"];
 
 
 	$db = new Connection();
@@ -71,10 +73,9 @@ function getReturnVal(){
 	if ($nor == 0) {
 		echo ("0");
 	} else {
-        $rec = $result->fetch_assoc();
-        $cost = $rec["item_cost"];
-        echo(100);
-		
+		$rec = $result->fetch_assoc();
+		$cost = $rec["item_cost"];
+		echo ($cost);
 	}
 	$con->close();
 }
@@ -203,8 +204,9 @@ function salesCreateTable()
 	$con->close();
 }
 
-function save_stock(){
-    $db = new Connection();
+function save_stock()
+{
+	$db = new Connection();
 	$con = $db->db_con();
 
 	//query
@@ -245,7 +247,7 @@ function save_stock(){
 	$subTol = $_POST["subTol"];
 	$cusid = $_POST["cusid"];
 	$balanceVal = $_POST["balanceVal"];
-	
+
 
 	$sql2 = "INSERT INTO tbl_sales_return(return_id,return_date,cus_id,return_total,return_status)
 		VALUES('$salesId','$salesDate','$cusid','$subTol','0')";
@@ -317,4 +319,3 @@ function salesDetailsSave()
 		}
 	}
 }
-?>

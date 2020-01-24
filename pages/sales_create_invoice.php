@@ -1,3 +1,9 @@
+<?php
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -85,11 +91,6 @@
             } catch (e) {}
         </script>
 
-
-
-
-
-
         <link href="../assets/css/select2.min.css" rel="stylesheet" />
         <script src="../assets/js/select2.min.js"></script>
 
@@ -103,7 +104,7 @@
                     <input type="hidden" id="salesid" value="<?php echo $_GET['salesid'] ?>">
                     <div>
                         <div>
-                            <!-- <h4 class="page-header"><b>Create Sales</b></h4> -->
+                          
                         </div>
                         <div class="box box-info">
                             <!-- /.box-header -->
@@ -221,7 +222,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- <div id="grid-pager"></div> -->
+                                                   
                                                 </div>
                                             </div>
                                         </div>
@@ -238,19 +239,7 @@
                                                 <button type="button" class="btn btn-info btn-block btn-flat" id="btnPrint">Print</button>
                                             </div>
                                         </div>
-                                        <!-- <div class="clearfix form-actions">
-                                    <div class="col-md-offset-3 col-md-9">
-                                        <div class="pull-right">
 
-
-                                            &nbsp; &nbsp; &nbsp;
-                                            <button class="btn btn-info" type="button" id="salessave">
-                                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div> -->
                                     </div>
                                 </div>
 

@@ -1,3 +1,10 @@
+<?php
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
+?>
+
 <?php require_once("../incl/header.php"); ?>
 <?php require_once("../incl/sidebar.php"); ?>
 <?php require_once("../incl/pagetop.php"); ?>
@@ -41,7 +48,53 @@
         </tfoot>
       </table>
 
+      <div class="modal fade" id="modelPoView" tabindex="-1" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="blue bigger">View Product Details</h4>
+          </div>
 
+          <div class="modal-body">
+            <div class="row">
+              <form class="form-horizontal" role="form" id="form_addNewProductCat">
+
+
+                    <div>
+                      <table id="purchaseModalTable" class="table table-striped table-bordered table-hover" style="width:100%;">
+                        <thead>
+                          <tr>
+
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+
+                          </tr>
+                        </thead>
+
+                        <tbody id="purchaseModalTableBody">
+ 
+
+                        </tbody>
+                      </table>
+                    </div>
+
+              </form>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-warning" data-dismiss="modal">
+              <i class="ace-icon fa fa-times"></i>
+              Cancel
+            </button>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
       <!-- PAGE CONTENT ENDS -->
     </div><!-- /.col -->
@@ -57,6 +110,38 @@
   jQuery(function($) {
     function myDatatable() {}
   });
+
+  function modalViewPo(grnid){
+        
+   
+        $.post("../controllers/controller_grn.php?type=viewGrnModal",
+        {grnid:grnid},
+        function(data,status){
+        if(status=="success"){
+            
+
+
+          $("#purchaseModalTable").DataTable().destroy();
+          $("#purchaseModalTable tbody").empty();
+          $("#purchaseModalTable tbody").append(data);
+          $("#purchaseModalTable").DataTable({
+                "searching": false,
+                "paging": false,
+                "info": false
+
+              });                 
+
+              // var jdata=jQuery.parseJSON(data);
+              // $("#editModalProductId").val(jdata.pro_id);
+              // $("#editModalProductCat").val(jdata.product_cat_name);
+              // $("#editModalProductSubCat").val(jdata.product_subcat_name);
+              // $("#editModalProductName").val(jdata.pro_name);
+              // $("#editModalProductSupplier").val(jdata.sup_name);
+
+           }
+        });
+    
+      }
 
 
   $(document).ready(function() {

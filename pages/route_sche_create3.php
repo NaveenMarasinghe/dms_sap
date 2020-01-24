@@ -1,3 +1,10 @@
+<?php
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
+?>
+
 <?php require_once("../incl/header.php"); ?>
 <?php require_once("../incl/sidebar.php"); ?>
 <?php require_once("../incl/pagetop.php"); ?>
@@ -9,8 +16,8 @@
 //     $ter = $_GET["ter"];
 // } 
 
-$sup = $_GET["sup"];
-$ter = $_GET["ter"];
+// $sup = $_GET["sup"];
+// $ter = $_GET["ter"];
 
 
 ?>
@@ -81,7 +88,7 @@ $ter = $_GET["ter"];
 
                 </div>
 
-                <div id='calendar' class="col-md-10"></div>
+                <div id='calendar' class="col-md-8"></div>
 
             </div>
             <!-- PAGE CONTENT ENDS -->

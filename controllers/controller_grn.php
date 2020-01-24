@@ -19,13 +19,18 @@ if (isset($_GET["type"])) {
 		case "purchaseSaveDetails":
 			purchaseSaveDetails();
 			break;
-
 		case "poLoad":
 			poLoad();
 			break;
 		case "viewGrn":
 			viewGrn();
 			break;
+		case "viewGrnModal":
+			viewGrnModal();
+			break;
+			case "updatePoStatus":
+				updatePoStatus();
+				break;
 	}
 }
 function get_poid()
@@ -47,7 +52,7 @@ function get_poid()
 	} else {
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
-			//merge province ID and name with HTML
+
 			echo ("<option value='" . $rec["pur_id"] . "'>" . $rec["pur_id"] . "</option>");
 		}
 	}
@@ -66,14 +71,14 @@ function get_po()
 		echo ("SQL Error: " . $con->error);
 		exit;
 	}
-	//alert('func');
+
 	$nor = $result->num_rows;
 	if ($nor == 0) {
 		echo ("");
 	} else {
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
-			//merge province ID and name with HTML
+
 			echo ("<option value='" . $rec["pur_id"] . "'>" . $rec["pur_id"] . "</option>");
 		}
 	}
@@ -99,8 +104,7 @@ function grnProductTable()
 		exit;
 	}
 	while ($rec = $result->fetch_assoc()) {
-		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
-		// </tr>";	
+
 		echo ("<tr class='' id='" . $rec["pro_id"] . "'>");
 		echo ('<td class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></td>');
 		echo ("<td>" . $rec["pro_id"] . "</td>");
@@ -109,20 +113,7 @@ function grnProductTable()
 		echo ("<td style='text-align:center'><div><input class='tableQty' style='border:0px; text-align:center' value='" . $rec["pur_qty"] . "'/></div></td>");
 		echo ("<td style='text-align:center'><div><input class='tableCost' style='border:0px; text-align:center' value=''/></div></td>");
 		echo ("<td style='text-align:center'><div><input class='tableMRP' style='border:0px; text-align:center' value=''/></div></td>");
-		echo ('<td><div class="hidden-sm hidden-xs btn-group">
-				<button class="btn btn-xs btn-success">
-					<i class="ace-icon fa fa-info-circle bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-info">
-					<i class="ace-icon fa fa-pencil bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-danger">
-					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-				</button>
-
-			</div></td>');
+		
 		echo ("</tr>");
 	}
 
@@ -177,7 +168,6 @@ function grnSave()
 	if ($purid == '0') {
 		$purid = "Without PO";
 	} else {
-
 		$sqlupdate = "UPDATE tbl_po
 			SET pur_status = '3'
 			WHERE pur_id = '$purid';";
@@ -208,11 +198,7 @@ function purchaseSaveDetails()
 	// Decode the JSON array
 	$tableData = json_decode($tableData, TRUE);
 
-	// now $tableData can be accessed like a PHP array
-	//echo $tableData[1]['pname'];
 	$tblDataLength = count($tableData);
-
-
 
 	for ($x = 1; $x < $tblDataLength; $x++) {
 		$grnpid = $tableData[$x]['grnpid'];
@@ -231,7 +217,6 @@ function purchaseSaveDetails()
 
 		//if product not exist in stock
 		if ($norPrice == 0) {
-
 			// create new batch id
 			$sqlbatchid = "SELECT batch_id
 			FROM tbl_stock
@@ -304,52 +289,7 @@ function purchaseSaveDetails()
 			$con->query($sqlStatus);
 		}
 		// check all products in purchase order are received
-		$sqlcount = "SELECT pro_id FROM tbl_po_details WHERE pur_prostatus='0' AND purod_id='$poId'";
-		$countResult = $con->query($sqlcount);
-		$norCount = $countResult->num_rows;
 
-		if ($norCount > 0) {
-			//set purchase order status to received
-			$sqlupdate = "UPDATE tbl_po
-			SET pur_status = '4'
-			WHERE pur_id = '$poId';";
-			$resultupdate = $con->query($sqlupdate);
-		}
-
-
-		// $stocksql = "SELECT stock_qty
-		// 			FROM tbl_stock
-		// 			WHERE batch_id='$grnbatch' and pro_id='$grnpid';";
-
-		// $rec = $con->query($stocksql);
-		// $nor = $rec->num_rows;
-
-		// if ($nor > 0) {
-		// 	$num = $rec->fetch_assoc();
-		// 	$stock = $num["stock_qty"];
-		// 	$grnpqty == $grnpqty + $stock;
-		// 	$sqlupdate = "UPDATE tbl_stock
-		// 					SET stock_qty = '$grnpqty'
-		// 					WHERE batch_id = '$grnbatch';";
-		// 	$resultupdate = $con->query($sqlupdate);
-		// } else {
-		// 	$sql2 = "INSERT INTO tbl_stock(batch_id,pro_id,stock_qty,item_cost,item_mrp)
-		// 		VALUES('$grnbatch','$grnpid','$grnpqty','$itcost','$itmrp');";
-		// 	$result2 = $con->query($sql2);
-		// }
-
-		// $result=$con->query($sql);
-		// $result = $con->query($sql);
-
-		// if ($con->error) {
-		// 	echo ("SQL error " . $con->error);
-		// 	exit;
-		// }
-		// if ($result > 0) {
-		// 	echo ("success2");
-		// } else {
-		// 	echo ("error");
-		// }
 	}
 }
 function poLoad()
@@ -410,14 +350,70 @@ function viewGrn()
 		echo ("<td>" . $rec["sup_name"] . "</td>");
 		echo ("<td>" . $rec["grn_date"] . "</td>");
 		echo ('<td style="text-align:center"><div class="hidden-sm hidden-xs btn-group">
-		<a href="view_single_grn.php?grnid='. $rec["grn_id"] . '">
-		<button class="btn btn-xs btn-info">
+		
+		<button class="btn btn-xs btn-info" id="btn_modelView" data-toggle="modal" data-target="#modelPoView" onclick="modalViewPo(\'' . $rec["grn_id"] . '\')">
 			<i class="ace-icon fa fa-info-circle bigger-120"></i>
-		</button></a>
+		</button>
 
 	</div></td>');
 		echo ("</tr>");
 	}
 
 	$con->close();
+}
+
+function viewGrnModal()
+{ {
+
+		$grnid = $_POST["grnid"];
+		$db = new Connection();
+		$con = $db->db_con();
+		$sql = "SELECT grn.pro_id, pro.pro_name, grn.qty
+					FROM tbl_grn_details grn, tbl_products pro
+					WHERE grn.pro_id=pro.pro_id and grn.grn_id='$grnid'";
+		$result = $con->query($sql);
+		if ($con->errno) {
+			echo ("SQL Error: " . $con->error);
+			exit;
+		}
+		$nor = $result->num_rows;
+		if ($nor == 0) {
+			echo ("<tr>");
+			echo ("<td>No Record</td>");
+			echo ("<td>No Record</td>");
+			echo ("<td>No Record</td>");
+
+
+			echo ("</tr>");
+			exit;
+		}
+		while ($rec = $result->fetch_assoc()) {
+
+			echo ("<tr id='" . $rec["pro_id"] . "'>");
+			echo ("<td>" . $rec["pro_id"] . "</td>");
+			echo ("<td>" . $rec["pro_name"] . "</td>");
+			echo ("<td>" . $rec["qty"] . "</td>");
+
+			echo ("</tr>");
+		}
+
+		$con->close();
+	}
+}
+
+function updatePoStatus(){
+	$poid = $_POST["poid"];
+	$db = new Connection();
+	$con = $db->db_con();
+	$sqlcount = "SELECT pro_id FROM tbl_po_details WHERE pur_prostatus='1' AND purod_id='$poid'";
+	$countResult = $con->query($sqlcount);
+	$norCount = $countResult->num_rows;
+
+	if ($norCount == 0) {
+		$sqlupdate = "UPDATE tbl_po
+		SET pur_status = '4'
+		WHERE pur_id ='$poid'";
+		$resultupdate = $con->query($sqlupdate);
+	}
+	echo($norCount);
 }

@@ -1,9 +1,8 @@
 <?php
-session_start();
-if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
-    header("location:../index.php");
-}
-
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
 ?>
 
 <?php require_once("../incl/header.php"); ?>
@@ -31,31 +30,31 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <form id="salesForm" method="post">
-                                    <div class="row">
-                                        <div class="col-xs-4">
-                                            <h4 class="page-header"><b>Select Products</b></h4>
-                                        </div>
-                                        <div class="col-xs-8">
-                                            <div class="col-xs-12" id='salesChangeCusDiv'>
-                                                <div class="form-group">
-                                                    <button type='button' class='btn btn-primary' id='salesChangeCus' style="float: right;">Change Customer</button>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12" id='salesSelectPrdDiv'>
-                                                <div class="form-group">
-                                                    <button type='button' class='btn btn-primary' id='salesSelectPrd' style="float: right;">Add Products</button>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12" id='createSalesDiv'>
-                                                <div class="form-group">
-                                                    <button type='button' class='btn btn-primary' id='createSales' style="float: right;">Create Sales</button>
-                                                </div>
-                                            </div>
-
-                                        </div>
+                            <input type="hidden" class="form-control" id="rtsche" name="rtsche" value='<?php echo $_SESSION["user"]["emp_id"] ?>'>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 class="page-header"><b>Select Products</b></h4>
                                     </div>
+                                    <div class="col-xs-8">
+                                        <div class="col-xs-12" id='salesChangeCusDiv'>
+                                            <div class="form-group">
+                                                <button type='button' class='btn btn-primary' id='salesChangeCus' style="float: right;">Change Customer</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12" id='salesSelectPrdDiv'>
+                                            <div class="form-group">
+                                                <button type='button' class='btn btn-primary' id='salesSelectPrd' style="float: right;">Add Products</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12" id='createSalesDiv'>
+                                            <div class="form-group">
+                                                <button type='button' class='btn btn-primary' id='createSales' style="float: right;">Create Sales</button>
+                                            </div>
+                                        </div>
 
+                                    </div>
+                                </div>
+                                <form id="salesForm" method="post">
                                     <div id="selectCustomer">
                                         <div class="row">
 
@@ -68,7 +67,7 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="rtsche">Route Schedule ID</label>
-                                                    <input readonly type="text" class="form-control" id="rtsche" name="rtsche" value='<?php echo $_SESSION["rtsche"]["rtscheid"] ?>'>
+                                                    <input readonly type="text" class="form-control" id="rtsche" name="rtsche" value=''>
                                                 </div>
                                             </div>
 
@@ -115,6 +114,8 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
                                             </div>
                                         </div>
                                     </div>
+                                </form>
+                                <form id="salesProForm" method="post">
                                     <div id="selectProducts">
                                         <div class="row">
                                             <div class="col-md-4 form-group">
@@ -158,14 +159,14 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
                                             <div class="col-md-2 form-group">
                                                 <div>
                                                     <label for="qty">Qty</label>
-                                                    <input type="text" class="form-control" name="qty" id="qty">
+                                                    <input type="text" class="form-control" placeholder="0" name="qty" id="qty">
 
                                                 </div>
                                             </div>
                                             <div class="col-md-2 form-group">
                                                 <div>
                                                     <label for="disVal">Discount %</label>
-                                                    <input type="text" class="form-control" name="disVal" id="disVal">
+                                                    <input type="text" class="form-control" placeholder="0%" name="disVal" id="disVal">
 
                                                 </div>
                                             </div>
@@ -188,10 +189,11 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
 
                                         </div>
                                     </div>
-                                    <div class="row">
+                                </form>
+                                <div class="row">
 
 
-                                    </div>
+                                </div>
 
                                 </form>
                             </div>
@@ -204,14 +206,7 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <!--                     <h3 class="header smaller lighter blue">jQuery dataTables</h3> -->
 
-
-
-
-                                                    <!-- div.table-responsive -->
-
-                                                    <!-- div.dataTables_borderWrap -->
                                                     <div>
                                                         <table id="salesTable" class="table table-striped table-bordered table-hover">
                                                             <thead>
@@ -427,7 +422,7 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
         $.post("../controllers/controller_sales.php?type=get_route",
             function(data, status) {
                 if (status == "success") {
-                    //alert(data);
+
                     $("#salesRoute").empty();
                     $("#salesRoute").append("<option value=''>--Select Route--</option>");
                     $("#salesRoute").append(data);
@@ -449,11 +444,7 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
     });
 
     $('#createSales').click(function() {
-        $('#selectCustomer').hide();
-        $('#createSalesDiv').hide();
-        $('#selectProducts').show();
-        $('#salesChangeCusDiv').show();
-        $('#btnSet').show();
+
     });
 
     $('#salesChangeCus').click(function() {
@@ -482,7 +473,7 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
             },
             function(data, status) {
                 if (status == "success") {
-                    // alert(data);
+
                     $("#salesCustomer").empty();
                     $("#salesCustomer").append("<option value=''>--Select Product Category--</option>");
                     $("#salesCustomer").append(data);
@@ -496,7 +487,7 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
 
 
         var salesSupplier = $('#salesSupplier').val(); // get option's value
-        // alert(salesSupplier);
+
         //change product category select box
         $.post("../controllers/controller_sales.php?type=get_ProCat", {
                 salesSupplier: salesSupplier
@@ -554,9 +545,7 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
     $('#salesProductName').change(function() {
 
         var proid = $('#salesProductName').val(); // get option's value
-        // var procatval = $('#rtscheProCat').val();
-        //alert(proid);
-        //change product name select box options
+
         $.post("../controllers/controller_sales.php?type=get_batch", {
                 proid: proid
             },
@@ -574,9 +563,7 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
     $('#salesBatch').change(function() {
 
         var proid = $('#salesBatch').val(); // get option's value
-        // var procatval = $('#rtscheProCat').val();
-        //alert(proid);
-        //change product name select box options
+
         getItemPrice()
 
     });
@@ -585,30 +572,37 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
     jQuery(function($) {
 
         $("#createSales").click(function() {
-            d = new FormData($("#salesForm")[0]);
-            $.ajax({
-                url: "../controllers/controller_sales.php?type=salesCreate",
-                method: "post",
-                data: d,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    var salesId = data;
-                    $("#salesid").val(data);
-                    $.post("../controllers/controller_sales.php?type=salesCreateTable", {
-                            salesId: salesId
-                        },
-                        function(data, status) {
-                            if (status == "success") {
-                                $("#salesTable tbody").empty();
-                                $("#salesTable tbody").append(data);
-                                updateSubTol();
-                                updateAmountDue();
-                            }
-                        });
+            if ($("#salesForm").valid()) {
+                $('#selectCustomer').hide();
+                $('#createSalesDiv').hide();
+                $('#selectProducts').show();
+                $('#salesChangeCusDiv').show();
+                $('#btnSet').show();
+                d = new FormData($("#salesForm")[0]);
+                $.ajax({
+                    url: "../controllers/controller_sales.php?type=salesCreate",
+                    method: "post",
+                    data: d,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        var salesId = data;
+                        $("#salesid").val(data);
+                        $.post("../controllers/controller_sales.php?type=salesCreateTable", {
+                                salesId: salesId
+                            },
+                            function(data, status) {
+                                if (status == "success") {
+                                    $("#salesTable tbody").empty();
+                                    $("#salesTable tbody").append(data);
+                                    updateSubTol();
+                                    updateAmountDue();
+                                }
+                            });
 
-                }
-            });
+                    }
+                });
+            }
         });
 
         $(document).ready(function() {
@@ -616,8 +610,8 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
             $(".amountPaid").val("0.00");
             $("#itemPrice").val("0.00");
             $("#grossTotal").val("0.00");
-            $("#qty").val("0");
-            $("#disVal").val("0%");
+            $("#qty").val("");
+            $("#disVal").val("");
             $(".balanceVal").text("0.00");
             // $('.date-picker').datepicker('setDate', 'today');
             $('.date-picker').datepicker({
@@ -630,46 +624,6 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
             $('.date-picker').datepicker('setDate', new Date());
 
 
-            // var myTable = $('#salesTable').DataTable({
-
-            //   "order": [
-            //     [0, "dsec"]
-            //   ],
-            //   "columnDefs": [{
-            //       "width": "15%",
-            //       "targets": 6
-            //     },
-            //     {
-            //       "width": "15%",
-            //       "targets": 5
-            //     },
-            //     {
-            //       "width": "15%",
-            //       "targets": 4
-            //     },
-            //     {
-            //       "width": "15%",
-            //       "targets": 3
-            //     },
-            //     {
-            //       "width": "15%",
-            //       "targets": 2
-            //     },
-            //     {
-            //       "width": "15%",
-            //       "targets": 1
-            //     },
-            //     {
-            //       "width": "10%",
-            //       "targets": 0
-            //     }
-            //   ],
-
-            //   "searching": false,
-            //   "paging": false,
-            //   "info": false
-            // });
-
             $("#qty").keyup(function() {
                 getItemPrice();
                 calGrossTol();
@@ -680,120 +634,89 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
             });
 
             $('#salesProductAdd').on('click', function() {
+                if ($("#salesProForm").valid()) {
 
-                var batch = $("#salesBatch option:selected").text();
-                var proid = $('#salesProductName').val();
+                    var batch = $("#salesBatch option:selected").text();
+                    var proid = $('#salesProductName').val();
 
-                var proname = $("#salesProductName option:selected").text();
-                var qnty = $('#qty').val();
-                var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button></div>"
-                var item_cost = $('#itemPrice').val();
-                // alert(item_cost); 
-                var discount = parseInt($('#disVal').val());
-                var subTotal = parseInt($("#grossTotal").val());
-                var total = item_cost * qnty;
-                var discTol = total;
-                var subTol = discTol.toFixed(2);
-                var tablerow = "<tr class='item-row'><td>" + buttons + "</td><td>" + batch + "</td><td>" + proname + "</td><td>" + item_cost + "</td><td>" + qnty + "</td><td>0%</td><td class='subTol'>" + subTol + "</td></tr>";
+                    var proname = $("#salesProductName option:selected").text();
+                    var qnty = $('#qty').val();
+                    var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button></div>"
+                    var item_cost = $('#itemPrice').val();
+                    // alert(item_cost); 
+                    var discount = parseInt($('#disVal').val());
+                    var subTotal = parseInt($("#grossTotal").val());
+                    var total = item_cost * qnty;
+                    var discTol = total;
+                    var subTol = discTol.toFixed(2);
+                    var tablerow = "<tr class='item-row'><td>" + buttons + "</td><td>" + batch + "</td><td>" + proname + "</td><td>" + item_cost + "</td><td>" + qnty + "</td><td>0%</td><td class='subTol'>" + subTol + "</td></tr>";
 
-                // var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
+                    var salesId = $("#salesid").val();
 
-                //<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>
-                // if(batch!=""){
-                // alert(item_cost);
-                // $("#salesTable").DataTable().destroy();
-                // $("#salesTable tbody").append(tablerow);
-                // $("#salesTable").DataTable();
-
-                // updateAmountDue();
-                var salesId = $("#salesid").val();
-
-                $.post("../controllers/controller_sales.php?type=salesAddRow", {
-                        proname: proname,
-                        item_cost: item_cost,
-                        qnty: qnty,
-                        discount: discount,
-                        subTotal: subTotal,
-                        salesId: salesId,
-                        batch: batch
-                    },
-                    function(data, status) {
-                        if (status == "success") {
-                            var salesId = $("#salesid").val();
-                            $.post("../controllers/controller_sales.php?type=salesCreateTable", {
-                                    salesId: salesId
-                                },
-                                function(data, status) {
-                                    if (status == "success") {
-                                        $("#salesTable tbody").empty();
-                                        $("#salesTable tbody").append(data);
-                                        updateSubTol();
-                                        updateAmountDue();
-                                    }
-                                });
-                        }
-                    });
-                // } else{
-                //   Swal.fire({
-                //     icon: 'error',
-                //     title: 'Oops...',
-                //     text: 'Please select a product!'
-
-                //   });
-                // }
-                // $("#subTotal").text("0");
-
-                $("#salesProductName").empty();
-                $("#itemPrice").val("0.00");
-                $("#grossTotal").val("0.00");
-                $("#qty").val("0");
-                $("#disVal").val("0%");
-                $("#salesBatch").empty();
-
-                $('.select2gg').select2({
-                    placeholder: "--Select a Product--",
-                    allowClear: true
-                });
+                    $.post("../controllers/controller_sales.php?type=salesAddRow", {
+                            proname: proname,
+                            item_cost: item_cost,
+                            qnty: qnty,
+                            discount: discount,
+                            subTotal: subTotal,
+                            salesId: salesId,
+                            batch: batch
+                        },
+                        function(data, status) {
+                            if (status == "success") {
+                                var salesId = $("#salesid").val();
+                                $.post("../controllers/controller_sales.php?type=salesCreateTable", {
+                                        salesId: salesId
+                                    },
+                                    function(data, status) {
+                                        if (status == "success") {
+                                            $("#salesTable tbody").empty();
+                                            $("#salesTable tbody").append(data);
+                                            updateSubTol();
+                                            updateAmountDue();
+                                        }
+                                    });
+                            }
+                        });
 
 
-                var supplierval = $('#salesSupplier').val();
-                var procatval = $('#salesProductCat').val(); // get option's value
+                    $("#salesProductName").empty();
+                    $("#itemPrice").val("0.00");
+                    $("#grossTotal").val("0.00");
+                    $("#qty").val("");
+                    $("#disVal").val("");
+                    $("#salesBatch").empty();
 
-                // get filtered data to datatable
-                $.post("../controllers/controller_purchase.php?type=get_productList", {
-                        procatval: procatval,
-                        supplierval: supplierval
-                    },
-                    function(data, status) {
-                        if (status == "success") {
-                            // alert(data);
-                            $("#salesProductName").empty();
-                            $("#salesProductName").append("<option></option>");
-                            $("#salesProductName").append(data);
-                            //   $('.select2gg').select2({
-                            //   placeholder: "Select a Product",
-                            //   allowClear: true
-                            // });
-                        }
+                    $('.select2gg').select2({
+                        placeholder: "--Select a Product--",
+                        allowClear: true
                     });
 
 
+                    var supplierval = $('#salesSupplier').val();
+                    var procatval = $('#salesProductCat').val(); // get option's value
 
+                    // get filtered data to datatable
+                    $.post("../controllers/controller_purchase.php?type=get_productList", {
+                            procatval: procatval,
+                            supplierval: supplierval
+                        },
+                        function(data, status) {
+                            if (status == "success") {
+
+                                $("#salesProductName").empty();
+                                $("#salesProductName").append("<option></option>");
+                                $("#salesProductName").append(data);
+
+                            }
+                        });
+
+
+                }
             });
             var oldVal = "";
 
-            // $("#salesTable tbody").on("change keyup paste", '.discountVal', function() {
-            //   var currentVal = $(this).val();
-            //   if (currentVal == oldVal) {
-            //     return; //check to prevent multiple simultaneous triggers
-            //   }
 
-            //   oldVal = currentVal;
-            //   //action to be performed on textarea changed
-            //   alert("currentVal");
-
-
-            // });
 
 
 
@@ -804,16 +727,13 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
                 var itemPrice = parseFloat($row.find("td:nth-child(4)").text());
                 var listNo = parseFloat($row.find("td:nth-child(2)").text());
                 var qty = parseFloat($row.find(".tableQty").val());
-                // alert(qty);
 
-                //alert(discPer);
-                // var $row = $(this).closest("tr"); // Find the row
                 var total = itemPrice * qty;
-                //alert(total);
+
                 var grossTotal = (total - total * dis / 100).toFixed(2);
-                // alert(discTotal);
+
                 $row.find("td:nth-child(7)").text(grossTotal);
-                // $row.find(".discountVal").text(discPer+"%");
+
                 updateSubTol();
                 updateAmountDue();
                 // updateTableRow();
@@ -863,17 +783,9 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
             });
 
             $("#salesTable tfoot").on("keyup", '.amountPaid', function() {
-                // alert("gg");
+
                 updateAmountDue();
-                // var balance = 0;
-                // var amountPaid = $(".amountPaid").val();
-                // var subTotal = parseFloat($(".subTotal").text());
-                // subTotal = subTotal.toFixed(2);
-                // // alert(subTotal);
-                // balance = subTotal - amountPaid;
-                // balance = balance.toFixed(2);
-                // $(".balanceVal").text(balance);
-                // $(".amountPaid").text(subTotal);
+
             });
             $('#salesTable tbody').on('click', '.fa-minus-circle', function() {
 
@@ -936,7 +848,6 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
                 myTable.row(".selected").remove().draw(false);
                 alert('sda');
 
-                // myTable.row('.selected').remove().draw( false );
             });
 
             $('#salesTable tbody').on('click', '.fa-pencil', function() {
@@ -951,48 +862,14 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
                     },
                     function(data, status) {
                         if (status == "success") {
-                            // alert(data);
+
                             $("#salesProductName").empty();
                             $("#salesProductName").append("<option></option>");
                             $("#salesProductName").append(data);
-                            //   $('.select2gg').select2({
-                            //   placeholder: "Select a Product",
-                            //   allowClear: true
-                            // });
+
                         }
                     });
-                // bootbox.prompt("What is your name?", function(result) {
-                //   if (result === null) {
 
-                //   } else {
-                //     $row.find("td:nth-child(2)").append(result);
-                //   }
-                // });
-
-                // const {
-                //     value: newQty
-                // } = Swal.fire({
-                //     title: proname,
-                //     input: 'text',
-                //     inputPlaceholder: 'Change quantity',
-                //     inputAttributes: {
-                //         maxlength: 10,
-                //         autocapitalize: 'off',
-                //         autocorrect: 'off'
-                //     }
-                // }).then((newQty) => {
-                //     var noval = "''";
-                //     var newQty2 = newQty['value'];
-                //     if (newQty2) {
-                //         $row.find("td:nth-child(5)").empty();
-                //         $row.find("td:nth-child(5)").append(newQty2);
-                //         Swal.fire(`Quantity changed to: ${newQty2}`);
-
-                //         // alert(newQty2);
-
-                //     }
-                // });
-                // myTable.row('.selected').remove().draw( false );
             });
 
             $('#salesSubmit').click(function() {
@@ -1021,49 +898,66 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
 
             });
             $('#salesCancel').click(function() {
+                var salesCustomer = $("#salesCustomer option:selected").text();
                 var salesid = $("#salesid").val();
-                $.post("../controllers/controller_sales.php?type=salesCancel", {
-                        salesid: salesid
-                    },
-                    function(data, status) {
-                        if (status == "success") {
 
-                            window.location.href = "sales_create5.php?";
-                        }
-                    });
+
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Remove sales for : " + salesCustomer,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Cancel sales record'
+                }).then((result) => {
+                    if (result.value) {
+                        Swal.fire(
+                            'Removed!',
+                            "Sales record for : " + salesCustomer,
+                            'success'
+                        );
+                        $(this).closest('tr').remove();
+                        $.post("../controllers/controller_sales.php?type=deleteTableRow", {
+                                salesid: salesid,
+                                listNo: listNo
+                            },
+                            function(data, status) {
+                                if (status == "success") {}
+                                $.post("../controllers/controller_sales.php?type=salesCancel", {
+                                        salesid: salesid
+                                    },
+                                    function(data, status) {
+                                        if (status == "success") {
+                                            window.location.href = "sales_create5.php?";
+                                        }
+                                    });
+                            });
+
+                    } else {
+                        Swal.fire(
+                            'Sales record not removed!',
+                            '',
+                            'info'
+                        );
+                    }
+                })
             });
+
+
 
             $('#salesHold').click(function() {
                 var salesid = $("#salesid").val();
                 window.location.href = "sales_create5.php";
             });
-            // // Automatically add a first row of data
-            // $('#addRow').click();
+
         });
     });
 
 
     jQuery(function($) {
 
-        // var myTable = $('#purchaseTable').DataTable({
-        //   bAutoWidth: false,
-        //   aoColumns: [null, null,null, null],
-        //   aaSorting: [],
-        //   select: {style: 'multi'}
-        //   });
-
-
-
-
-
-        // $('#stockTable').on( 'click', 'tbody tr', function () {
-        //   myTable.row( this ).delete( {
-        //       buttons: [
-        //           { label: 'Cancel', fn: function () { this.close(); } },
-        //           'Delete'
-        //       ]
-        //     });
-        //   });
 
 
         $(document).ready(function() {
@@ -1073,29 +967,82 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
                 allowClear: true
             });
 
-
-            // $.validator.addMethod("notEqual", function(value, element, param) {
-            //   return this.optional(element) || value != param;
-            // }, "Please specify a different (non-default) value");
-
-            $('#purchaseform').validate({
+            $('#salesForm').validate({
                 errorElement: 'div',
                 errorClass: 'help-block',
                 focusInvalid: false,
                 ignore: "",
                 rules: {
-                    poSupplier: {
+                    salesRoute: {
                         required: true,
                     },
-                    podate: {
+                    salesCustomer: {
                         required: true
                     },
-                    qty: {
-                        required: false,
+                    salesSupplier: {
+                        required: true,
                         number: false
                     },
-                    poProductList: {
-                        required: false
+                },
+
+                messages: {
+                    poSupplier: {
+                        required: "Please select a supplier.",
+                        minlength: "Please select a supplier."
+                    },
+                    podate: "Please enter a date"
+                },
+
+
+                highlight: function(e) {
+                    $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+                },
+
+                success: function(e) {
+                    $(e).closest('.form-group').removeClass('has-error'); //.addClass('has-info');
+                    $(e).remove();
+                },
+
+                errorPlacement: function(error, element) {
+                    if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                        var controls = element.closest('div[class*="col-"]');
+                        if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                    } else if (element.is('.select2')) {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    } else if (element.is('.chosen-select')) {
+                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                    } else error.insertAfter(element.parent());
+                },
+
+            });
+
+            $('#salesProForm').validate({
+                errorElement: 'div',
+                errorClass: 'help-block',
+                focusInvalid: false,
+                ignore: "",
+                rules: {
+                    salesProductCat: {
+                        required: true,
+                    },
+                    salesProductName: {
+                        required: true
+                    },
+                    salesBatch: {
+                        required: true,
+                        number: false
+                    },
+                    itemPrice: {
+                        required: false,
+                    },
+                    qty: {
+                        required: true,
+                        number: true
+                    },
+                    disVal: {
+                        required: false,
+                        number: true
                     },
                 },
 
@@ -1136,62 +1083,6 @@ if (!isset($_SESSION["user"]) || $_SESSION["user"]["utype"] != "1") {
 
 
     });
-
-    // jQuery(function($) {
-
-    //     $("#salessave").click(function() {
-
-    //         // if($("#purchaseform").valid()) {
-    //         d = new FormData($("#salesform")[0]);
-    //         //alert(d);
-    //         var subTol = $("#subTotal").text();
-    //         var balanceVal = $("#balanceVal").text();
-    //         var balanceValFloat = parseFloat(balanceVal);
-    //         var amountPaid = $('#amountPaid').val();
-    //         var cusid = $('#salesCustomer').val();
-    //         var salesDate = $('#salesDate').val();
-
-
-    //         alert(subTol);
-
-    //         d.append("cusid", cusid);
-    //         d.append("subTol", subTol);
-    //         d.append("amountPaid", amountPaid);
-    //         d.append("salesDate", salesDate);
-    //         d.append("balanceVal", balanceValFloat);
-    //         $.ajax({
-    //             url: "../controllers/controller_sales.php?type=save_stock",
-    //             method: "POST",
-    //             data: d,
-    //             processData: false,
-    //             contentType: false,
-    //             success: function(data) {
-    //                 // $('#purchaseform')[0].reset();
-    //                 // location.reload(true);
-    //                 alert(data);
-
-    //                 // $("#poid").append(data);
-    //                 var salesId = jQuery.parseJSON(data);
-
-    //                 TableData = storeTblValues(salesId)
-    //                 TableData = JSON.stringify(TableData);
-    //                 alert(TableData);
-    //                 $.ajax({
-    //                     type: "POST",
-    //                     url: "../controllers/controller_sales.php?type=salesDetailsSave",
-    //                     data: "pTableData=" + TableData,
-    //                     success: function(msg) {
-    //                         alert(msg);
-    //                         // $('#salesform').reset();
-    //                         location.reload(true);
-
-    //                     }
-    //                 });
-    //             }
-    //         });
-    //         // }
-    //     });
-    // });
 </script>
 
 

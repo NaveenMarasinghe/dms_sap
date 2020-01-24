@@ -1,3 +1,10 @@
+<?php
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
+?>
+
 <?php require_once("../incl/header.php"); ?>
 <link href="../assets/css/select2.min.css" rel="stylesheet" />
 <script src="../assets/js/select2.min.js"></script>
@@ -260,23 +267,6 @@
           }
         });
 
-      // f = new FormData($("#issueStock")[0]);
-      // alert(f);
-      // $.ajax({
-      //     method: "POST",
-      //     url: "../controllers/controller_stock.php?type=RouteStockSalesman",
-      //     data: f,
-      //     processData: false,
-      //     contentType: false
-      //   })
-      //   .done(function(data) {
-      //     var testdata = JSON.parse(data);
-      //     //console.log(data);
-      //     $("#routeSalesman").val(testdata.emp_fname + ' ' + testdata.emp_lname);
-      //     $("#routeVehicle").val(testdata.veh_number);
-      //     // $("#eq_name").val(testdata[0].name);
-
-      //   });
 
     });
 
@@ -455,10 +445,6 @@
         allowClear: true
       });
 
-
-      // $.validator.addMethod("notEqual", function(value, element, param) {
-      //   return this.optional(element) || value != param;
-      // }, "Please specify a different (non-default) value");
 
       $('#purchaseform').validate({
         errorElement: 'div',

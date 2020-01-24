@@ -1,3 +1,9 @@
+<?php
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
+?>
 <?php require_once("../incl/header.php"); ?>
 <link href="../assets/css/select2.min.css" rel="stylesheet" />
 <script src="../assets/js/select2.min.js"></script>
@@ -227,9 +233,14 @@
                                   <div class="col-xs-11 label label-lg">
                                     <b>Supplier</b>
                                   </div>
+                                 
                                 </div>
 
-                                <div id="supplierAddress" style="text-align: left; margin-left:10px ">
+                                <div id="supplierAddress" style="text-align: left; ">
+                                  Ceylon Biscuits Limited, </br>
+                                  P.O. Box 03, 
+                                  Makumbura Pannipitiya. 
+                                  Sri Lanka
 
                                 </div>
                               </div><!-- /.col -->

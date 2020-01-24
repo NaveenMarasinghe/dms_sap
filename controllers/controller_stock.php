@@ -188,9 +188,6 @@ function issueStock()
 		$isid = "IS0001";
 	}
 
-
-
-
 	$sql2 = "INSERT INTO tbl_issue_stock(issue_stock_id,issue_routesche)
 		VALUES('$isid','$rtsche');";
 
@@ -204,6 +201,8 @@ function issueStock()
 	} else {
 		echo ("error");
 	}
+
+
 }
 function viewStockReport()
 {

@@ -371,7 +371,7 @@ function routeScheSave()
 	$selectDriver = $_POST["selectDriver"];
 	$selectVehicle = $_POST["selectVehicle"];
 	$rtscheRemarks = $_POST["rtscheRemarks"];
-	$rtscheStatus = "Pending";
+	$rtscheStatus = "1";
 
 	$sql2 = "INSERT INTO tbl_route_sche(routesche_id,route_id,route_date,sup_id,rtsche_remarks,rtsche_status,vehicle,driver,salesman)
 		VALUES('$rtscheid','$rtscheRoute','$rtscheDate','$rtscheSupplier','$rtscheRemarks','$rtscheStatus','$selectSalesman','$selectDriver','$selectVehicle');";
@@ -555,11 +555,28 @@ function rtscheViewDatatable()
 	while ($rec = $result->fetch_assoc()) {
 		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
 		// </tr>";	
+		switch(4){
+			case "1":
+				$statustd = "<span class='label label-sm label-warning'>Pending</span>";
+				break;
+			case "2":
+				$statustd = "<span class='label label-sm label-default arrowed arrowed-righ'>Sent</span>";
+				break;
+			case "3":
+				$statustd = "<span class='label label-sm label-info arrowed arrowed-righ'>Received</span>";
+				break;
+			case "4":
+				$statustd = "<span class='label label-sm label-success arrowed arrowed-righ'>Completed</span>";
+				break;
+			case "5":
+				$statustd = "Completed";
+				break;
+		}
 		echo ("<tr id='" . $rec["routesche_id"] . "'>");
 		echo ("<td>" . $rec["routesche_id"] . "</td>");
 		echo ("<td>" . $rec["route_id"] . "</td>");
 		echo ("<td>" . $rec["route_name"] . "</td>");
-		echo ("<td>" . $rec["rtsche_status"] . "</td>");
+		echo ("<td>" .$statustd. "</td>");
 		echo ("<td>" . $rec["route_date"] . "</td>");
 		echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
 					<button type="button" class="btn btn-xs btn-success" id="btn_modelView" onclick="viewSingleProduct(\'' . $rec["pur_id"] . '\')">

@@ -1,3 +1,10 @@
+<?php
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
+?>
+
 <?php require_once("../incl/header.php"); ?>
 <link href="../assets/css/select2.min.css" rel="stylesheet" />
 <script src="../assets/js/select2.min.js"></script>
@@ -34,10 +41,10 @@
 										<span class="title">Product List</span>
 									</li>
 
-									<li data-step="3">
+									<!-- <li data-step="3">
 										<span class="step">3</span>
 										<span class="title">Complete GRN</span>
-									</li>
+									</li> -->
 
 									<!-- 								<li data-step="4">
 									<span class="step">4</span>
@@ -130,11 +137,7 @@
 													</select>
 												</div>
 											</div>
-											<div class="col-md-2">
-												<label for="grnAddProduct" style="color: white;">&nbsp;</label>
-												<button type='button' class='btn btn-purple btn-sm btn-block' id='grnAddProduct'>Add New Product</button>
-
-											</div>
+										
 
 
 
@@ -201,7 +204,7 @@
 																	<th style="width:10%">Quantity</th>
 																	<th style="width:10%">Item Cost</th>
 																	<th style="width:10%">Item MRP</th>
-																	<th style="width:10%">Actions</th>
+																	
 																</tr>
 															</thead>
 
@@ -366,9 +369,8 @@
 
 		$('#grnSupplier').change(function() {
 
-			var supplierval = $('#grnSupplier').val(); // get option's value
+			var supplierval = $('#grnSupplier').val();
 
-			//change product category select box
 			$.post("../controllers/controller_grn.php?type=get_poid", {
 					supplierval: supplierval
 				},
@@ -379,7 +381,7 @@
 						$("#grnPOID").append("<option value=''>--Select Purchase Order--</option>");
 						$("#grnPOID").append("<option value='0'>Without Purchase Order</option>");
 						$("#grnPOID").append(data);
-						// $("#poSupplier").attr("disabled", "disabled");
+
 					}
 				});
 
@@ -400,10 +402,7 @@
 
 		var grnTable2 = $('#grnTable').DataTable({
 			"aaSorting": [],
-			"columnDefs": [{
-					"width": "10%",
-					"targets": 6
-				},
+			"columnDefs": [
 				{
 					"width": "10%",
 					"targets": 5
@@ -421,7 +420,7 @@
 					"targets": 2
 				},
 				{
-					"width": "40%",
+					"width": "50%",
 					"targets": 1
 				},
 				{
@@ -429,31 +428,26 @@
 					"targets": 0
 				}
 			]
-			// select: {
-			// 	style: 'multi'
-			// }
+
 		});
 
 
 		$('#grnPOID').change(function() {
 
-			var poidVal = $('#grnPOID').val(); // get option's value
+			var poidVal = $('#grnPOID').val();
 
 			$.post("../controllers/controller_grn.php?type=grnProductTable", {
 					poidVal: poidVal
 				},
 				function(data, status) {
 					if (status == "success") {
-						//alert(data);
+
 						$("#grnTable").DataTable().destroy();
 						$("#grnTable tbody").empty();
 						$("#grnTable tbody").append(data);
 						$('#grnTable').DataTable({
 							"aaSorting": [],
-							"columnDefs": [{
-									"width": "10%",
-									"targets": 6
-								},
+							"columnDefs": [
 								{
 									"width": "10%",
 									"targets": 5
@@ -471,7 +465,7 @@
 									"targets": 2
 								},
 								{
-									"width": "40%",
+									"width": "50%",
 									"targets": 1
 								},
 								{
@@ -479,9 +473,7 @@
 									"targets": 0
 								}
 							]
-							// select: {
-							// 	style: 'multi'
-							// }
+
 						});
 
 					}
@@ -490,17 +482,16 @@
 
 		$('#grnProductCat').change(function() {
 
-			var supplierval = $('#grnSupplier').val(); // get option's value
+			var supplierval = $('#grnSupplier').val();
 			var procatval = $('#grnProductCat').val();
 
-			//change product name select box options
 			$.post("../controllers/controller_purchaseCreate.php?type=get_productList", {
 					procatval: procatval,
 					supplierval: supplierval
 				},
 				function(data, status) {
 					if (status == "success") {
-						// alert(data);
+
 						$("#grnProductName").empty();
 						$("#grnProductName").append("<option value=''>--Select Product--</option>");
 						$("#grnProductName").append(data);
@@ -510,11 +501,6 @@
 		});
 
 		$('#grnAddItems').on('click', function() {
-			// $('#grnTable').DataTable({
-			// 	"aaSorting": []
-			// });
-
-			// $("grnTable").deleteRow(0);
 
 			var proname = $("#grnProductName option:selected").text();
 			var proid = $('#grnProductName').val();
@@ -522,8 +508,8 @@
 			var cost = $('#grnCost').val();
 			var mrp = $('#grnMRP').val();
 			var chkbox = '<td class="center"><label class="pos-rel"><input type="checkbox" class="ace" /><span class="lbl"></span></label></td>';
-			var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-success' id='btn_modelView'><i class='ace-icon fa fa-info-circle bigger-120'></i></button><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button><button type='button' class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div>"
-			var tablerow = "<tr>" + chkbox + "<td>" + proid + "</td><td>" + proname + "</td><td style='text-align:center'><div><input class='tableQty' style='border:0px; text-align:center' value='" + qnty + "'/></div></td><td style='text-align:center'><div><input class='tableCost' style='border:0px; text-align:center' value='" + cost + "'/></div></td><td style='text-align:center'><div><input class='tableMRP' style='border:0px; text-align:center' value='" + mrp + "'/></div></td><td>" + buttons + "</td></tr>";
+			var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div>"
+			var tablerow = "<tr>" + chkbox + "<td>" + proid + "</td><td>" + proname + "</td><td style='text-align:center'><div><input class='tableQty' style='border:0px; text-align:center' value='" + qnty + "'/></div></td><td style='text-align:center'><div><input class='tableCost' style='border:0px; text-align:center' value='" + cost + "'/></div></td><td style='text-align:center'><div><input class='tableMRP' style='border:0px; text-align:center' value='" + mrp + "'/></div></td></tr>";
 
 
 			$("#grnTable").DataTable().destroy();
@@ -531,10 +517,7 @@
 			$("#grnTable tbody").append(tablerow);
 			$('#grnTable').DataTable({
 				"aaSorting": [],
-				"columnDefs": [{
-						"width": "10%",
-						"targets": 6
-					},
+				"columnDefs": [
 					{
 						"width": "10%",
 						"targets": 5
@@ -548,7 +531,7 @@
 						"targets": 3
 					},
 					{
-						"width": "40%",
+						"width": "50%",
 						"targets": 2
 					},
 					{
@@ -595,12 +578,12 @@
 
 		$('#grnTable tbody').on('click', '.fa-trash-o', function() {
 
-			var btn = this;
+			
 
 			var $row = $(this).closest("tr"); // Find the row
-			var proname = $row.find("td:nth-child(2)").text();
-			var proqty = $row.find("td:nth-child(3)").text();
-			// alert(proqty);
+			// var proname = $row.find("td:nth-child(2)").text();
+			// var proqty = $row.find("td:nth-child(3)").text();
+			// // alert(proqty);
 			// alert(proname);
 
 			Swal.fire({
@@ -618,41 +601,11 @@
 						proname + " - " + proqty + " units removed.",
 						'success'
 					);
-					grnTable2.row($(btn).parents('tr')).remove().draw(false);
+					// grnTable2.row($(btn).parents('tr')).remove().draw(false);
 				}
 			})
 
 		});
-
-		//select code
-		// grnTable2.on('select', function(e, dt, type, index) {
-		// 	if (type === 'row') {
-		// 		$(grnTable2.row(index).node()).find('input:checkbox').prop('checked', true);
-		// 	}
-		// });
-		// grnTable2.on('deselect', function(e, dt, type, index) {
-		// 	if (type === 'row') {
-		// 		$(grnTable2.row(index).node()).find('input:checkbox').prop('checked', false);
-		// 	}
-		// });
-		// $('th input[type=checkbox], td input[type=checkbox]').prop('checked', false);
-
-		// $('#grnTable > thead > tr > th input[type=checkbox], #grntable_wrapper input[type=checkbox]').eq(0).on('click', function() {
-		// 	var th_checked = this.checked; //checkbox inside "TH" table header
-
-		// 	$('#grnTable').find('tbody > tr').each(function() {
-		// 		var row = this;
-		// 		if (th_checked) grnTable2.row(row).select();
-		// 		else grnTable2.row(row).deselect();
-		// 	});
-		// });
-
-		// //select/deselect a row when the checkbox is checked/unchecked
-		// $('#grnTable').on('click', 'td input[type=checkbox]', function() {
-		// 	var row = $(this).closest('tr').get(0);
-		// 	if (this.checked) grnTable2.row(row).deselect();
-		// 	else grnTable2.row(row).select();
-		// });
 
 		var active_class = 'active';
 		$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function() {
@@ -694,20 +647,18 @@
 		var $validation = false;
 		$('#fuelux-wizard-container')
 			.ace_wizard({
-				//step: 2 //optional argument. wizard will jump to step "2" at first
-				//buttons: '.wizard-actions:eq(0)'
+
 			})
 			.on('actionclicked.fu.wizard', function(e, info) {
 				if (info.step == 1) {
 
 				}
 			})
-			//.on('changed.fu.wizard', function() {
-			//})
+
 			.on('finished.fu.wizard', function(e) {
 				//save to database
 				d = new FormData($("#grnSupplierForm")[0]);
-				alert(d);
+
 				$.ajax({
 					url: "../controllers/controller_grn.php?type=grnSave",
 					method: "POST",
@@ -715,17 +666,13 @@
 					processData: false,
 					contentType: false,
 					success: function(data) {
-						// $('#purchaseform')[0].reset();
-						// location.reload(true);
-						alert(data);
 
-						// $("#poid").append(data);
 						var grnidddata = jQuery.parseJSON(data);
 
 						function storeTblValues() {
 							var poId = $('#grnPOID').val();
 							var TableData = new Array();
-							
+
 							$('#grnTable tr').each(function(row, tr) {
 								if ($(tr).hasClass('active')) {
 									TableData[row] = {
@@ -739,39 +686,51 @@
 									}
 								}
 
-								//   poid    
-								// TableData.push("Kiwi");
 							});
-							// TableData.shift();  // first row will be empty - so remove
 
 							return TableData;
 						}
 
 						TableData = storeTblValues()
 						TableData = JSON.stringify(TableData);
-						alert(TableData);
+
 						$.ajax({
 							type: "POST",
 							url: "../controllers/controller_grn.php?type=purchaseSaveDetails",
 							data: "pTableData=" + TableData,
 							success: function(msg) {
-								alert(msg);
-								// $('#purchaseform')[0].reset();
-								// location.reload(true);
+								var poid= $("#grnPOID").val();
+								
+								$.post("../controllers/controller_grn.php?type=updatePoStatus", {
+									poid:poid
+									},
+									function(data, status) {
+										
+										if (status == "success") {
+											Swal.fire({
+												title: 'Products Received',
+												icon: 'success',
+												showCancelButton: false,
+												confirmButtonColor: '#3085d6',
+												cancelButtonColor: '#d33',
+												confirmButtonText: 'OK!'
+											}).then((result) => {
+												if (result.value) {
+													window.location.href = "grn_view.php";
+												}
+											})
+										}
+									});
+
+
+
+
 
 							}
 						});
 					}
 				});
-				bootbox.dialog({
-					message: "GRN Saved!",
-					buttons: {
-						"success": {
-							"label": "OK",
-							"className": "btn-sm btn-primary"
-						}
-					}
-				});
+
 			}).on('stepclick.fu.wizard', function(e) {
 				//e.preventDefault();//this will prevent clicking and selecting steps
 			});

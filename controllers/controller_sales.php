@@ -478,11 +478,6 @@ function salesCreate()
 			echo ($salesId);
 		} elseif ($status == 1) {
 			// existing sales order
-			// $sql3="SELECT * FROM tbl_sales_order WHERE sales_id='$id'";
-			// $salesDetailsResult=$con->query($sql3);
-			// while ($salesDetailsRec=$salesDetailsResult->fetch_assoc()){
-			// 	echo("gg");
-			// }
 			echo ($id);
 		}
 	} else {
@@ -514,11 +509,6 @@ function salesCreateTable()
 		exit;
 	}
 	while ($rec = $result->fetch_assoc()) {
-		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
-		// </tr>";	
-		// sql2 ="select sum(stock_qty) from tbl_stock where pro_id='.$rec["pro_id"].';";
-		// $result2 = $con->query($sql2);
-		// // $rec2=$result2->fetch_assoc();
 
 		echo ("<tr id='" . $rec["list_no"] . "'>");
 		echo ("<td><div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-danger' style='margin: auto'><i class='ace-icon fa fa-minus-circle bigger-120'></i></button></div></td>");
@@ -528,7 +518,7 @@ function salesCreateTable()
 		echo ("<td style='text-align:center'><div><input class='tableQty' style='border:0px; width:50%; text-align:center' value='" . $rec["sales_qty"] . "'/></div></td>");
 		echo ("<td style='text-align:center'><div><input class='tableDis' style='border:0px; width:50%; text-align:center' value='" . $rec["sale_disrate"] . "'/></div></td>");
 		echo ("<td class='subTolRow' style='text-align:right'>" . $rec["sub_total"] . "</td>");
-		// echo("<td>".$rec2["sum(stock_qty)"]."</td>");
+		
 		echo ("</tr>");
 	}
 
@@ -556,12 +546,7 @@ function salesInvoiceTable()
 		exit;
 	}
 	while ($rec = $result->fetch_assoc()) {
-		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
-		// </tr>";	
-		// sql2 ="select sum(stock_qty) from tbl_stock where pro_id='.$rec["pro_id"].';";
-		// $result2 = $con->query($sql2);
-		// // $rec2=$result2->fetch_assoc();
-
+		
 		echo ("<tr id='" . $rec["list_no"] . "'>");
 		echo ("<td style='text-align:center'>" . $rec["list_no"] . "</td>");
 		echo ("<td>" . $rec["item_name"] . "</td>");
@@ -569,7 +554,7 @@ function salesInvoiceTable()
 		echo ("<td style='text-align:center'><div><input class='tableQty' style='border:0px; width:50%; text-align:center' value='" . $rec["sales_qty"] . "'/></div></td>");
 		echo ("<td style='text-align:center'><div><input class='tableDis' style='border:0px; width:50%; text-align:center' value='" . $rec["sale_disrate"] . "'/></div></td>");
 		echo ("<td class='subTolRow' style='text-align:right'>" . $rec["sub_total"] . "</td>");
-		// echo("<td>".$rec2["sum(stock_qty)"]."</td>");
+		
 		echo ("</tr>");
 	}
 

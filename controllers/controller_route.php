@@ -12,12 +12,12 @@
 	}
 	else if($utype=="2")
 	{
-		header("Location:manager.php");
+		header("Location:../pages/products_view.php");
 		
 	}
 	else if($utype=="3")
 	{
-		header("Location:clerk.php");
+		header("Location:../pages/products_view.php");
 		
 	}
 

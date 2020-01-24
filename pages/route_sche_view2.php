@@ -1,4 +1,11 @@
 <?php
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
+?>
+
+<?php
 require_once("../controllers/class_dbconnection.php");
 $db = new Connection();
 $con = $db->db_con();

@@ -1,3 +1,10 @@
+<?php
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
+?>
+
 <?php require_once("../incl/header.php");?>
   <link href="../assets/css/select2.min.css" rel="stylesheet" />
   <script src="../assets/js/select2.min.js"></script>

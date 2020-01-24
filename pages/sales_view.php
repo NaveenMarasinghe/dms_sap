@@ -1,3 +1,10 @@
+<?php
+  session_start();
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+      header("location:../index.php");
+    } 
+?>
+
 <?php require_once("../incl/header.php"); ?>
 <?php require_once("../incl/sidebar.php"); ?>
 <?php require_once("../incl/pagetop.php"); ?>
@@ -60,8 +67,7 @@
 
 
   $(document).ready(function() {
-    // jQuery(function($) {
-    // var myTable = $("#stockTable").DataTable({});
+
     $.noConflict();
     $.ajax({
       url: "../controllers/controller_sales.php?type=viewSales",
@@ -72,15 +78,12 @@
       //alert(data);
       $("#stockTable").DataTable().destroy();
       $("#stockTable tbody").empty();
-      // if ( $.fn.DataTable.isDataTable('#stockTable') ) {
-      //       $('#stockTable').DataTable().destroy();
-      //   }
 
       $("#stockTable tbody").append(data);
       //initiate dataTables plugin
       var myTable =
         $('#stockTable')
-        //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+        
         .DataTable({
             "order": [[ 0, "desc" ]],
           bAutoWidth: true,
