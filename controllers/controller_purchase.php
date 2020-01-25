@@ -235,36 +235,28 @@ function purchaseView()
 					<i class="ace-icon fa fa-pencil bigger-120"></i>
 				</button>
 
-				<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
-					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-				</button>';
+				';
 				break;
 			case "2":
 				$buttons = '<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelPoView" onclick="modalViewPo(\'' . $rec["pur_id"] . '\')">
 				<i class="ace-icon fa fa-info-circle bigger-120"></i>
 			</button>		
 
-			<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
-				<i class="ace-icon fa fa-trash-o bigger-120"></i>
-			</button>';
+			';
 				break;
 			case "3":
 				$buttons = '<button class="btn btn-xs btn-success" id="btn_modelView" onclick="modalViewPo(\'' . $rec["pur_id"] . '\')">
 					<i class="ace-icon fa fa-info-circle bigger-120"></i>
 				</button>		
 	
-				<button class="btn btn-xs btn-danger">
-					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-				</button>';
+				';
 				break;
 			case "4":
 				$buttons = '<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelPoView" onclick="modalViewPo(\'' . $rec["pur_id"] . '\')">
 						<i class="ace-icon fa fa-info-circle bigger-120"></i>
 					</button>		
 		
-					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
-						<i class="ace-icon fa fa-trash-o bigger-120"></i>
-					</button>';
+					';
 				break;
 		}
 

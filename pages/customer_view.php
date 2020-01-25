@@ -1,8 +1,8 @@
 <?php
-  session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
-      header("location:../index.php");
-    } 
+session_start();
+if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "5")) {
+  header("location:../index.php");
+}
 ?>
 
 <?php require_once("../incl/header.php"); ?>
@@ -56,20 +56,32 @@
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+
+        $.post("../controllers/controller_cus.php?type=deleteCus", {
+          cusid: cusid
+          },
+          function(data, status) {
+            if (status == "success") {
+
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+            }
+          });
+
       }
     })
   }
 
-  function editRecord(cusid){
-            window.location.href = "customer_edit.php?cus_id="+cusid;
-        }
+  function editRecord(cusid) {
+    window.location.href = "customer_edit.php?cus_id=" + cusid;
+  }
 
   $(document).ready(function() {
+
+    document.title = "Customer View";
     $.noConflict();
 
     // load datatable on load

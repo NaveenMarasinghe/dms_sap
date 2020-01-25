@@ -235,9 +235,7 @@
                                             <div class="col-md-4">
                                                 <button type="button" class="btn btn-default btn-block btn-flat" id="btnBack">Back</button>
                                             </div>
-                                            <div class="col-md-4">
-                                                <button type="button" class="btn btn-info btn-block btn-flat" id="btnPrint">Print</button>
-                                            </div>
+                                
                                         </div>
 
                                     </div>
@@ -256,6 +254,7 @@
 
         <script type="text/javascript">
             $(document).ready(function() {
+                document.title = "Sales Invoice";
                 var salesId = $("#salesid").val();
                 $.post("../controllers/controller_sales.php?type=salesInvoiceTable", {
                         salesId: salesId

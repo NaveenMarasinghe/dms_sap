@@ -310,7 +310,7 @@
 
       $(".fa-trash-o").click(function() {
         myTable.row(".selected").remove().draw(false);
-        alert('sda');
+
         // myTable.row('.selected').remove().draw( false );
       });
 
@@ -400,7 +400,7 @@
 
 
     d = new FormData($("#purchaseform")[0]);
-    alert(d);
+
     $.ajax({
       url: "../controllers/controller_purchase.php?type=purchaseSave",
       method: "POST",
@@ -435,13 +435,13 @@
 
         TableData = storeTblValues()
         TableData = JSON.stringify(TableData);
-        alert(TableData);
+
         $.ajax({
           type: "POST",
           url: "../controllers/controller_purchase.php?type=purchaseSaveDetails",
           data: "pTableData=" + TableData,
           success: function(msg) {
-            alert(msg);
+
             $('#purchaseform')[0].reset();
             location.reload(true);
 

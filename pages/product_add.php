@@ -83,15 +83,7 @@
 			</div>
 		</div>
 
-<!-- 		<div class="form-group">
-			<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="url">Company URL:</label>
 
-			<div class="col-xs-12 col-sm-9">
-				<div class="clearfix">
-					<input type="text" id="url" name="url" class="col-xs-12 col-sm-8" />
-				</div>
-			</div>
-		</div> -->
 
 		<div class="form-group">
 			<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Name </label>
@@ -103,15 +95,17 @@
 			</div>
 		</div>
 
-		<!-- <div class="form-group">
-			<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Image </label>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Reorder level </label>
 
 			<div class="col-sm-9">
 				<div class="clearfix">
-				<input type="file" class="col-xs-10 col-sm-5" id="pro_image" name="pro_image" onchange="readURL(this);"/>
+				<input type="text" class="col-xs-10 col-sm-5" id="pro_reorder" name="pro_reorder""/>
 				</div>
 			</div>
-		</div> -->
+		</div>
+
 
 			<div class="clearfix form-actions">
 				<div class="col-md-offset-3 col-md-9">
@@ -379,6 +373,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 
+			document.title = "Add Product";
+
 				$.noConflict();
 		       $.ajax({
 		            url:"../controllers/controller_products.php?type=selectSupplierLoad",
@@ -405,12 +401,7 @@
 
 
 	    $('#pro_supplier').change(function(){
-	      // alert("gg");
-	      // table
-	      //   .columns(4)
-	      //   .search(this.value)
-	      //   .draw();
-	      // $.noConflict();
+
 
 	      var supplierval = this.value; // get option's value
 	      // get filtered data to datatable
@@ -424,11 +415,6 @@
 	        $("#pro_cat").empty();
 	        $("#pro_subcat").empty();
 
-	        // $('#procat_supplier').empty();      
-         //    $('#prosubcat_supplier').empty();
-
-         //    $("#prosubcat_supplier").append("<option value=''>Select Product Sub Category</option>");
-	        // $("#procat_supplier").append("<option value=''>Select Product Category</option>");
 
 	        $("#pro_subcat").append("<option value=''>Select Product Sub Category</option>");
 	        $("#pro_cat").append("<option value=''>Select Product Category</option>");
@@ -439,17 +425,6 @@
 	        }
 	      });
 
-		    //   $.post("../controllers/controller_products.php?type=selectSupplierLoadModal",
-		    //   {supplierval:supplierval},
-		    //   function(data,status){
-		    //   if(status=="success"){
-		    //         //alert(data);
-		    //      //load success message 
-
-	     //        $('#procat_supplier').append(data);      
-	     //        $('#prosubcat_supplier').append(data); 
-		    //   } 
-		    // }); 
 	    });
 
 		$('#pro_cat').change(function(){

@@ -1,6 +1,6 @@
 <?php
   session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="2") || ($_SESSION["user"]["utype"]=="3")){
       header("location:../index.php");
     } 
 ?>
@@ -328,7 +328,7 @@
 
 
 		$(document).ready(function() {
-
+            document.title = "Create GRN";
 			$.noConflict();
 
 			$('.select2gg').select2({

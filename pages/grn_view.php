@@ -1,6 +1,6 @@
 <?php
   session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="2")){
       header("location:../index.php");
     } 
 ?>
@@ -145,6 +145,8 @@
 
 
   $(document).ready(function() {
+
+    document.title = "View GRN";
     // jQuery(function($) {
     // var myTable = $("#stockTable").DataTable({});
     $.noConflict();
@@ -197,10 +199,6 @@
             }
           ]
 
-
-          // select: {
-          //     style: 'single'
-          // }
         });
 
 

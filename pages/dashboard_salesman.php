@@ -46,7 +46,7 @@ $empid = $_GET["empid"]; ?>
       },
       function(data, status) {
         if (status == "success") {
-          alert(data);
+
 
           $("#routeAcceptBtn").append(data);
 
@@ -56,7 +56,7 @@ $empid = $_GET["empid"]; ?>
       // 
     $('#routeAcceptBtn').click(function() {
       var rtscheid = $("#routeAcceptBtn").text();
-      alert(rtscheid);
+
       var empid = $('#empid').val();
       window.location.href = "dashboard_salesman.php?empid="+empid;
       // $.post("../controllers/controller_cus.php?type=createRtscheSesson", {

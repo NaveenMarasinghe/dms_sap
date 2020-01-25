@@ -30,7 +30,7 @@
               <button type='button' class='btn btn-primary m-b-20' data-toggle='modal' data-target='#modelEditProduct' style='margin-bottom: 10px;' id='addbutton'>Add New Product</button> 
                 </div>
               </div> -->
-                <!-- <div class="row">
+                <div class="row">
                 <div class="col-md-3">
                   <div class="form-group" id="filter_col1" data-column="2">
                     <label for="exampleInputEmail1">Supplier</label>
@@ -71,7 +71,7 @@
                 <div class="col-md-3">
                   
                 </div>
-              </div> -->
+              </div>
 
               <table id="productTable" class="table table-bordered table-striped">
                 <thead>

@@ -16,7 +16,6 @@ if (isset($_GET["type"])) {
 		case "issueStock":
 			issueStock();
 			break;
-
 		case "viewStockReport":
 			viewStockReport();
 			break;
@@ -26,9 +25,18 @@ if (isset($_GET["type"])) {
 		case "receiveRouteStock":
 			receiveRouteStock();
 			break;
-			case "receiveStock":
-				receiveStock();
-				break;
+		case "receiveVehStock":
+			receiveVehStock();
+			break;
+		case "receiveStock":
+			receiveStock();
+			break;
+		case "topEmp":
+			topEmp();
+			break;
+		case "topProducts":
+			topProducts();
+			break;
 	}
 }
 
@@ -132,19 +140,26 @@ function RouteStockSalesman()
 	$selectRouteSche = $_POST["selectRouteSche"];
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "SELECT usr.emp_fname, usr.emp_lname FROM tbl_route_sche rt, tbl_user_details usr where rt.routesche_id='$selectRouteSche' and rt.salesman=usr.emp_id";
+	$sql = "SELECT usr.emp_fullname as fname FROM tbl_route_sche rt, tbl_user_details usr where rt.routesche_id='$selectRouteSche' and rt.salesman=usr.emp_id";
 	$sql2 = "SELECT vehicle FROM tbl_route_sche where routesche_id='$selectRouteSche'";
 
-	$result = $con->query($sql);
+	// $result = $con->query($sql);
 	$result2 = $con->query($sql2);
 	if ($con->errno) {
 		echo ("SQL Error: " . $con->error);
 		exit;
 	}
-	$rec = $result->fetch_assoc();
+	// $rec = $result->fetch_assoc();
+	// $name=$rec["fname"];
+
 	$rec2 = $result2->fetch_assoc();
-	$merge = array_merge($rec, $rec2);
-	echo json_encode($merge);
+	$vehicle = $rec2["vehicle"];
+
+	// $dataArray[0]["name"] = $name;
+	$dataArray[0]["vehicle"] = $vehicle;
+
+	echo json_encode($dataArray);
+
 	$con->close();
 }
 
@@ -201,7 +216,9 @@ function issueStock()
 	} else {
 		echo ("error");
 	}
+	$sqlupdate = "UPDATE tbl_route_sche SET rtsche_status='2' WHERE routesche_id='$rtsche'";
 
+	$sqlupdate2 = $con->query($sqlupdate);
 
 }
 function viewStockReport()
@@ -347,47 +364,120 @@ function receiveRouteStock()
 	$con->close();
 }
 
-function receiveStock(){
-		// Unescape the string values in the JSON array
-		$tableData = stripcslashes($_POST['pTableData']);
+function receiveStock()
+{
+	// Unescape the string values in the JSON array
+	$tableData = stripcslashes($_POST['pTableData']);
 
-		// Decode the JSON array
-		$tableData = json_decode($tableData, TRUE);
-	
-		// now $tableData can be accessed like a PHP array
-		//echo $tableData[1]['pname'];
-		$tblDataLength = count($tableData);
-	
-		for ($x = 1; $x < $tblDataLength; $x++) {
-	
-	
-			$batch = $tableData[$x]["batch"];
-			$qty = $tableData[$x]["qty"];
-			$routeVehicle = $tableData[$x]["routeVehicle"];
+	// Decode the JSON array
+	$tableData = json_decode($tableData, TRUE);
 
-			
-	
-			$db = new Connection();
-			$con = $db->db_con();
-	
-			$sql1="SELECT stock_qty FROM tbl_stock WHERE batch_id='$batch' ";
-			$stockResult = $con->query($sql1);
-			$stockCount = $stockResult->num_rows;
+	// now $tableData can be accessed like a PHP array
+	//echo $tableData[1]['pname'];
+	$tblDataLength = count($tableData);
 
-			if($stockCount>0){
-				$rec = $stockResult->fetch_assoc();
-				$stockqty = $rec["stock_qty"];
-				$stockqty=$stockqty+$qty;
-				$sqlupdate="UPDATE tbl_stock SET stock_qty='$stockqty' WHERE batch_id='$batch'";
-				$con->query($sqlupdate);
-				echo($stockqty);
+	for ($x = 1; $x < $tblDataLength; $x++) {
 
-				$sqlveh="DELETE FROM tbl_vehicle_products WHERE veh_id='$routeVehicle' AND batch_id='$batch'";
-				$con->query($sqlveh);
-				echo('removed');
-			}			
-	
 
-			$con->close();
+		$batch = $tableData[$x]["batch"];
+		$qty = $tableData[$x]["qty"];
+		$routeVehicle = $tableData[$x]["routeVehicle"];
+
+
+
+		$db = new Connection();
+		$con = $db->db_con();
+
+		$sql1 = "SELECT stock_qty FROM tbl_stock WHERE batch_id='$batch' ";
+		$stockResult = $con->query($sql1);
+		$stockCount = $stockResult->num_rows;
+
+		if ($stockCount > 0) {
+			$rec = $stockResult->fetch_assoc();
+			$stockqty = $rec["stock_qty"];
+			$stockqty = $stockqty + $qty;
+			$sqlupdate = "UPDATE tbl_stock SET stock_qty='$stockqty' WHERE batch_id='$batch'";
+			$con->query($sqlupdate);
+			echo ($stockqty);
+
+			$sqlveh = "DELETE FROM tbl_vehicle_products WHERE veh_id='$routeVehicle' AND batch_id='$batch'";
+			$con->query($sqlveh);
+			echo ('removed');
 		}
+
+
+		$con->close();
+	}
+}
+
+function topEmp()
+{
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT tbl_user_details.emp_fullname,tbl_sales_details.emp_id,SUM(sub_total) AS totalSales FROM `tbl_sales_details`,tbl_user_details WHERE tbl_user_details.emp_id =tbl_sales_details.emp_id GROUP BY emp_id ORDER BY totalSales DESC LIMIT 10 ";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("<tr>");
+		echo ("<td></td>");
+		echo ("<td></td>");
+		echo ("</tr>");
+		exit;
+	}
+	while ($rec = $result->fetch_assoc()) {
+
+		echo ("<tr>");
+		echo ("<td class='hidden-480'><span class='label label-success arrowed-in arrowed-in-right'>" . $rec["emp_fullname"] . "</span></td>");
+		echo ("<td><b class='green'>" . $rec["totalSales"] . "</b></td>");
+		echo ("</tr>");
+	}
+
+	$con->close();
+}
+
+function topProducts()
+{
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT item_name, SUM(sales_qty) as total FROM `tbl_sales_details` GROUP BY item_name ORDER BY SUM(sales_qty) DESC";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("<tr>");
+		echo ("<td></td>");
+		echo ("<td></td>");
+		echo ("</tr>");
+		exit;
+	}
+	while ($rec = $result->fetch_assoc()) {
+
+		echo ("<tr>");
+		echo ("<td class='hidden-480'><span class='label label-info arrowed-right arrowed-in'>" . $rec["item_name"] . "</span></td>");
+		echo ("<td><b class='blue'>" . $rec["total"] . "</b></td>");
+
+		echo ("</tr>");
+	}
+
+	$con->close();
+}
+
+function receiveVehStock(){
+
+	$rtscheid = $_POST["rtscheid"];
+	$db = new Connection();
+	$con = $db->db_con();
+	$sqlupdate = "UPDATE tbl_route_sche SET rtsche_status='3' WHERE routesche_id='$rtscheid'";
+
+	$sqlupdate2 = $con->query($sqlupdate);
+
+	echo('gg');
+
 }

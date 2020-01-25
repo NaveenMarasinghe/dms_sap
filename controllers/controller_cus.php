@@ -3,7 +3,7 @@ require_once("../controllers/class_dbconnection.php");
 
 if (isset($_GET["type"])) {
     $type = $_GET["type"];
-    switch ($type) {            // checks the type addNewProductCat
+    switch ($type) {            
         case "viewCustomerTable":
             viewCustomerTable();
             break;
@@ -31,6 +31,9 @@ if (isset($_GET["type"])) {
         case "updateCustomer":
             updateCustomer();
             break;
+        case "deleteCus":
+            deleteCus();
+            break;
     }
 }
 
@@ -39,7 +42,7 @@ function viewCustomerTable()
     $db = new Connection();
     $con = $db->db_con();
     $sql = "SELECT cus_id, cus_name, cus_add, cus_tel, sales_balance
-				FROM tbl_customers ";
+				FROM tbl_customers WHERE cus_status='1'";
     $result = $con->query($sql);
     if ($con->errno) {
         echo ("SQL Error: " . $con->error);
@@ -65,18 +68,13 @@ function viewCustomerTable()
         echo ("<td>" . $rec["cus_add"] . "</td>");
         echo ("<td>" . $rec["cus_tel"] . "</td>");
         echo ("<td>" . $rec["sales_balance"] . "</td>");
-        echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
-					
+        echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">					
                     
-                    <button class="btn btn-xs btn-info" onclick="editRecord(\''.$rec["cus_id"].'\')">
+                    <button class="btn btn-xs btn-info" onclick="editRecord(\'' . $rec["cus_id"] . '\')">
                         <i class="ace-icon fa fa-pencil bigger-120"></i>
-                    </button>
+                    </button>                    
                     
-					<button class="btn btn-xs btn-success" >
-						<i class="ace-icon fa fa-info bigger-120"></i>
-					</button>
-                    
-					<button class="btn btn-xs btn-danger" onclick="deleteRecord(\''.$rec["cus_id"].'\')">
+					<button class="btn btn-xs btn-danger" onclick="deleteRecord(\'' . $rec["cus_id"] . '\')">
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
@@ -139,14 +137,14 @@ function addNewCustomer()
         echo ("SQL Error: " . $con->error);
         exit;
     }
-    //alert('func');
+    
     $nor = $result->num_rows;
     if ($nor == 0) {
         echo ("");
     } else {
         //fetch all the records
         while ($rec = $result->fetch_assoc()) {
-            //merge province ID and name with HTML
+            
             echo ("Success");
         }
     }
@@ -163,7 +161,7 @@ function getTerritory()
         echo ("SQL Error: " . $con->error);
         exit;
     }
-    //alert('func');
+   
     $nor = $result->num_rows;
     if ($nor == 0) {
         echo ("No records");
@@ -213,7 +211,7 @@ function getEmpType()
         echo ("SQL Error: " . $con->error);
         exit;
     }
-    //alert('func');
+  
     $nor = $result->num_rows;
     if ($nor == 0) {
         echo ("No records");
@@ -272,9 +270,7 @@ function viewEmpTable()
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-warning">
-						<i class="ace-icon fa fa-flag bigger-120"></i>
-					</button>
+
 				</div></td>');
         echo ("</tr>");
     }
@@ -328,7 +324,7 @@ function addNewEmp()
     $emp_email = $_POST["emp_email"];
     $emp_dob = $_POST["emp_dob"];
     $emp_type = $_POST["emp_type"];
-    $emp_pw = $_POST["emp_pw"];
+    $emp_pw = md5($_POST["emp_pw"]);
 
     $sql = "INSERT INTO tbl_user_details(emp_id,emp_name,emp_fullname,emp_tel,emp_add,emp_email,emp_type,emp_dob)
     VALUES('$emp_id','$emp_name','$emp_fullname','$emp_tel','$emp_add','$emp_email','$emp_type','$emp_dob');";
@@ -359,4 +355,13 @@ function createRtscheSesson()
 function updateCustomer()
 {
     echo ("gg");
+}
+
+function deleteCus()
+{
+    $cus_id = $_POST["cus_id"];
+    $db = new Connection();
+    $con = $db->db_con();
+    $sql = "UPDATE tbl_customers SET cus_status='0' WHERE cus_id='$cus_id'";
+    $result = $con->query($sql);
 }

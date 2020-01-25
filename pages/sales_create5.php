@@ -1,6 +1,6 @@
 <?php
   session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="4") || ($_SESSION["user"]["utype"]=="5")){
       header("location:../index.php");
     } 
 ?>
@@ -282,19 +282,7 @@
                                         <button type="button" class="btn btn-success btn-block btn-flat" id="salesSubmit">Submit</button>
                                     </div>
                                 </div>
-                                <!-- <div class="clearfix form-actions">
-                                    <div class="col-md-offset-3 col-md-9">
-                                        <div class="pull-right">
 
-
-                                            &nbsp; &nbsp; &nbsp;
-                                            <button class="btn btn-info" type="button" id="salessave">
-                                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
 
@@ -403,13 +391,15 @@
             },
             function(data, status) {
                 if (status == "success") {
-                    alert('gg');
+       
 
                 }
             });
     }
 
     $(document).ready(function() {
+
+        document.title = "Sales Create";
 
         $('#selectProducts').hide();
         $('#salesChangeCusDiv').hide();
@@ -846,7 +836,7 @@
 
             $(".fa-trash-o").click(function() {
                 myTable.row(".selected").remove().draw(false);
-                alert('sda');
+         
 
             });
 

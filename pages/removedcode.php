@@ -195,6 +195,16 @@ x.document.close();
 
 }
 
+$("#mySelect2").select2("val", "0");
+
+$dataArray[0]["poid"] = $poId;
+    $dataArray[0]["status"] = 2;
+
+    echo json_encode($dataArray);
+    
+var recData = JSON.parse(data);
+var poId = (recData[0].poid);
+var postatus = (recData[0].status);
 
 
 

@@ -212,7 +212,7 @@
   </div><!-- /.row -->
 <script type="text/javascript">
   $(document).ready(function(){
-    alert(pur_id);
+
   });
   
 </script>

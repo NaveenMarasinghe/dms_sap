@@ -1,8 +1,8 @@
 <?php
-  session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
-      header("location:../index.php");
-    } 
+session_start();
+if (!isset($_SESSION["user"])) {
+  header("location:../index.php");
+}
 ?>
 
 <?php require_once("../incl/header.php"); ?>
@@ -28,7 +28,7 @@
             <table id="rtscheViewTable" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Route Schedule ID</th>
+                  <th>Schedule ID</th>
                   <th>Route ID</th>
                   <th>Route Name</th>
                   <th>Status</th>
@@ -63,17 +63,17 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
-            <h4 class="blue bigger">View Product Details</h4>
+            <h4 class="blue bigger">View Schedule Details</h4>
           </div>
 
           <div class="modal-body">
             <div class="row">
               <form class="form-horizontal" role="form" id="form_addNewProductCat">
                 <div class="form-group">
-                  <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product ID </label>
+                  <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Salesman </label>
 
                   <div class="col-sm-9">
-                    <input type="text" readonly="readonly" id="editModalProductId" name="editModalProductId" placeholder="" class="col-xs-10 col-sm-8" />
+                    <input type="text" readonly="readonly" id="modalSalesman" name="modalSalesman" placeholder="" class="col-xs-10 col-sm-8" />
                     <div class="clearfix">
 
                     </div>
@@ -81,44 +81,25 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Category </label>
+                  <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Driver </label>
 
                   <div class="col-sm-9">
                     <div class="clearfix">
-                      <input type="text" readonly="readonly" id="editModalProductCat" name="editModalProductCat" placeholder="" class="col-xs-10 col-sm-8" />
+                      <input type="text" readonly="readonly" id="modalDriver" name="modalDriver" placeholder="" class="col-xs-10 col-sm-8" />
                     </div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Sub Category </label>
+                  <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Vehicle </label>
 
                   <div class="col-sm-9">
                     <div class="clearfix">
-                      <input type="text" readonly="readonly" class="col-xs-10 col-sm-8" placeholder="" id="editModalProductSubCat" name="editModalProductSubCat" />
+                      <input type="text" readonly="readonly" class="col-xs-10 col-sm-8" placeholder="" id="modalVehicle" name="modalVehicle" />
                     </div>
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Product Name </label>
-
-                  <div class="col-sm-9">
-                    <div class="clearfix">
-                      <input type="text" readonly="readonly" class="col-xs-10 col-sm-8" placeholder="" id="editModalProductName" name="editModalProductName" />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Supplier </label>
-
-                  <div class="col-sm-9">
-                    <div class="clearfix">
-                      <input type="text" readonly="readonly" class="col-xs-10 col-sm-8" placeholder="" id="editModalProductSupplier" name="editModalProductSupplier" />
-                    </div>
-                  </div>
-                </div>
 
               </form>
             </div>
@@ -140,9 +121,52 @@
 </div><!-- /.row -->
 </div><!-- /.page-content -->
 <script type="text/javascript">
+
+function viewScheDetails(data) {
+
+var proid = data;
+$.post("../controllers/controller_routeSche.php?type=viewScheModal", {
+    proid: proid
+  },
+  function(data, status) {
+    if (status == "success") {
+  
+
+      var jdata = jQuery.parseJSON(data);
+      $("#modalVehicle").val(jdata.vehicle);
+    }
+  });
+  $.post("../controllers/controller_routeSche.php?type=viewScheSalesman", {
+    proid: proid
+  },
+  function(data, status) {
+    if (status == "success") {  
+
+      var jdata = jQuery.parseJSON(data);
+      $("#modalSalesman").val(jdata.emp_fullname);
+    }
+  });
+  $.post("../controllers/controller_routeSche.php?type=viewScheDriver", {
+    proid: proid
+  },
+  function(data, status) {
+    if (status == "success") {
+  
+
+      var jdata = jQuery.parseJSON(data);
+      $("#modalDriver").val(jdata.emp_fullname);
+    }
+  });
+}
   jQuery(function($) {
 
+
+
     $(document).ready(function() {
+
+
+
+      document.title = "Route Schedule View";
       $('#datestart').datepicker({
         autoclose: true,
 
@@ -158,38 +182,35 @@
 
       $.post("../controllers/controller_routeSche.php?type=rtscheViewDatatable", {
 
-},
-function(data, status) {
-  if (status == "success") {
-    //alert(data);
-    $("#rtscheViewTable").DataTable().destroy();
-    $("#rtscheViewTable tbody").empty();
-    $("#rtscheViewTable tbody").append(data);
-    $("#rtscheViewTable").DataTable({
-      "order": [
-        [0, "desc"]
-      ],
-      bAutoWidth: false,
-      aoColumns: [null, null, null, null, null, {
-        "bSortable": false
-      }],
-      aaSorting: [],
-    });
-  }
-});
+        },
+        function(data, status) {
+          if (status == "success") {
+            //alert(data);
+            $("#rtscheViewTable").DataTable().destroy();
+            $("#rtscheViewTable tbody").empty();
+            $("#rtscheViewTable tbody").append(data);
+            $("#rtscheViewTable").DataTable({
+              "order": [
+                [0, "desc"]
+              ],
+              bAutoWidth: true,
+              aoColumns: [null, null, null, null, null, {
+                "bSortable": false
+              }],
+              aaSorting: [],
+              columns: [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ]
+            });
+          }
+        });
     });
   });
-
-  $(document).ready(function() {
-
-
-
-
-
-  });
-
-
-
 
   $('#rtscheViewTable tbody').on('click', '.fa-trash-o', function() {
 

@@ -69,7 +69,7 @@ bootstrap.min.css'>
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 dayClick: function(date, jsEvent, view) {
-                    alert('gg');
+            
                     // $("#successModal").modal("show");
                     // $("#eventDate").val(date.format());
 

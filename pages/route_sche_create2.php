@@ -1,8 +1,8 @@
 <?php
-  session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
-      header("location:../index.php");
-    } 
+session_start();
+if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSION["user"]["utype"] == "4") || ($_SESSION["user"]["utype"] == "5")) {
+	header("location:../index.php");
+}
 ?>
 
 <?php require_once("../incl/header.php"); ?>
@@ -151,6 +151,15 @@
 
 										</div>
 									</div>
+
+									<div class="col-md-3 form-group">
+										<div>
+											<label for="rtscheQty">Avaliable Qty</label>
+											<input type="text" class="form-control" name="avaqty" id="avaqty">
+
+										</div>
+									</div>
+
 									<div class="col-xs-3">
 
 										<div class="form-group">
@@ -334,7 +343,7 @@
 
 
 		$(document).ready(function() {
-
+			document.title = "Create Route Schedule";
 
 			$.noConflict();
 			$("#rtscheTable").DataTable()
@@ -417,6 +426,24 @@
 						$("#rtscheRoute").empty();
 						$("#rtscheRoute").append("<option value=''>--Select Route--</option>");
 						$("#rtscheRoute").append(data);
+					}
+				});
+
+		});
+
+		$('#rtscheBatch').change(function() {
+
+			var rtscheBatch = $('#rtscheBatch').val(); // get option's value
+
+			//change product name select box options
+			$.post("../controllers/controller_routeSche.php?type=avaqty", {
+				rtscheBatch: rtscheBatch
+				},
+				function(data, status) {
+					if (status == "success") {
+					
+
+						$("#avaqty").val(data);
 					}
 				});
 
@@ -511,13 +538,21 @@
 
 		$('#rtscheAddItems').on('click', function() {
 
+			var qty= parseInt($('#rtscheQty').val());
+			var avaqty=parseInt($('#avaqty').val());
+
+			var avaqty=avaqty+1;
+
+			if( qty<avaqty ) {
+
+			
 
 			var proname = $("#rtscheProName option:selected").text();
 			var proid = $('#rtscheProName').val();
 			var qnty = $('#rtscheQty').val();
 			var batch = $('#rtscheBatch').val();
 
-			var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-success' id='btn_modelView'><i class='ace-icon fa fa-info-circle bigger-120'></i></button><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button><button type='button' class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div>"
+			var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div>"
 			if (proid != 0) {
 				rtscheTable2.row.add([
 					proid,
@@ -560,8 +595,19 @@
 					}
 				});
 
-		});
 
+			} else {
+				Swal.fire(
+						'Not enough stock in the inventory!',
+						"",
+						'Warning'
+					);
+
+			}
+
+
+
+		});
 
 		$('#rtscheTable tbody').on('click', '.fa-trash-o', function() {
 
@@ -569,7 +615,7 @@
 
 			var $row = $(this).closest("tr"); // Find the row
 			var proname = $row.find("td:nth-child(2)").text();
-			var proqty = $row.find("td:nth-child(3)").text();
+			var proqty = $row.find("td:nth-child(4)").text();
 			// alert(proqty);
 			// alert(proname);
 
@@ -610,7 +656,7 @@
 			.on('actionclicked.fu.wizard', function(e, info) {
 				if (info.step == 1) {
 
-					if (!$('#rtscheSupplier').valid()) e.preventDefault();
+					if ((!$('#rtscheSupplier').valid()) && (!$('#rtscheTerritory').valid())) e.preventDefault();
 					if (!$('#rtscheTerritory').valid()) e.preventDefault();
 					if (!$('#rtscheRoute').valid()) e.preventDefault();
 					if (!$('#rtscheDate').valid()) e.preventDefault();
@@ -673,13 +719,13 @@
 
 							TableData = storeTblValues()
 							TableData = JSON.stringify(TableData);
-							alert(TableData);
+
 							$.ajax({
 								type: "POST",
 								url: "../controllers/controller_routeSche.php?type=rtscheSaveDetails",
 								data: "pTableData=" + TableData,
 								success: function(msg) {
-									alert(msg);
+
 									// $('#purchaseform')[0].reset();
 									location.reload(true);
 
@@ -690,7 +736,7 @@
 
 				Swal.fire(
 					'Route Schedule Created!',
-					
+
 					'success'
 				)
 			}).on('stepclick.fu.wizard', function(e) {

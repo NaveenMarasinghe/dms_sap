@@ -1,8 +1,8 @@
 <?php
-  session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
-      header("location:../index.php");
-    } 
+session_start();
+if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSION["user"]["utype"] == "2") || ($_SESSION["user"]["utype"] == "5")) {
+  header("location:../index.php");
+}
 ?>
 <?php require_once("../incl/header.php"); ?>
 <link href="../assets/css/select2.min.css" rel="stylesheet" />
@@ -233,13 +233,13 @@
                                   <div class="col-xs-11 label label-lg">
                                     <b>Supplier</b>
                                   </div>
-                                 
+
                                 </div>
 
                                 <div id="supplierAddress" style="text-align: left; ">
                                   Ceylon Biscuits Limited, </br>
-                                  P.O. Box 03, 
-                                  Makumbura Pannipitiya. 
+                                  P.O. Box 03,
+                                  Makumbura Pannipitiya.
                                   Sri Lanka
 
                                 </div>
@@ -392,7 +392,7 @@
 
     $(document).ready(function() {
 
-
+      document.title = "Create Purchase";
 
       $.noConflict();
 
@@ -639,47 +639,51 @@
       })
       .on('actionclicked.fu.wizard', function(e, info) {
         if (info.step == 1) {
-          d = new FormData($("#poSupplierForm")[0]);
-          $.ajax({
-            url: "../controllers/controller_purchase.php?type=poCreate",
-            method: "post",
-            data: d,
-            processData: false,
-            contentType: false,
-            success: function(data) {
-              var recData = JSON.parse(data);
-              var poId = (recData[0].poid);
-              var postatus = (recData[0].status);
-              if (postatus == 2) {                    
-                    Swal.fire(
-                      'New Purchase Order Created!',
-                      "Purchase Order ID: " + poId,
-                      'info'
-                    );
-                  } else {
-                    Swal.fire(
-                      'Existing Purchase Order loaded!',
-                      "Purchase Order ID: " + poId,
-                      'info'
-                    );
+      
+            d = new FormData($("#poSupplierForm")[0]);
+            $.ajax({
+              url: "../controllers/controller_purchase.php?type=poCreate",
+              method: "post",
+              data: d,
+              processData: false,
+              contentType: false,
+              success: function(data) {
+                var recData = JSON.parse(data);
+                var poId = (recData[0].poid);
+                var postatus = (recData[0].status);
+                if (postatus == 2) {
+                  Swal.fire(
+                    'New Purchase Order Created!',
+                    "Purchase Order ID: " + poId,
+                    'info'
+                  );
+                } else {
+                  Swal.fire(
+                    'Existing Purchase Order loaded!',
+                    "Purchase Order ID: " + poId,
+                    'info'
+                  );
 
-                  }              
-              $("#poId").val(poId);
-              var poId = $("#poId").val();
-              $.post("../controllers/controller_purchase.php?type=purCreateTable", {
-                  poId: poId
-                },
-                function(data, status) {
-                  // $("#purchaseTable").DataTable().destroy();
-                  $("#purchaseTable tbody").empty();
-                  $("#purchaseTable tbody").append(data);
-                  // $("#purchaseTable").DataTable();
+                }
+                $("#poId").val(poId);
+                var poId = $("#poId").val();
+                $.post("../controllers/controller_purchase.php?type=purCreateTable", {
+                    poId: poId
+                  },
+                  function(data, status) {
+                    // $("#purchaseTable").DataTable().destroy();
+                    $("#purchaseTable tbody").empty();
+                    $("#purchaseTable tbody").append(data);
+                    // $("#purchaseTable").DataTable();
 
 
-                });
+                  });
 
-            }
-          });
+              }
+            });
+
+ 
+
           $("#qty").val("0");
         }
         if (info.step == 2) {
@@ -734,21 +738,6 @@
         //e.preventDefault();//this will prevent clicking and selecting steps
       });
 
-
-    //jump to a step
-    /**
-    var wizard = $('#fuelux-wizard-container').data('fu.wizard')
-    wizard.currentStep = 3;
-    wizard.setState();
-    */
-
-    //determine selected step
-    //wizard.selectedItem().step
-
-
-
-
-
     //documentation : http://docs.jquery.com/Plugins/Validation/validate
 
 
@@ -759,7 +748,7 @@
       return this.optional(element) || /^\(\d{3}\) \d{3}\-\d{4}( x\d{1,6})?$/.test(value);
     }, "Enter a valid phone number.");
 
-    $('#validation-form').validate({
+    $('#poSupplierForm').validate({
       errorElement: 'div',
       errorClass: 'help-block',
       focusInvalid: false,
@@ -778,7 +767,7 @@
           minlength: 5,
           equalTo: "#password"
         },
-        name: {
+        poSupplier: {
           required: true
         },
         phone: {

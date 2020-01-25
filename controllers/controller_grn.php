@@ -28,9 +28,9 @@ if (isset($_GET["type"])) {
 		case "viewGrnModal":
 			viewGrnModal();
 			break;
-			case "updatePoStatus":
-				updatePoStatus();
-				break;
+		case "updatePoStatus":
+			updatePoStatus();
+			break;
 	}
 }
 function get_poid()
@@ -113,7 +113,7 @@ function grnProductTable()
 		echo ("<td style='text-align:center'><div><input class='tableQty' style='border:0px; text-align:center' value='" . $rec["pur_qty"] . "'/></div></td>");
 		echo ("<td style='text-align:center'><div><input class='tableCost' style='border:0px; text-align:center' value=''/></div></td>");
 		echo ("<td style='text-align:center'><div><input class='tableMRP' style='border:0px; text-align:center' value=''/></div></td>");
-		
+
 		echo ("</tr>");
 	}
 
@@ -401,7 +401,8 @@ function viewGrnModal()
 	}
 }
 
-function updatePoStatus(){
+function updatePoStatus()
+{
 	$poid = $_POST["poid"];
 	$db = new Connection();
 	$con = $db->db_con();
@@ -415,5 +416,5 @@ function updatePoStatus(){
 		WHERE pur_id ='$poid'";
 		$resultupdate = $con->query($sqlupdate);
 	}
-	echo($norCount);
+	echo ($norCount);
 }

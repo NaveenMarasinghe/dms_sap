@@ -112,7 +112,7 @@
 				</button>
 
 				<div class="navbar-header pull-left">
-					<a href="index.html" class="navbar-brand">
+					<a href="../pages/dashboard.php" class="navbar-brand">
 						<small>
 							<i class="fa fa-leaf"></i>
 							SAP DMS

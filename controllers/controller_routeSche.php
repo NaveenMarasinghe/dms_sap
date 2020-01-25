@@ -34,9 +34,9 @@ if (isset($_GET["type"])) {
 		case "rtscheViewDatatable":
 			rtscheViewDatatable();
 			break;
-			case "getRouteScheDetails":
-				getRouteScheDetails();
-				break;
+		case "getRouteScheDetails":
+			getRouteScheDetails();
+			break;
 		case "selectSalesman";
 			selectSalesman();
 			break;
@@ -48,6 +48,18 @@ if (isset($_GET["type"])) {
 			break;
 		case "getEventData";
 			getEventData();
+			break;
+		case "viewScheModal";
+			viewScheModal();
+			break;
+		case "viewScheSalesman";
+			viewScheModal();
+			break;
+		case "viewScheDriver";
+			viewScheModal();
+			break;
+			case "avaqty";
+			avaqty();
 			break;
 	}
 }
@@ -374,7 +386,7 @@ function routeScheSave()
 	$rtscheStatus = "1";
 
 	$sql2 = "INSERT INTO tbl_route_sche(routesche_id,route_id,route_date,sup_id,rtsche_remarks,rtsche_status,vehicle,driver,salesman)
-		VALUES('$rtscheid','$rtscheRoute','$rtscheDate','$rtscheSupplier','$rtscheRemarks','$rtscheStatus','$selectSalesman','$selectDriver','$selectVehicle');";
+		VALUES('$rtscheid','$rtscheRoute','$rtscheDate','$rtscheSupplier','$rtscheRemarks','$rtscheStatus','$selectVehicle','$selectDriver','$selectSalesman');";
 
 	$result2 = $con->query($sql2);
 
@@ -553,45 +565,62 @@ function rtscheViewDatatable()
 		exit;
 	}
 	while ($rec = $result->fetch_assoc()) {
-		// echo "<tr><td>".$rec["pro_id"]."</td><td>".$rec["pro_cat"]."</td><td>".$rec["pro_subcat"]."</td><td>".$rec["pro_name"]."</td><td>".$rec["pro_sup"]."</td> 
-		// </tr>";	
-		switch(4){
+		$status = $rec["rtsche_status"];
+		switch ($status) {
 			case "1":
-				$statustd = "<span class='label label-sm label-warning'>Pending</span>";
+				$statustd = "<span class='label label-sm label-warning'>Scheduled</span>";
 				break;
 			case "2":
-				$statustd = "<span class='label label-sm label-default arrowed arrowed-righ'>Sent</span>";
+				$statustd = "<span class='label label-sm label-default arrowed arrowed-righ'>Distributing</span>";
 				break;
 			case "3":
-				$statustd = "<span class='label label-sm label-info arrowed arrowed-righ'>Received</span>";
-				break;
-			case "4":
-				$statustd = "<span class='label label-sm label-success arrowed arrowed-righ'>Completed</span>";
-				break;
-			case "5":
-				$statustd = "Completed";
+				$statustd = "<span class='label label-sm label-info arrowed arrowed-righ'>Completed</span>";
 				break;
 		}
+
+		$status = $rec["rtsche_status"];
+		switch ($status) {
+			case "1":
+				$btn = '<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
+				<button type="button" class="btn btn-xs btn-success" id="btn_modelView" onclick="viewScheDetails(\'' . $rec["routesche_id"] . '\')">
+					<i class="ace-icon fa fa-info-circle bigger-120"></i>
+				</button>
+
+			</div></td>';
+				break;
+			case "2":
+				$btn = '<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
+				<button type="button" class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelDeleteProduct" onclick="viewScheDetails(\'' . $rec["routesche_id"] . '\')">
+					<i class="ace-icon fa fa-info-circle bigger-120"></i>
+				</button>
+
+			</div></td>';
+				break;
+			case "2":
+				$btn = '<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
+					<button type="button" class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelDeleteProduct" onclick="viewScheDetails(\'' . $rec["routesche_id"] . '\')">
+						<i class="ace-icon fa fa-info-circle bigger-120"></i>
+					</button>	
+	
+				</div></td>';
+				break;
+			case "3":
+				$btn = '<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
+						<button type="button" class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelDeleteProduct" onclick="viewScheDetails(\'' . $rec["routesche_id"] . '\')">
+							<i class="ace-icon fa fa-info-circle bigger-120"></i>
+						</button>	
+		
+					</div></td>';
+				break;
+		}
+
 		echo ("<tr id='" . $rec["routesche_id"] . "'>");
 		echo ("<td>" . $rec["routesche_id"] . "</td>");
 		echo ("<td>" . $rec["route_id"] . "</td>");
 		echo ("<td>" . $rec["route_name"] . "</td>");
-		echo ("<td>" .$statustd. "</td>");
+		echo ("<td>" . $statustd . "</td>");
 		echo ("<td>" . $rec["route_date"] . "</td>");
-		echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
-					<button type="button" class="btn btn-xs btn-success" id="btn_modelView" onclick="viewSingleProduct(\'' . $rec["pur_id"] . '\')">
-						<i class="ace-icon fa fa-info-circle bigger-120"></i>
-					</button>
-
-		          <a href="route_sche_edit.php?routeSche_id=\'' . $rec["routesche_id"] . '\'" class="btn btn-xs btn-info">
-		            <i class="ace-icon fa fa-pencil bigger-120"></i>
-		          </a>
-
-					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
-						<i class="ace-icon fa fa-trash-o bigger-120"></i>
-					</button>
-
-				</div></td>');
+		echo ($btn);
 		echo ("</tr>");
 	}
 
@@ -624,7 +653,7 @@ function selectSalesman()
 
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "SELECT DISTINCT usr.emp_fullname, usr.emp_id FROM tbl_user_details usr, tbl_user_calender cal where cal.cal_date<>'$rtscheDate' and usr.emp_id=cal.emp_id AND usr.emp_type='3'";
+	$sql = "SELECT DISTINCT usr.emp_fullname, usr.emp_id FROM tbl_user_details usr, tbl_user_calender cal where usr.emp_type='3'";
 
 	$result = $con->query($sql);
 	if ($con->errno) {
@@ -748,9 +777,92 @@ function getEventData()
 	$con->close();
 }
 
-function getRouteScheDetails(){
+function getRouteScheDetails()
+{
 	$routeScheId = $_POST['routeScheId'];
 	$db = new Connection();
 	$con = $db->db_con();
 	$sql = "SELECT * FROM tbl_route_sche WHERE ";
+}
+
+function viewScheModal()
+{
+	$proid = $_POST["proid"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT vehicle
+				FROM tbl_route_sche 
+				WHERE routesche_id='$proid' ";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+
+	$rec = $result->fetch_assoc();
+	echo (json_encode($rec));
+	$con->close();
+}
+
+function viewScheDriver()
+{
+	$proid = $_POST["proid"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT usr.emp_fullname
+	FROM tbl_route_sche rt, tbl_user_details usr
+	WHERE routesche_id='$proid' AND rt.driver = usr.emp_id";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+
+	$rec = $result->fetch_assoc();
+	echo (json_encode($rec));
+	$con->close();
+}
+
+function viewScheSalesman()
+{
+	$proid = $_POST["proid"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT usr.emp_fullname
+				FROM tbl_route_sche rt, tbl_user_details usr
+				WHERE routesche_id='$proid' AND rt.salesman = usr.emp_id";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+
+	$rec = $result->fetch_assoc();
+	echo (json_encode($rec));
+	$con->close();
+}
+
+
+function avaqty()
+{
+	$rtscheBatch = $_POST["rtscheBatch"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT stock_qty
+				FROM tbl_stock
+				WHERE batch_id='$rtscheBatch'";
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+
+	$rec = $result->fetch_assoc();
+	$avaqty = $rec["stock_qty"];
+echo($avaqty);
+	$con->close();
 }

@@ -1,8 +1,8 @@
 <?php
-  session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
-      header("location:../index.php");
-    } 
+session_start();
+if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSION["user"]["utype"] == "3") || ($_SESSION["user"]["utype"] == "4")) {
+  header("location:../index.php");
+}
 ?>
 
 <?php require_once("../incl/header.php"); ?>
@@ -35,19 +35,13 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="proid">Route Schedule</label>
+                    <label for="proid">Avaliable Route Schedule</label>
                     <select name="selectRouteSche" id="selectRouteSche" class="form-control selcet-filter">
                       <option value="0">--Select Route Schedule--</option>
                     </select>
                   </div>
                 </div>
 
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="routeSalesman">Salesman</label>
-                    <textarea id="routeSalesman" class="form-control" readonly style=" overflow: hidden; resize: none; background: transparent;"></textarea>
-                  </div>
-                </div>
 
 
                 <div class="col-md-4">
@@ -260,9 +254,10 @@
           if (status == "success") {
             //alert(data);
             var testdata = JSON.parse(data);
-            //console.log(data);
-            $("#routeSalesman").val(testdata.emp_fname + ' ' + testdata.emp_lname);
-            $("#routeVehicle").val(testdata.vehicle);
+            console.log(data);
+            var recData = JSON.parse(data);
+            var vehicle = (recData[0].vehicle);
+            $("#routeVehicle").val(vehicle);
             // $("#eq_name").val(testdata[0].name);
           }
         });
@@ -439,6 +434,8 @@
 
 
     $(document).ready(function() {
+
+      document.title = "Stock Issue";
       $.noConflict();
       $('.select2gg').select2({
         placeholder: "--Select a Product--",
@@ -546,13 +543,26 @@
 
             TableData = storeTblValues()
             TableData = JSON.stringify(TableData);
-            alert(TableData);
+
             $.ajax({
               type: "POST",
               url: "../controllers/controller_stock.php?type=vehicleStock",
               data: "pTableData=" + TableData,
               success: function(msg) {
-                alert(msg);
+
+                Swal.fire({
+                  title: 'Items issued!',
+                  icon: 'info',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#3085d6',
+                  confirmButtonText: 'OK'
+                }).then((result) => {
+                  if (result.value) {
+                    location.reload(true);
+                  }
+                });
+
                 $('#issueStock')[0].reset();
                 // location.reload(true);
 

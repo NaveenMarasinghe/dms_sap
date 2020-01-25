@@ -1,6 +1,6 @@
 <?php
   session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+    if(!isset($_SESSION["user"]) ){
       header("location:../index.php");
     } 
 ?>
@@ -67,6 +67,7 @@
 
 
   $(document).ready(function() {
+    document.title = "Product Stock";
     // jQuery(function($) {
     // var myTable = $("#stockTable").DataTable({});
     $.noConflict();

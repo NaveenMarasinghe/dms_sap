@@ -3,7 +3,7 @@
 	require_once("../controllers/class_dbconnection.php");
 
 	$uname=$_POST["uname"];
-	$pass=$_POST["pass"];
+	$pass=md5($_POST["pass"]);
 		//echo($uname);
 	$obj=new Connection();
 	$con=$obj->db_con();

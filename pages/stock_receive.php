@@ -1,8 +1,8 @@
 <?php
-  session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
-      header("location:../index.php");
-    } 
+session_start();
+if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSION["user"]["utype"] == "3") || ($_SESSION["user"]["utype"] == "4")) {
+    header("location:../index.php");
+}
 ?>
 
 <?php require_once("../incl/header.php"); ?>
@@ -41,14 +41,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="routeSalesman">Salesman</label>
-                                        <textarea id="routeSalesman" class="form-control" readonly style=" overflow: hidden; resize: none; background: transparent;"></textarea>
-                                    </div>
-                                </div>
-
 
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -99,7 +91,7 @@
                                                             </tr>
                                                         </thead>
 
-                                                        <tbody id="routeStockTable">
+                                                        <tbody>
 
                                                             <!-- <tr class="selected"> -->
                                                             <!--                             <td class="center">
@@ -238,30 +230,35 @@
         $('#selectRouteSche').change(function() {
             $.noConflict();
             var selectRouteSche = $("#selectRouteSche").val();
+            
             $.post("../controllers/controller_stock.php?type=RouteStockSalesman", {
                     selectRouteSche: selectRouteSche
                 },
                 function(data, status) {
                     if (status == "success") {
-                        //alert(data);
-                        var testdata = JSON.parse(data);
-                        //console.log(data);
-                        $("#routeSalesman").val(testdata.emp_fname + ' ' + testdata.emp_lname);
-                        $("#routeVehicle").val(testdata.vehicle);
-                        // $("#eq_name").val(testdata[0].name);
+                     
+                        var recData = JSON.parse(data);
+                        // var name = (recData[0].name);
+                        var vehicle = (recData[0].vehicle);
+
+                        $("#routeVehicle").val(vehicle);
                         var routeVehicle = $("#routeVehicle").val();
+                       
                         $.post("../controllers/controller_stock.php?type=receiveRouteStock", {
                                 routeVehicle: routeVehicle
                             },
                             function(data, status) {
                                 if (status == "success") {
-                                    //alert(data);
+                                 
                                     $("#routeStockTable").DataTable().destroy();
                                     $("#routeStockTable tbody").empty();
                                     $("#routeStockTable tbody").append(data);
                                     $("#routeStockTable").DataTable();
+
                                 }
                             });
+
+
                     }
                 });
 
@@ -310,8 +307,8 @@
 
             $(".fa-trash-o").click(function() {
                 myTable.row(".selected").remove().draw(false);
-                alert('sda');
-                // myTable.row('.selected').remove().draw( false );
+               
+            
             });
 
             $('#purchaseTable tbody').on('click', '.fa-pencil', function() {
@@ -356,6 +353,8 @@
 
 
         $(document).ready(function() {
+
+            document.title = "Stock Recieve";
             $.noConflict();
             $('.select2gg').select2({
                 placeholder: "--Select a Product--",
@@ -374,38 +373,51 @@
         $("#issueProduct").click(function() {
 
             // if ($("#issueStock").valid()) {
-            var rtsche = $("#selectRouteSche").val()
+            var rtscheid = $("#selectRouteSche").val()
 
-            function storeTblValues() {
-                var TableData = new Array();
-                var routeVehicle = $("#routeVehicle").val()
-                $('#routeStockTable tr').each(function(row, tr) {
-                    if ($(tr).hasClass('active')) {
-                        TableData[row] = {
-                            "batch": $(tr).find('td:eq(3)').text(),
-                            "qty": $(tr).find('td:eq(4)').text(),
-                            "routeVehicle": routeVehicle
+            $.post("../controllers/controller_stock.php?type=receiveVehStock", {
+                rtscheid: rtscheid
+                },
+                function(data, status) {
+                    if (status == "success") {
+                 
+                        function storeTblValues() {
+                            var TableData = new Array();
+                            var routeVehicle = $("#routeVehicle").val()
+                            $('#routeStockTable tr').each(function(row, tr) {
+                                if ($(tr).hasClass('active')) {
+                                    TableData[row] = {
+                                        "batch": $(tr).find('td:eq(3)').text(),
+                                        "qty": $(tr).find('td:eq(4)').text(),
+                                        "routeVehicle": routeVehicle
+                                    }
+                                }
+                            });
+
+                            return TableData;
                         }
+
+                        TableData = storeTblValues()
+                        TableData = JSON.stringify(TableData);
+               
+                        $.ajax({
+                            type: "POST",
+                            url: "../controllers/controller_stock.php?type=receiveStock",
+                            data: "pTableData=" + TableData,
+                            success: function(msg) {
+                                // alert(msg);
+                                // $('#issueStock')[0].reset();
+                                location.reload(true);
+
+                            }
+                        });
+
                     }
                 });
 
-                return TableData;
-            }
 
-            TableData = storeTblValues()
-            TableData = JSON.stringify(TableData);
-            alert(TableData);
-            $.ajax({
-                type: "POST",
-                url: "../controllers/controller_stock.php?type=receiveStock",
-                data: "pTableData=" + TableData,
-                success: function(msg) {
-                    // alert(msg);
-                    // $('#issueStock')[0].reset();
-                    location.reload(true);
 
-                }
-            });
+
 
 
 

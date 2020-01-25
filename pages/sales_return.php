@@ -1,6 +1,6 @@
 <?php
   session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
+    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="5") || ($_SESSION["user"]["utype"]=="4") ){
       header("location:../index.php");
     } 
 ?>
@@ -404,7 +404,7 @@
             },
             function(data, status) {
                 if (status == "success") {
-                    alert('gg');
+       
 
                 }
             });
@@ -581,6 +581,8 @@
 
         $(document).ready(function() {
 
+            document.title = "Sales Return";
+
             $(".amountPaid").val("0.00");
             $("#itemPrice").val("0.00");
             $("#grossTotal").val("0.00");
@@ -701,7 +703,7 @@
 
             // if($("#purchaseform").valid()) {
             d = new FormData($("#salesform")[0]);
-            alert(d);
+    
             var subTol = $("#subTotal").text();
             var balanceVal = $("#balanceVal").text();
             var balanceValFloat = parseFloat(balanceVal);
@@ -709,7 +711,7 @@
             var salesDate = $('#salesDate').val();
 
 
-            alert(subTol);
+   
 
             d.append("cusid", cusid);
             d.append("subTol", subTol);
@@ -724,20 +726,20 @@
                 success: function(data) {
                     // $('#purchaseform')[0].reset();
                     // location.reload(true);
-                    alert(data);
+       
 
                     // $("#poid").append(data);
                     var salesId = jQuery.parseJSON(data);
 
                     TableData = storeTblValues(salesId)
                     TableData = JSON.stringify(TableData);
-                    alert(TableData);
+         
                     $.ajax({
                         type: "POST",
                         url: "../controllers/controller_return.php?type=salesDetailsSave",
                         data: "pTableData=" + TableData,
                         success: function(msg) {
-                            alert(msg);
+                 
                             // $('#salesform').reset();
                             location.reload(true);
 

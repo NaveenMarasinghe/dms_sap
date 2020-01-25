@@ -131,6 +131,8 @@
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
+
+        document.title = "Route Schedule";
         $.post("../controllers/controller_products.php?type=selectSupplierLoad",
             function(data, status) {
                 if (status == "success") {
@@ -165,19 +167,9 @@
 
             var sup = $('#selectSupplier').val(); // get option's value
             var ter = $('#selectTerritory').val();
-            alert(sup);
+        
             window.location.href = "route_sche_create3.php?sup="+sup+"&ter="+ter;
-            // $.post("route_sche_create3.php?sup=supplierval".sup&"ter=".$ter, {
-            //         supplierval: supplierval,
-            //         territoryval: territoryval
-            //     },
-            //     function(data, status) {
-            //         if (status == "success") {
-            //             alert('gg');
 
-
-            //         }
-            //     });
 
         });
 
@@ -264,36 +256,36 @@
                 ],
             });
 
-            function edit(event) {
-                start = event.start.format('YYYY-MM-DD HH:mm:ss');
-                if (event.end) {
-                    end = event.end.format('YYYY-MM-DD HH:mm:ss');
-                } else {
-                    end = start;
-                }
+            // function edit(event) {
+            //     start = event.start.format('YYYY-MM-DD HH:mm:ss');
+            //     if (event.end) {
+            //         end = event.end.format('YYYY-MM-DD HH:mm:ss');
+            //     } else {
+            //         end = start;
+            //     }
 
-                id = event.id;
+            //     id = event.id;
 
-                Event = [];
-                Event[0] = id;
-                Event[1] = start;
-                Event[2] = end;
+            //     Event = [];
+            //     Event[0] = id;
+            //     Event[1] = start;
+            //     Event[2] = end;
 
-                $.ajax({
-                    url: 'editEventDate.php',
-                    type: "POST",
-                    data: {
-                        Event: Event
-                    },
-                    success: function(rep) {
-                        if (rep == 'OK') {
-                            alert('Saved');
-                        } else {
-                            alert('Could not be saved. try again.');
-                        }
-                    }
-                });
-            }
+            //     $.ajax({
+            //         url: 'editEventDate.php',
+            //         type: "POST",
+            //         data: {
+            //             Event: Event
+            //         },
+            //         success: function(rep) {
+            //             if (rep == 'OK') {
+            //                 alert('Saved');
+            //             } else {
+            //                 alert('Could not be saved. try again.');
+            //             }
+            //         }
+            //     });
+            // }
             // $('.nameselect').select2();
 
 
