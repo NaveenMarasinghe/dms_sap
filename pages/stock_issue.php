@@ -33,6 +33,8 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
 
 
               <div class="row">
+
+
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="proid">Avaliable Route Schedule</label>
@@ -41,8 +43,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                     </select>
                   </div>
                 </div>
-
-
 
                 <div class="col-md-4">
                   <div class="form-group">

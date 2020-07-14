@@ -61,7 +61,7 @@ function stockRouteSche()
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
 			//merge province ID and name with HTML
-			echo ("<option value='" . $rec["routesche_id"] . "'>" . $rec["route_name"] . "</option>");
+			echo ("<option value='" . $rec["routesche_id"] . "'>" . $rec["routesche_id"] . "</option>");
 		}
 	}
 	$con->close();

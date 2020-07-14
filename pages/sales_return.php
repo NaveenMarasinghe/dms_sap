@@ -141,6 +141,16 @@
                                                 </div>
                                             </div>
 
+
+                                            <div class="col-md-3 form-group">
+                                                <div>
+                                                    <label for="returnSoldQty" style="display:block;">Sold Qty</label>
+                                                    <input type="text" readonly class="form-control" name="returnSoldQty" id="returnSoldQty">
+                                                    <!-- <select class="form-control selcet-filter select2gg" id="salesBatch" name="salesBatch" style="width:100%;">
+                                                        <option></option>
+                                                    </select> -->
+                                                </div>
+                                            </div>
                                             <div class="col-md-4 form-group">
                                                 <div>
                                                     <label for="salesBatch" style="display:block;">Product Batch</label>
@@ -149,7 +159,7 @@
                                                         <option></option>
                                                     </select> -->
                                                 </div>
-                                            </div>
+                                            </div>                                            
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3 form-group">
@@ -162,7 +172,7 @@
 
                                             <div class="col-md-3 form-group">
                                                 <div>
-                                                    <label for="qty">Qty</label>
+                                                    <label for="qty">Return Qty</label>
                                                     <input type="text" class="form-control" name="qty" id="qty">
 
                                                 </div>
@@ -552,6 +562,7 @@
                 if (status == "success") {
                     $("#salesBatch").val(data);
                     var salesBatch = $('#salesBatch').val();
+                    var returnCus = $('#salesCustomer').val();
 
                     $.post("../controllers/controller_return.php?type=getReturnVal", {
                             salesBatch: salesBatch
@@ -563,8 +574,21 @@
                                 $("#returnVal").val(itcost.toFixed(2));
                             }
                         });
+                        $.post("../controllers/controller_return.php?type=getSoldQty", {
+                            salesBatch: salesBatch,
+                            returnCus: returnCus
+                        },
+                        function(data, status) {
+                            if (status == "success") {
+                                var soldQty = parseFloat(data);
+
+                                $("#returnSoldQty").val(soldQty);
+                            }
+                        });
                 }
             });
+
+
     });
 
 
@@ -603,7 +627,13 @@
 
             $('#salesProductAdd').on('click', function() {
 
-                var batch = $("#salesBatch").val();
+                var returnQty= parseInt($('#qty').val());
+			    var soldQty=parseInt($('#returnSoldQty').val());
+
+                var soldQty=soldQty+1;
+
+                if(returnQty<soldQty){
+                    var batch = $("#salesBatch").val();
                 var proname = $("#salesProductName option:selected").text();
                 var qnty = $('#qty').val();
                 var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-danger' style='margin: auto'><i class='ace-icon fa fa-minus-circle bigger-120'></i></button></div>"
@@ -656,6 +686,17 @@
                             // });
                         }
                     });
+
+                } else{
+                    Swal.fire(
+						'Please enter valid Return Qty!',
+						"",
+						'Warning'
+					);
+
+                }
+
+
 
 
 

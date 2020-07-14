@@ -22,6 +22,9 @@ if (isset($_GET["type"])) {
 		case "salesDetailsSave":
 			salesDetailsSave();
 			break;
+		case "getSoldQty":
+			getSoldQty();
+			break;
 	}
 }
 
@@ -318,4 +321,54 @@ function salesDetailsSave()
 			echo ("error");
 		}
 	}
+}
+
+function getSoldQty()
+{
+	$salesBatch = $_POST["salesBatch"];
+	$returnCus = $_POST["returnCus"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT SUM(sd.sales_qty) as sales_sum 
+			FROM tbl_sales_order so, tbl_sales_details sd 
+			WHERE so.cus_id='$returnCus' AND so.sales_id=sd.sales_id AND sd.batch_id='$salesBatch' ";
+	$sql2 ="SELECT SUM(rtd.return_qty) AS returned_qty 
+	FROM tbl_sales_return rt, tbl_return_details rtd 
+	WHERE rt.return_id=rtd.return_id AND rtd.batch_id='$salesBatch'AND rt.cus_id='$returnCus' ";
+
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	//alert('func');
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ('0');
+	} else {
+		$rec = $result->fetch_assoc();
+		$salesSum = $rec["sales_sum"];
+		$salesSum = $salesSum + 0;
+
+		$result2 = $con->query($sql2);
+		if ($con->errno) {
+			echo ("SQL Error: " . $con->error);
+			exit;
+		}
+		//alert('func');
+		$nor2 = $result2->num_rows;
+		if ($nor2 == 0) {
+			echo ("$salesSum");
+		} else {
+			$rec2 = $result2->fetch_assoc();
+			$returnedQty = $rec2["returned_qty"];
+			$soldQty = $salesSum - $returnedQty;
+			echo ($soldQty);
+		}
+
+		
+	}
+	$con->close();
+
 }

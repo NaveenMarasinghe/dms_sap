@@ -543,9 +543,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 
 			var avaqty=avaqty+1;
 
-			if( qty<avaqty ) {
-
-			
+			if( qty<avaqty ) {			
 
 			var proname = $("#rtscheProName option:selected").text();
 			var proid = $('#rtscheProName').val();

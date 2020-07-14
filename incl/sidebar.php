@@ -348,6 +348,41 @@ if (isset($_SESSION["user"]) && ($_SESSION["user"]["utype"] == "1")) {
 
 			<li class="">
 				<a href="#" class="dropdown-toggle">
+					<i class="menu-icon fa fa-home"></i>
+					<span class="menu-text"> Vehicles </span>
+
+					<b class="arrow fa fa-angle-down"></b>
+				</a>
+
+				<b class="arrow"></b>
+
+				<ul class="submenu">
+
+
+					<li class="">
+						<a href="../pages/vehicle_stock.php">
+							<i class="menu-icon fa fa-caret-right"></i>
+							View Vehicle Stock
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+
+					<li class="">
+						<a href="../pages/vehicle_add.php">
+							<i class="menu-icon fa fa-caret-right"></i>
+							Add New Vehicle
+						</a>
+
+						<b class="arrow"></b>
+					</li>
+
+
+				</ul>
+			</li>
+
+			<li class="">
+				<a href="#" class="dropdown-toggle">
 					<i class="menu-icon fa fa-users"></i>
 					<span class="menu-text"> Employees </span>
 

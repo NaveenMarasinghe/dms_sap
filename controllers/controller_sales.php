@@ -73,14 +73,23 @@ if (isset($_GET["type"])) {
 		case "viewSales";
 			viewSales();
 			break;
+		case "get_rtscheid";
+			get_rtscheid();
+			break;
+		case "get_supplierId";
+			get_supplierId();
+			break;
+		case "get_avaQty";
+			get_avaQty();
+			break;
 	}
 }
 function get_route()
 {
-
+	$rtsche = $_POST["rtsche"];
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "SELECT route_id, route_name FROM tbl_route";
+	$sql = "SELECT rt.route_name AS route_name FROM tbl_route rt, tbl_route_sche rtsche WHERE rt.route_id=rtsche.route_id AND rtsche.routesche_id='$rtsche'";
 
 	$result = $con->query($sql);
 	if ($con->errno) {
@@ -95,7 +104,7 @@ function get_route()
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
 			//merge province ID and name with HTML
-			echo ("<option value='" . $rec["route_id"] . "'>" . $rec["route_name"] . "</option>");
+			echo ($rec["route_name"]);
 		}
 	}
 	$con->close();
@@ -103,10 +112,11 @@ function get_route()
 
 function get_customers()
 {
-	$salesRoute = $_POST["salesRoute"];
+	$rtsche = $_POST["rtsche"];
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "SELECT cus_id, cus_name FROM tbl_customers WHERE route_id='$salesRoute'";
+	$sql = "SELECT cus.cus_id, cus.cus_name FROM tbl_customers cus, tbl_route_sche rtsche 
+			WHERE rtsche.routesche_id='$rtsche' AND cus.route_id=rtsche.route_id";
 
 	$result = $con->query($sql);
 	if ($con->errno) {
@@ -156,10 +166,11 @@ function get_ProCat()
 
 function get_suppliers()
 {
-
+	$rtsche = $_POST["rtsche"];
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "SELECT sup_id, sup_name FROM tbl_suppliers;";
+	$sql = "SELECT sup.sup_name FROM tbl_suppliers sup, tbl_route_sche rtsche 
+	WHERE rtsche.routesche_id='$rtsche' AND sup.sup_id=rtsche.sup_id";
 
 	$result = $con->query($sql);
 	if ($con->errno) {
@@ -174,7 +185,33 @@ function get_suppliers()
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
 			//merge province ID and name with HTML
-			echo ("<option value='" . $rec["sup_id"] . "'>" . $rec["sup_name"] . "</option>");
+			echo ($rec["sup_name"]);
+		}
+	}
+	$con->close();
+}
+
+function get_supplierId()
+{
+	$rtsche = $_POST["rtsche"];
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT sup_id FROM tbl_route_sche WHERE routesche_id='$rtsche'";
+
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	//alert('func');
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("");
+	} else {
+		//fetch all the records
+		while ($rec = $result->fetch_assoc()) {
+			//merge province ID and name with HTML
+			echo ($rec["sup_id"]);
 		}
 	}
 	$con->close();
@@ -349,6 +386,35 @@ function get_itemPrice()
 			//merge province ID and name with HTML
 			echo ($rec["item_mrp"]);
 		}
+	}
+	$con->close();
+}
+
+function get_avaQty()
+{
+
+	$batch = $_POST["batch"];
+	$rtsche = $_POST["rtsche"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT SUM(veh.qty) AS stock_sum FROM tbl_vehicle_products veh, tbl_route_sche rtsche where veh.batch_id='$batch' AND rtsche.vehicle=veh.veh_id AND rtsche.routesche_id='$rtsche'";
+
+	$result = $con->query($sql);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	//alert('func');
+	$nor = $result->num_rows;
+	if ($nor == 0) {
+		echo ("");
+	} else {
+		//fetch all the records
+		$rec = $result->fetch_assoc();
+			//merge province ID and name with HTML
+		echo ($rec["stock_sum"]);
+		
 	}
 	$con->close();
 }
@@ -686,12 +752,13 @@ function salesSubmit()
 	$subTotal = $_POST["subTotal"];
 	$amountPaid = $_POST["amountPaid"];
 	$salesCustomer = $_POST["salesCustomer"];
+	$empId = $_POST["empId"];
 	$balanceVal = $_POST["balanceVal"];
 	$preBalance = $_POST["preBalance"];
 	$status = 0;
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "UPDATE tbl_sales_order SET sales_total='$subTotal', sales_paid='$amountPaid', sales_balance='$balanceVal', sales_prebal='$preBalance', sales_status='$status' WHERE sales_id='$salesid'";
+	$sql = "UPDATE tbl_sales_order SET sales_total='$subTotal', sales_paid='$amountPaid', sales_balance='$balanceVal', sales_prebal='$preBalance', sales_status='$status', emp_id='$empId' WHERE sales_id='$salesid'";
 	$result = $con->query($sql);
 	if ($con->error) {
 		echo ("SQL error " . $con->error);
@@ -821,6 +888,56 @@ function viewSales()
 
 	</div></td>');
 		echo ("</tr>");
+	}
+
+	$con->close();
+}
+
+function get_rtscheid()
+{
+	$empId = $_POST["empId"];
+	$date = $_POST["date"];
+
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT routesche_id FROM tbl_route_sche WHERE route_date='$date' AND salesman='$empId'";
+	$sql2 = "SELECT routesche_id FROM tbl_route_sche WHERE route_date='$date'";
+
+	if($empId=='EMP001'){
+		$result = $con->query($sql2);
+		if ($con->errno) {
+			echo ("SQL Error: " . $con->error);
+			exit;
+		}
+		//alert('func');
+		$nor = $result->num_rows;
+		if ($nor == 0) {
+			echo ("");
+		} else {
+			//fetch all the records
+			while ($rec = $result->fetch_assoc()) {
+				//merge province ID and name with HTML
+				echo ("<option value='" . $rec["routesche_id"] . "'>" . $rec["routesche_id"] . "</option>");
+			}
+		}
+	}else{
+		$result = $con->query($sql);
+		if ($con->errno) {
+			echo ("SQL Error: " . $con->error);
+			exit;
+		}
+		//alert('func');
+		$nor = $result->num_rows;
+		if ($nor == 0) {
+			echo ("");
+		} else {
+			//fetch all the records
+			while ($rec = $result->fetch_assoc()) {
+				//merge province ID and name with HTML
+				// echo ($rec["routesche_id"]);
+				echo ("<option value='" . $rec["routesche_id"] . "'>" . $rec["routesche_id"] . "</option>");
+			}
+		}
 	}
 
 	$con->close();
