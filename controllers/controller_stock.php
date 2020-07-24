@@ -56,7 +56,7 @@ function stockRouteSche()
 	//alert('func');
 	$nor = $result->num_rows;
 	if ($nor == 0) {
-		echo ("");
+		echo ("<option value='0'>No Route Schedules Avaliable</option>");
 	} else {
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
@@ -477,6 +477,10 @@ function receiveVehStock(){
 	$sqlupdate = "UPDATE tbl_route_sche SET rtsche_status='3' WHERE routesche_id='$rtscheid'";
 
 	$sqlupdate2 = $con->query($sqlupdate);
+
+	$sqldetailsupdate = "UPDATE tbl_route_sche_details SET rtsche_dstatus='0' WHERE rtsche_id='$rtscheid'";
+
+	$sqlupdate3 = $con->query($sqldetailsupdate);
 
 	echo('gg');
 

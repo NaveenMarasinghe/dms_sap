@@ -103,7 +103,7 @@ function viewProductTable()
 		$reorder = $rec3["pro_reorder"];
 
 		if($stock<$reorder){
-			$btn = "<td style='background-color:#ffcccc; text-align:center'>" . $stock . "</td>";
+			$btn = "<td style='text-align:center'>" . $stock . "</td>";
 		} else{
 			$btn = "<td style='text-align:center'>" . $stock . "</td>";
 		}

@@ -386,8 +386,8 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
         var batch = $("#salesBatch option:selected").text();
         var rtsche = $("#rtsche option:selected").text();
-        alert(batch);
-        alert(rtsche);
+        // alert(batch);
+        // alert(rtsche);
         $.post("../controllers/controller_sales.php?type=get_avaQty", {
                 rtsche: rtsche,
                 batch: batch
@@ -655,6 +655,8 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                 if (status == "success") {
                     //alert(data);
                     $("#salesBatch").empty();
+                    $("#itemPrice").val("0.00");
+                    $("#avaQty").val("0");
                     $("#salesBatch").append("<option value=''>--Select Batch--</option>");
                     $("#salesBatch").append(data);
                 }
@@ -850,7 +852,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                         Swal.fire({
 					icon: 'error',
 					title: 'Oops...',
-					text: 'Not enough stock!'
+					text: 'Not enough stock in vehicles!'
 
 				});
                     }
@@ -1039,8 +1041,17 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                     },
                     function(data, status) {
                         if (status == "success") {
-
-                            window.location.href = "sales_create_invoice.php?salesid=" + salesid;
+                            alert("gg");
+                            $.post("../controllers/controller_sales.php?type=updateVehicle", {
+                                salesid:salesid
+                                },
+                                function(data, status) {
+                                    alert(data);
+                                    if (status == "success") {
+                                        
+                                    }
+                                });
+                            // window.location.href = "sales_create_invoice.php?salesid=" + salesid;
                         }
                     });
 

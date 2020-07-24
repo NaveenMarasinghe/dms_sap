@@ -35,7 +35,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="proid">Route Schedule</label>
+                                        <label for="proid">Today Route Schedules</label>
                                         <select name="selectRouteSche" id="selectRouteSche" class="form-control selcet-filter">
                                             <option value="0">--Select Route Schedule--</option>
                                         </select>

@@ -82,6 +82,9 @@ if (isset($_GET["type"])) {
 		case "get_avaQty";
 			get_avaQty();
 			break;
+		case "updateVehicle";
+			updateVehicle();
+			break;
 	}
 }
 function get_route()
@@ -224,7 +227,8 @@ function get_batch()
 
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "SELECT DISTINCT batch_id FROM tbl_stock where stock_qty>0 and pro_id='$proid'";
+	$sql = "SELECT veh.batch_id AS batch_id FROM tbl_stock st, tbl_vehicle_products veh 
+			where veh.qty>0 and st.pro_id='$proid' AND veh.batch_id=st.batch_id";
 
 	$result = $con->query($sql);
 	if ($con->errno) {
@@ -333,7 +337,6 @@ function salesDetailsSave()
 	$tblDataLength = count($tableData);
 
 
-
 	for ($x = 0; $x < $tblDataLength; $x++) {
 		$batch_id = $tableData[$x]['batch_id'];
 		$item_price = $tableData[$x]['item_price'];
@@ -345,7 +348,7 @@ function salesDetailsSave()
 		$con = $db->db_con();
 
 		$sql2 = "INSERT INTO tbl_sales_details(sales_id,batch_id,item_price,sales_qty,sale_disrate)
-			VALUES('$salesId','$batch_id','$item_price','$item_qty','$item_dis');";
+				VALUES('$salesId','$batch_id','$item_price','$item_qty','$item_dis');";
 
 		// $result=$con->query($sql);
 		$result2 = $con->query($sql2);
@@ -758,6 +761,8 @@ function salesSubmit()
 	$status = 0;
 	$db = new Connection();
 	$con = $db->db_con();
+
+	//update sales order
 	$sql = "UPDATE tbl_sales_order SET sales_total='$subTotal', sales_paid='$amountPaid', sales_balance='$balanceVal', sales_prebal='$preBalance', sales_status='$status', emp_id='$empId' WHERE sales_id='$salesid'";
 	$result = $con->query($sql);
 	if ($con->error) {
@@ -768,6 +773,8 @@ function salesSubmit()
 	} else {
 		echo ("error");
 	}
+
+	// update customer balance
 	$sql2 = "UPDATE tbl_customers SET sales_balance='$balanceVal' WHERE cus_id='$salesCustomer'";
 	$result2 = $con->query($sql2);
 	if ($con->error) {
@@ -778,6 +785,10 @@ function salesSubmit()
 	} else {
 		echo ("error");
 	}
+
+	// update vehicle stock
+	// get sales details
+
 	$con->close();
 }
 
@@ -940,5 +951,51 @@ function get_rtscheid()
 		}
 	}
 
+	$con->close();
+}
+
+function updateVehicle()
+{
+	$db = new Connection();
+	$con = $db->db_con();
+	$salesid = $_POST["salesid"];
+	$sql3 = "SELECT *
+			FROM tbl_sales_details
+			WHERE sales_id = '$salesid'";
+	$result3 = $con->query($sql3);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+	$nor3 = $result3->num_rows;
+	if ($nor3 == 0) {
+		echo ("0");
+		exit;
+	}
+	// update vehicle stock table for each sale
+	while ($rec3 = $result3->fetch_assoc()) {
+
+		$salesQty = $rec3["sales_qty"];
+		$batchId = $rec3["batch_id"];
+
+		// get qty in vehicle
+		$sql4 ="SELECT qty FROM tbl_vehicle_products WHERE batch_id='$batchId'";
+		$result4 = $con->query($sql4);
+		$rec4 = $result4->fetch_assoc();
+		$vehicleQty = $rec4['qty'];
+		
+		$updateQty = $vehicleQty - $salesQty;
+
+		$sql5 = "UPDATE tbl_vehicle_products SET qty='$updateQty' WHERE batch_id='$batchId'";
+		$result5 = $con->query($sql5);
+		if ($con->error) {
+			echo ("SQL error " . $con->error);
+			exit;
+		} elseif ($result5 > 0) {
+			echo ($updateQty);
+		} else {
+			echo ("error");
+		}
+	}
 	$con->close();
 }

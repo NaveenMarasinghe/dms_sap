@@ -102,7 +102,6 @@
 			//alert('data');
 			if($("#form_addNewSupplier").valid()) {
 
-
 			d= new FormData($("#form_addNewSupplier")[0]);
 	       	$.ajax({
 	            url:"../controllers/controller_products.php?type=addNewSupplier",

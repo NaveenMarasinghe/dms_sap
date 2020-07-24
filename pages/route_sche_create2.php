@@ -434,16 +434,23 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 		$('#rtscheBatch').change(function() {
 
 			var rtscheBatch = $('#rtscheBatch').val(); // get option's value
-
+			alert(rtscheBatch);
 			//change product name select box options
 			$.post("../controllers/controller_routeSche.php?type=avaqty", {
 				rtscheBatch: rtscheBatch
 				},
 				function(data, status) {
 					if (status == "success") {
+						var avaqtydata = data;
+						alert(avaqtydata);
+						if(avaqtydata>0){
+							$("#avaqty").val(data);
+						}else{
+							$("#avaqty").val('0');
+						}
 					
 
-						$("#avaqty").val(data);
+						
 					}
 				});
 
@@ -570,6 +577,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 
 
 			$("#rtscheQty").val("");
+			$("#avaqty").val("");
 			$("#rtscheBatch").val("");
 			$("#rtscheProName").empty();
 			$('.select2gg').select2({

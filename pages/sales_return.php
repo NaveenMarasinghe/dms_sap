@@ -34,6 +34,8 @@
                                     <div class="row">
                                         <div class="col-xs-4">
                                             <h4 class="page-header"><b>Sales Return</b></h4>
+                                            <input type="hidden" class="form-control" id="empId" name="empId" value='<?php echo $_SESSION["user"]["emp_id"] ?>'>
+                                            <input type="hidden" class="form-control" id="salesSupplier" name="salesSupplier" value='0'>
                                         </div>
                                         <div class="col-xs-8">
                                             <div class="col-xs-12" id='salesChangeCusDiv'>
@@ -58,7 +60,7 @@
                                     <div id="selectCustomer">
                                         <div class="row">
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="salesid">Sales ID</label>
                                                     <input readonly type="text" class="form-control" id="salesid" name="salesid">
@@ -66,7 +68,7 @@
                                             </div>
 
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="salesDate">Date</label>
                                                     <div class="input-group">
@@ -77,21 +79,41 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+
+
+                                            <div class="col-md-6 form-group">
+                                                <div class="form-group">
+                                                    <label for="">Route</label>
+                                                    <input readonly type="text" class="form-control" id="salesRoute" name="salesRoute" value=''>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-6 form-group">
+                                                <div class="form-group">
+                                                    <label for="salesSupplierName">Supplier</label>
+                                                    <input readonly type="text" class="form-control" id="salesSupplierName" name="salesSupplierName" value=''>
+                                                </div>
+
+                                            </div>
+
+
 
 
                                         </div>
-
                                         <div class="row">
-                                            <div class="col-md-4 form-group">
+                                            <div class="col-md-6 form-group">
                                                 <div>
-                                                    <label for="salesRoute" style="display:block;">Route</label>
-                                                    <select class="form-control selcet-filter select2gg" id="salesRoute" name="salesRoute" style="width:100%;">
+                                                    <label for="rtsche" style="display:block;">Route Schedule</label>
+                                                    <select class="form-control selcet-filter select2gg" id="rtsche" name="rtsche" style="width:100%;">
                                                         <option></option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4 form-group">
+                                            <div class="col-md-6 form-group">
                                                 <div>
                                                     <label for="salesCustomer" style="display:block;">Customer</label>
                                                     <select class="form-control selcet-filter select2gg" id="salesCustomer" name="salesCustomer" style="width:100%;">
@@ -99,14 +121,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 form-group">
-                                                <div>
-                                                    <label for="salesSupplier" style="display:block;">Supplier</label>
-                                                    <select class="form-control selcet-filter select2gg" id="salesSupplier" name="salesSupplier" style="width:100%;">
-                                                        <option></option>
-                                                    </select>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div id="selectProducts">
@@ -135,7 +150,7 @@
                                             <div class="col-md-3 form-group">
                                                 <div>
                                                     <div class="form-group">
-                                                        <label for="itemPrice">Item MRP</label>
+                                                        <label for="itemPrice">Enter Item MRP</label>
                                                         <input type="text" class="form-control" name="itemPrice" id="itemPrice">
                                                     </div>
                                                 </div>
@@ -172,7 +187,7 @@
 
                                             <div class="col-md-3 form-group">
                                                 <div>
-                                                    <label for="qty">Return Qty</label>
+                                                    <label for="qty">Enter Return Qty</label>
                                                     <input type="text" class="form-control" name="qty" id="qty">
 
                                                 </div>
@@ -335,6 +350,7 @@
                 "item_price": $(tr).find('td:eq(3)').text(),
                 "item_qty": $(tr).find('td:eq(4)').text(),
                 "item_total": $(tr).find('td:eq(5)').text(),
+                "rtscheid": $('#rtsche').val(),
                 "salesId": test
             }
         });
@@ -419,7 +435,7 @@
                 }
             });
     }
-
+jQuery(function($) {
     $(document).ready(function() {
 
         // $('#salesChangeCusDiv').hide();
@@ -429,63 +445,46 @@
         $('#btnSet').hide();
         $("#salesid").val("");
 
+                    $('.date-picker').datepicker({
+                autoclose: true,
+                minDate: 0,
+                maxDate: 0,
+                todayHighlight: true,
+                dateFormat: 'yy-mm-dd'
+            });
+            $('.date-picker').datepicker('setDate', new Date());
+
+        var empId = $('#empId').val();
+        var date = $('#salesDate').val();
+        // alert(empId);
+
         $.noConflict();
         // load supplier select box
-        $.post("../controllers/controller_sales.php?type=get_route",
+        $.post("../controllers/controller_sales.php?type=get_rtscheid",{
+            empId:empId,
+            date:date
+        },
             function(data, status) {
                 if (status == "success") {
-                    //alert(data);
-                    $("#salesRoute").empty();
-                    $("#salesRoute").append("<option value=''>--Select Route--</option>");
-                    $("#salesRoute").append(data);
+                    // alert(data);
+                    $("#rtsche").empty();
+                    $("#rtsche").append("<option value=''>--Select Route--</option>");
+                    $("#rtsche").append(data);
 
                 }
             });
-        $.post("../controllers/controller_sales.php?type=get_suppliers",
-            function(data, status) {
-                if (status == "success") {
-                    //alert(data); 
-                    $("#salesSupplier").empty();
-                    $("#salesSupplier").append("<option value=''>--Select Supplier--</option>");
-                    $("#salesSupplier").append(data);
 
-                }
-            });
     });
+});
 
     $('#createSales').click(function() {
         $('#selectCustomer').hide();
         $('#createSalesDiv').hide();
         $('#selectProducts').show();
         $('#btnSet').show();
-    });
-
-
-    $('#salesRoute').change(function() {
-
-        var salesRoute = $('#salesRoute').val(); // get option's value
-
-        //change product category select box
-        $.post("../controllers/controller_sales.php?type=get_customers", {
-                salesRoute: salesRoute
-            },
-            function(data, status) {
-                if (status == "success") {
-                    // alert(data);
-                    $("#salesCustomer").empty();
-                    $("#salesCustomer").append("<option value=''>--Select Product Category--</option>");
-                    $("#salesCustomer").append(data);
-                    // $("#poSupplier").attr("disabled", "disabled");
-                }
-            });
-
-    });
-
-    $('#salesSupplier').change(function() {
-
 
         var salesSupplier = $('#salesSupplier').val(); // get option's value
-        // alert(salesSupplier);
+        alert(salesSupplier);
         //change product category select box
         $.post("../controllers/controller_sales.php?type=get_ProCat", {
                 salesSupplier: salesSupplier
@@ -499,6 +498,65 @@
                     // $("#poSupplier").attr("disabled", "disabled");
                 }
             });
+    });
+
+
+    $('#rtsche').change(function() {
+
+        var rtsche = $('#rtsche').val(); // get option's value
+
+        //change product category select box
+        $.post("../controllers/controller_sales.php?type=get_customers", {
+                rtsche: rtsche
+            },
+            function(data, status) {
+                if (status == "success") {
+                    // alert(data);
+                    $("#salesCustomer").empty();
+                    $("#salesCustomer").append("<option value=''>--Select Customer--</option>");
+                    $("#salesCustomer").append(data);
+                    // $("#poSupplier").attr("disabled", "disabled");
+                }
+            });
+            $.post("../controllers/controller_sales.php?type=get_suppliers", {
+                rtsche:rtsche
+            },
+            function(data, status) {
+                if (status == "success") {
+                    //alert(data); 
+                    $("#salesSupplierName").val(data);
+
+                }
+            });
+            $.post("../controllers/controller_sales.php?type=get_supplierId", {
+                rtsche:rtsche
+            },
+            function(data, status) {
+                if (status == "success") {
+                    alert(data); 
+                    $("#salesSupplier").val(data);
+
+                }
+            });
+            $.post("../controllers/controller_sales.php?type=get_route", {
+                rtsche: rtsche
+            },
+            function(data, status) {
+                if (status == "success") {
+
+                    $("#salesRoute").empty();
+                    // $("#salesRoute").append("<option value=''>--Select Route--</option>");
+                    $("#salesRoute").val(data);
+
+                }
+            });
+
+    });
+
+    $('#salesSupplier').change(function() {
+
+
+
 
     });
 
@@ -528,23 +586,25 @@
 
     });
 
-    $('#salesProductName').change(function() {
+    // $('#salesProductName').change(function() {
 
-        var proid = $('#salesProductName').val(); // get option's value
-        // var procatval = $('#rtscheProCat').val();
-        //alert(proid);
-        //change product name select box options
-        $.post("../controllers/controller_sales.php?type=get_batch", {
-                proid: proid
-            },
-            function(data, status) {
-                if (status == "success") {
-                    //alert(data);
+    //     var cusId = $('#salesCustomer').val();
+    //     var proId = $('#salesProductName').val(); 
+    //     // var procatval = $('#rtscheProCat').val();
+    //     alert(proId);
+    //     //change product name select box options
+    //     $.post("../controllers/controller_sales.php?type=getMRP", {
+    //         proId: proId,
+    //         cusId: cusId
+    //         },
+    //         function(data, status) {
+    //             if (status == "success") {
+    //                 alert(data);
 
-                }
-            });
+    //             }
+    //         });
 
-    });
+    // });
 
     $('#itemPrice').keyup(function() {
 
@@ -614,14 +674,7 @@
             $("#disVal").val("0%");
             $(".balanceVal").text("0.00");
             // $('.date-picker').datepicker('setDate', 'today');
-            $('.date-picker').datepicker({
-                autoclose: true,
-                minDate: 0,
-                maxDate: 0,
-                todayHighlight: true,
-                dateFormat: 'yy-mm-dd'
-            });
-            $('.date-picker').datepicker('setDate', new Date());
+
 
 
 
@@ -750,6 +803,7 @@
             var balanceValFloat = parseFloat(balanceVal);
             var cusid = $('#salesCustomer').val();
             var salesDate = $('#salesDate').val();
+            
 
 
    
@@ -771,7 +825,7 @@
 
                     // $("#poid").append(data);
                     var salesId = jQuery.parseJSON(data);
-
+                    
                     TableData = storeTblValues(salesId)
                     TableData = JSON.stringify(TableData);
          
@@ -780,6 +834,7 @@
                         url: "../controllers/controller_return.php?type=salesDetailsSave",
                         data: "pTableData=" + TableData,
                         success: function(msg) {
+                            
                  
                             // $('#salesform').reset();
                             location.reload(true);

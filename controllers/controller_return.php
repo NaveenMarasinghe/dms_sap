@@ -25,6 +25,9 @@ if (isset($_GET["type"])) {
 		case "getSoldQty":
 			getSoldQty();
 			break;
+			case "updateVehicle":
+				updateVehicle();
+				break;
 	}
 }
 
@@ -302,6 +305,7 @@ function salesDetailsSave()
 		$item_total = $tableData[$x]['item_total'];
 		$item_qty = $tableData[$x]['item_qty'];
 		$salesId = $tableData[$x]['salesId'];
+		$rtscheid = $tableData[$x]['rtscheid'];
 
 		$db = new Connection();
 		$con = $db->db_con();
@@ -320,6 +324,25 @@ function salesDetailsSave()
 		} else {
 			echo ("error");
 		}
+		$sql_getVehId="SELECT vehicle FROM tbl_route_sche WHERE routesche_id='$rtscheid'";
+		$resultVeh = $con->query($sql_getVehId);
+		if ($con->error) {
+			echo ("SQL error " . $con->error);
+			exit;
+		}
+		$recVeh = $resultVeh->fetch_assoc();			
+		$veh_id = $recVeh["vehicle"];
+		$pro_id = substr($batch_id, 0,5);
+	
+		$sql_vehicleUpdate="INSERT INTO tbl_vehicle_products(veh_id,pro_id,batch_id,qty) 
+							VALUES ('$veh_id','$pro_id','$batch_id','$item_qty')";
+		$resultVehUpdate = $con->query($sql_vehicleUpdate);
+		if ($con->error) {
+			echo ("SQL error " . $con->error);
+			exit;
+		}
+
+		$con->close();
 	}
 }
 

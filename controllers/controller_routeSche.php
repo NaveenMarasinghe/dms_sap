@@ -846,23 +846,63 @@ function viewScheSalesman()
 }
 
 
+// function avaqty()
+// {
+// 	$rtscheBatch = $_POST["rtscheBatch"];
+
+// 	$db = new Connection();
+// 	$con = $db->db_con();
+// 	$sql = "SELECT
+// 			(SELECT SUM(stock_qty)
+// 			FROM tbl_stock
+// 			WHERE batch_id='$rtscheBatch')
+// 			-
+// 			(SELECT SUM(rtsche_qty)
+// 			FROM tbl_route_sche_details rtd
+// 			WHERE rtd.rtsche_batch='$rtscheBatch' AND rtd.rtsche_dstatus='1')
+// 			AS avastock";
+// 	$result = $con->query($sql);
+// 	if ($con->errno) {
+// 		echo ("SQL Error: " . $con->error);
+// 		exit;
+// 	}
+
+// 	$rec = $result->fetch_assoc();
+// 	$avaqty = $rec["avastock"];
+// 	echo($avaqty);
+// 	$con->close();
+// }
+
 function avaqty()
 {
 	$rtscheBatch = $_POST["rtscheBatch"];
 
 	$db = new Connection();
 	$con = $db->db_con();
-	$sql = "SELECT stock_qty
-				FROM tbl_stock
-				WHERE batch_id='$rtscheBatch'";
-	$result = $con->query($sql);
+	$sql1 = "SELECT SUM(stock_qty) AS stock_qty
+			FROM tbl_stock
+			WHERE batch_id='$rtscheBatch'";
+	$result1 = $con->query($sql1);
 	if ($con->errno) {
 		echo ("SQL Error: " . $con->error);
 		exit;
 	}
 
-	$rec = $result->fetch_assoc();
-	$avaqty = $rec["stock_qty"];
-echo($avaqty);
+	$rec1 = $result1->fetch_assoc();
+	$stockqty = $rec1["stock_qty"];
+
+	$sql2 = "SELECT SUM(rtsche_qty) AS rtsche_qty
+			FROM tbl_route_sche_details rtd
+			WHERE rtd.rtsche_batch='$rtscheBatch' AND rtd.rtsche_dstatus='1'";
+	$result2 = $con->query($sql2);
+	if ($con->errno) {
+		echo ("SQL Error: " . $con->error);
+		exit;
+	}
+
+	$rec2 = $result2->fetch_assoc();
+	$scheqty = $rec2["rtsche_qty"];
+	$avaqty = $stockqty - $scheqty;
+	echo($avaqty);
 	$con->close();
 }

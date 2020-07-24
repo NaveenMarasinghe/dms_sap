@@ -16,6 +16,7 @@
     	<!-- <link rel="stylesheet" href="../assets/sweetalert/css/sweetalert.css" /> -->
     	<link rel="stylesheet" href="../assets/css/jquery-ui.min.css" />
     	<link rel="stylesheet" href="../assets/css/bootstrap-datepicker3.min.css" />
+    	<link rel="stylesheet" href="../assets/css/daterangepicker.min.css" />
 <!-- 		<link rel="stylesheet" href="../assets/jqueryui/jquery-ui.min.css" /> -->
 		<link rel="stylesheet" href="../assets/css/ui.jqgrid.min.css" />
 		<link rel="stylesheet" href="../assets/css/fullcalendar.min.css" />
