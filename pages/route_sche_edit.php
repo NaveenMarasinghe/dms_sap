@@ -367,7 +367,7 @@
 				processData: false,
 				contentType: false,
 				success: function(data) {
-					//alert(data); 
+		
 					$("#rtscheSupplier").empty();
 					$("#rtscheSupplier").append("<option value=''>--Select Supplier--</option>");
 					$("#rtscheSupplier").append(data);
@@ -388,7 +388,7 @@
 
 		$('#rtscheSupplier').change(function() {
 
-			var supplierval = $('#rtscheSupplier').val(); // get option's value
+			var supplierval = $('#rtscheSupplier').val(); 
 
 			//change product category select box options
 			$.post("../controllers/controller_products.php?type=get_filteredProCat", {
@@ -396,7 +396,7 @@
 				},
 				function(data, status) {
 					if (status == "success") {
-						// alert(data); 
+			
 						$("#rtscheProCat").empty();
 						$("#rtscheProCat").append("<option value=''>--Select Product Category--</option>");
 						$("#rtscheProCat").append(data);
@@ -408,7 +408,7 @@
 				},
 				function(data, status) {
 					if (status == "success") {
-						// alert(data);
+			
 						$("#rtscheProGroup").empty();
 						$("#rtscheProGroup").append("<option value=''>--Select Products Group--</option>");
 						$("#rtscheProGroup").append(data);
@@ -420,7 +420,7 @@
 				},
 				function(data, status) {
 					if (status == "success") {
-						// alert(data);
+			
 						$("#rtscheTerritory").empty();
 						$("#rtscheTerritory").append("<option value=''>--Select Territory--</option>");
 						$("#rtscheTerritory").append(data);
@@ -429,31 +429,7 @@
 
 		});
 
-		// $('#rtscheProGroup').change(function(){
-
-		//      var proGroup = $('#rtscheProGroup').val(); // get option's value
-
-		//      $.post("../controllers/controller_routeSche.php?type=rtscheProductTable",
-		//      {proGroup:proGroup},
-		//      function(data,status){
-		//      if(status=="success"){
-		//       //alert(data);
-		//         $("#rtscheTable").DataTable().destroy();
-		//         $("#rtscheTable tbody").empty();
-		//         $("#rtscheTable tbody").append(data);
-		//         $("#rtscheTable").DataTable({
-		// 			"order": [[ 0, "dsec" ]],
-		// 			// "columnDefs": [
-		// 			//     { "width": "25%", "targets": 3 },
-		// 			//     { "width": "25%", "targets": 2 },
-		// 			//     { "width": "25%", "targets": 1 },
-		// 			//     { "width": "25%", "targets": 0 }
-		// 			// ]
-		// 		});				      
-		//       }
-		//     });			
-
-		//    });				    
+		    
 
 		$('#rtscheTerritory').change(function() {
 
@@ -479,7 +455,7 @@
 
 		$('#rtscheProCat').change(function() {
 
-			var supplierval = $('#rtscheSupplier').val(); // get option's value
+			var supplierval = $('#rtscheSupplier').val(); 
 			var procatval = $('#rtscheProCat').val();
 
 			//change product name select box options
@@ -489,7 +465,7 @@
 				},
 				function(data, status) {
 					if (status == "success") {
-						// alert(data);
+	
 						$("#rtscheProName").empty();
 						$("#rtscheProName").append("<option value=''>--Select Product--</option>");
 						$("#rtscheProName").append(data);
@@ -499,8 +475,8 @@
 		});
 		$('#rtscheProName').change(function() {
 
-			var proid = $('#rtscheProName').val(); // get option's value
-			// var procatval = $('#rtscheProCat').val();
+			var proid = $('#rtscheProName').val(); 
+
 
 			//change product name select box options
 			$.post("../controllers/controller_routeSche.php?type=get_batch", {
@@ -508,7 +484,7 @@
 				},
 				function(data, status) {
 					if (status == "success") {
-						//alert(data);
+
 						$("#rtscheBatch").empty();
 						$("#rtscheBatch").append("<option value=''>--Select Batch--</option>");
 						$("#rtscheBatch").append(data);
@@ -551,7 +527,7 @@
 				placeholder: "--Select a Product--",
 				allowClear: true
 			});
-			var supplierval = $('#rtscheSupplier').val(); // get option's value
+			var supplierval = $('#rtscheSupplier').val(); 
 			var procatval = $('#rtscheProCat').val();
 
 			//change product name select box options
@@ -561,7 +537,7 @@
 				},
 				function(data, status) {
 					if (status == "success") {
-						//alert(data);
+
 						$("#rtscheProName").empty();
 						$("#rtscheProName").append("<option value=''>--Select Product--</option>");
 						$("#rtscheProName").append(data);
@@ -577,8 +553,7 @@
 			var $row = $(this).closest("tr"); // Find the row
 			var proname = $row.find("td:nth-child(2)").text();
 			var proqty = $row.find("td:nth-child(3)").text();
-			// alert(proqty);
-			// alert(proname);
+
 
 			Swal.fire({
 				title: 'Remove following items?',
@@ -615,12 +590,10 @@
 		var $validation = false;
 		$('#fuelux-wizard-container')
 			.ace_wizard({
-				//step: 2 //optional argument. wizard will jump to step "2" at first
-				//buttons: '.wizard-actions:eq(0)'
+
 			})
 
-			//.on('changed.fu.wizard', function() {
-			//})
+
 			.on('finished.fu.wizard', function(e) {
 				//save to database
 				d = new FormData($("#routeScheForm")[0]);
@@ -632,11 +605,8 @@
 					processData: false,
 					contentType: false,
 					success: function(data) {
-						// $('#purchaseform')[0].reset();
-						// location.reload(true);
-						alert(data);
 
-						// $("#poid").append(data);
+					
 						var rtscheid = jQuery.parseJSON(data);
 
 						function storeTblValues() {
@@ -650,10 +620,9 @@
 									"rtscheqty": $(tr).find('td:eq(3)').text(),
 									"rtscheid": rtscheid
 								}
-								//   poid    
-								// TableData.push("Kiwi");
+								
 							});
-							// TableData.shift();  // first row will be empty - so remove
+						
 
 							return TableData;
 						}
@@ -667,7 +636,7 @@
 							data: "pTableData=" + TableData,
 							success: function(msg) {
 								alert(msg);
-								// $('#purchaseform')[0].reset();
+								
 								location.reload(true);
 
 							}
@@ -684,16 +653,9 @@
 					}
 				});
 			}).on('stepclick.fu.wizard', function(e) {
-				//e.preventDefault();//this will prevent clicking and selecting steps
+		
 			});
 
-
-
-
-
-
-
-		//documentation : http://docs.jquery.com/Plugins/Validation/validate
 
 
 		$.mask.definitions['~'] = '[+-]';
@@ -800,16 +762,6 @@
 		$('#modal-wizard-container').ace_wizard();
 		$('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
 
-
-		/**
-		$('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
-			$(this).closest('form').validate().element($(this));
-		});
-		
-		$('#mychosen').chosen().on('change', function(ev) {
-			$(this).closest('form').validate().element($(this));
-		});
-		*/
 
 
 		$(document).one('ajaxloadstart.page', function(e) {

@@ -97,7 +97,6 @@
        });
 
 			$("#addSupplierSave").click(function(){
-			//alert('data');
 			if($("#form_addNewVehicle").valid()) {
 
 
@@ -111,7 +110,6 @@
 	         success: function(data){
 	         	$('#form_addNewVehicle')[0].reset();
 		        location.reload(true);
-	            //alert(data);
 
 		      } 
 		    }); 

@@ -21,11 +21,7 @@
             <div>       
                   <h4 class="page-header"><b>View Purchase Orders</b></h4>
             </div>
-<!--               <div class="row">
-                <div class="col-md-3">
-              <button type='button' class='btn btn-primary m-b-20' data-toggle='modal' data-target='#modelEditProduct' style='margin-bottom: 10px;' id='addbutton'>Add New Product</button> 
-                </div>
-              </div> -->
+
 
               <table id="purchaseOrderTable" class="table table-bordered table-striped">
                 <thead>
@@ -124,13 +120,11 @@ var myTable = $('#productTable').DataTable({
 });
       function modalViewPo(purid){
         
-        //alert(purid);
+
         $.post("../controllers/controller_purchase.php?type=viewPurchaseModal",
         {purid:purid},
         function(data,status){
         if(status=="success"){
-              //alert(data);
-
 
           $("#purchaseModalTable").DataTable().destroy();
           $("#purchaseModalTable tbody").empty();
@@ -142,12 +136,6 @@ var myTable = $('#productTable').DataTable({
 
               });                 
 
-              // var jdata=jQuery.parseJSON(data);
-              // $("#editModalProductId").val(jdata.pro_id);
-              // $("#editModalProductCat").val(jdata.product_cat_name);
-              // $("#editModalProductSubCat").val(jdata.product_subcat_name);
-              // $("#editModalProductName").val(jdata.pro_name);
-              // $("#editModalProductSupplier").val(jdata.sup_name);
 
            }
         });
@@ -164,15 +152,14 @@ var myTable = $('#productTable').DataTable({
     document.title = "View Purchase Order";
 
     $.noConflict();
-    // $('#productTable').datatable();
-    // load datatable on load
+
       $.ajax({
         url:"../controllers/controller_purchase.php?type=purchaseView",
         method:"POST",
         processData: false,
         contentType: false,
       success: function(data){
-        //alert(data);
+
           $("#purchaseOrderTable").DataTable().destroy();
           $("#purchaseOrderTable tbody").empty();
           $("#purchaseOrderTable tbody").append(data);

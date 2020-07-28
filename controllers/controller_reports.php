@@ -68,6 +68,12 @@ if (isset($_GET["type"])) {
         case "getSup":
             getSup();
         break;
+        case "getSalesman":
+            getSalesman();
+        break;
+        case "getVehicle":
+            getVehicle();
+        break;
     }
 }
 
@@ -1083,6 +1089,64 @@ FROM tbl_products pro,
             //fetch all the records
             while ($rec=$result->fetch_assoc()) {
                 echo($rec["sup_name"]);
+            }
+        }
+
+        $con->close();
+    }
+
+    function getSalesman(){
+        $scheId=$_POST["scheId"];
+        $db=new Connection();
+        $con=$db->db_con();
+        $sql="SELECT DISTINCT usr.emp_fullname FROM tbl_user_details usr, tbl_route_sche rts WHERE usr.emp_id=rts.salesman AND rts.routesche_id='$scheId'";
+        $result=$con->query($sql);
+
+        if ($con->errno) {
+            echo("SQL Error: ". $con->error);
+            exit;
+        }
+
+        //alert('func');
+        $nor=$result->num_rows;
+
+        if ($nor==0) {
+            echo("No records");
+            exit;
+        } else {
+
+            //fetch all the records
+            while ($rec=$result->fetch_assoc()) {
+                echo($rec["emp_fullname"]);
+            }
+        }
+
+        $con->close();
+    }
+
+    function getVehicle(){
+        $scheId=$_POST["scheId"];
+        $db=new Connection();
+        $con=$db->db_con();
+        $sql="SELECT DISTINCT vehicle FROM tbl_route_sche WHERE routesche_id='$scheId'";
+        $result=$con->query($sql);
+
+        if ($con->errno) {
+            echo("SQL Error: ". $con->error);
+            exit;
+        }
+
+        //alert('func');
+        $nor=$result->num_rows;
+
+        if ($nor==0) {
+            echo("No records");
+            exit;
+        } else {
+
+            //fetch all the records
+            while ($rec=$result->fetch_assoc()) {
+                echo($rec["vehicle"]);
             }
         }
 

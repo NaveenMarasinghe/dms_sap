@@ -34,6 +34,18 @@ if (isset($_GET["type"])) {
         case "deleteCus":
             deleteCus();
             break;
+            case "getCusDetails":
+                getCusDetails();
+                break;
+                case "removeEmp":
+                    removeEmp();
+                    break;
+                    case "getEmpDetails":
+                        getEmpDetails();
+                        break;
+                        case "updateEmp":
+                            updateEmp();
+                            break;
     }
 }
 
@@ -130,8 +142,8 @@ function addNewCustomer()
     $cus_ter = $_POST["cus_ter"];
     $cus_route = $_POST["cus_route"];
 
-    $sql = "INSERT INTO tbl_customers(cus_id,route_id,cus_name,cus_add,cus_tel,cus_type,sales_balance)
-    VALUES('$cus_id','$cus_route','$cus_name','$cus_add','$cus_tel','0','0');";
+    $sql = "INSERT INTO tbl_customers(cus_id,route_id,cus_name,cus_add,cus_tel,cus_type,sales_balance,cus_status)
+    VALUES('$cus_id','$cus_route','$cus_name','$cus_add','$cus_tel','0','0','1');";
     $result = $con->query($sql);
     if ($con->errno) {
         echo ("SQL Error: " . $con->error);
@@ -231,7 +243,7 @@ function viewEmpTable()
     $db = new Connection();
     $con = $db->db_con();
     $sql = "SELECT usr.emp_id, usr.emp_fullname, usr.emp_tel, usr.emp_add, ut.user_typename
-				FROM tbl_user_details usr, tbl_user_type ut WHERE usr.emp_type=ut.user_type";
+				FROM tbl_user_details usr, tbl_user_type ut, tbl_users us WHERE usr.emp_type=ut.user_type AND usr.emp_id=us.emp_id AND us.emp_status='1'";
     $result = $con->query($sql);
     if ($con->errno) {
         echo ("SQL Error: " . $con->error);
@@ -258,15 +270,12 @@ function viewEmpTable()
         echo ("<td>" . $rec["emp_tel"] . "</td>");
         echo ("<td>" . $rec["user_typename"] . "</td>");
         echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
-					<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelViewProduct" onclick="modalViewProduct(\'' . $rec["pro_id"] . '\')">
-						<i class="ace-icon fa fa-info-circle bigger-120"></i>
-					</button>
 
-					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelEditProduct">
+					<button class="btn btn-xs btn-info" onclick="editEmp(\'' . $rec["emp_id"] . '\')">
 						<i class="ace-icon fa fa-pencil bigger-120"></i>
 					</button>
 
-					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
+					<button class="btn btn-xs btn-danger" onclick="removeEmp(\'' . $rec["emp_id"] . '\')">
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
 
@@ -354,14 +363,88 @@ function createRtscheSesson()
 
 function updateCustomer()
 {
-    echo ("gg");
+    $cus_id=$_POST["cus_id"];
+    $cus_name=$_POST["cus_name"];
+    $cus_ter=$_POST["cus_ter"];
+    $cus_route=$_POST["cus_route"];
+    $cus_add=$_POST["cus_add"];
+    $cus_tel=$_POST["cus_tel"];
+
+    $db = new Connection();
+    $con = $db->db_con();
+    $sql = "UPDATE tbl_customers SET route_id='$cus_route', cus_name='$cus_name', cus_add='$cus_add', cus_tel='$cus_tel' WHERE cus_id='$cus_id'";
+    $result = $con->query($sql);
+    $con->close();
+
 }
 
 function deleteCus()
 {
-    $cus_id = $_POST["cus_id"];
+    $cus_id = $_POST["cusid"];
     $db = new Connection();
     $con = $db->db_con();
     $sql = "UPDATE tbl_customers SET cus_status='0' WHERE cus_id='$cus_id'";
     $result = $con->query($sql);
+    $con->close();
+}
+
+function getCusDetails(){
+	$cusId=$_POST["cusId"];
+
+	$db=new Connection();
+	$con=$db->db_con();
+	$sql="SELECT cus_name, cus_add, cus_tel FROM tbl_customers WHERE cus_id='$cusId'";
+	$result=$con->query($sql);
+
+	if ($con->errno) {
+		echo("SQL Error: ". $con->error);
+		exit;
+	}
+
+	$rec=$result->fetch_assoc();
+	echo(json_encode($rec));
+	$con->close();
+
+}
+
+function removeEmp(){
+    $empId=$_POST["empId"];
+    $db = new Connection();
+    $con = $db->db_con();
+    $sql = "UPDATE tbl_users SET emp_status='0' WHERE emp_id='$empId'";
+    $result = $con->query($sql);
+    $con->close();
+}
+
+function getEmpDetails(){
+    $empId=$_POST["empId"];
+
+	$db=new Connection();
+	$con=$db->db_con();
+	$sql="SELECT emp_fullname, emp_add, emp_tel FROM tbl_user_details WHERE emp_id='$empId'";
+	$result=$con->query($sql);
+
+	if ($con->errno) {
+		echo("SQL Error: ". $con->error);
+		exit;
+	}
+
+	$rec=$result->fetch_assoc();
+	echo(json_encode($rec));
+	$con->close();
+}
+
+function updateEmp()
+{
+    $emp_id=$_POST["emp_id"];
+    $emp_name=$_POST["emp_name"];
+    $emp_add=$_POST["emp_add"];
+    $emp_tel=$_POST["emp_tel"];
+
+    $db = new Connection();
+    $con = $db->db_con();
+    $sql = "UPDATE tbl_user_details SET emp_fullname='$emp_name', emp_add='$emp_add', emp_tel='$emp_tel' WHERE emp_id='$emp_id'";
+    $result = $con->query($sql);
+    $con->close();
+
 }

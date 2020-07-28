@@ -198,7 +198,7 @@ function purchaseView()
 		echo ("<td>No Record</td>");
 		echo ("<td>No Record</td>");
 		echo ("<td>No Record</td>");
-		echo ("<td>No Record</td>");
+
 
 		echo ("</tr>");
 		exit;

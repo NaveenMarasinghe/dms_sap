@@ -120,27 +120,7 @@
 </div><!-- /.page-content -->
 <script type="text/javascript">
 		function viewSingleProduct(proid){
-        // $('.page-content').load("purchase_view_single.php");
-        // //alert(proid);      
-       	// var pur_id=proid;
-       	// //alert(pur_id); 
-        // $("#qty").text("gg");
-    	
-        // $.post("../controllers/controller_products.php?type=viewProductModal",
-        // {proid:proid},
-        // function(data,status){
-        // if(status=="success"){
-        //       //alert(data);
-              
-        //       var jdata=jQuery.parseJSON(data);
-        //       $("#editModalProductId").val(jdata.pro_id);
-        //       $("#editModalProductCat").val(jdata.product_cat_name);
-        //       $("#editModalProductSubCat").val(jdata.product_subcat_name);
-        //       $("#editModalProductName").val(jdata.pro_name);
-        //       $("#editModalProductSupplier").val(jdata.sup_name);
 
-        //    }
-        // });
       }
 
       function modalPoProduct(proid){
@@ -167,8 +147,6 @@
           $('#purchaseform').hide();
           $('#purchaseform').removeClass('hide');
 
-          // $('#purchaseform').addClass('hide');
-          // $('#purchaseform').show();
 
       })      
 
@@ -181,7 +159,7 @@
 	      processData: false,
 	      contentType: false,
 	    success: function(data){
-	      //alert(data);
+
 	        $("#purchaseOrderTable").DataTable().destroy();
 	        $("#purchaseOrderTable tbody").empty();
 	        $("#purchaseOrderTable tbody").append(data);
@@ -197,9 +175,7 @@
 			});      
 	      }
 	    });  
-// $("#btn_modelView").click(function() {
-//   alert( "Handler for .click() called." );
-// });
+
 
     });
 

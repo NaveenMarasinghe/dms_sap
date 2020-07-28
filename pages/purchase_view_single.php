@@ -92,7 +92,7 @@
                 <div class="form-group">
                 <div class="row">
                   <div class="col-xs-12">
-<!--                     <h3 class="header smaller lighter blue">jQuery dataTables</h3> -->
+
 
                     <div class="clearfix">
                       <div class="pull-right tableTools-container"></div>
@@ -101,19 +101,12 @@
                       Purchase Order - Product List
                     </div>
 
-                    <!-- div.table-responsive -->
-
-                    <!-- div.dataTables_borderWrap -->
+ 
                     <div>
                       <table id="purchaseTable" class="table table-striped table-bordered table-hover">
                         <thead>
                           <tr>
-<!--                             <th class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </th> -->
+
                             <th>Product ID</th>
                             <th>Product Name</th>
                             <th>Quantity</th>
@@ -123,35 +116,9 @@
 
                         <tbody id="tablebody">
  
-                          <!-- <tr class="selected"> -->
-<!--                             <td class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </td> -->
 
-<!--                             <td>GG</td>
-                            <td>GoodGame</td>
-                            <td class="hidden-480">30</td>
 
-                            <td>
-                              <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="blue" href="#">
-                                  <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                </a>
 
-                                <a class="green" href="#">
-                                  <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                </a>
-
-                                <a class="red" href="#">
-                                  <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                </a>
-                              </div>
-
-                            </td>
-                          </tr> -->
                         </tbody>
                       </table>
                     </div>
@@ -163,22 +130,6 @@
               </div>
               </div>            
 
-<!--                     <table id="product_table" class="table table-bordered table-striped">
-                        <thead>
-                          <tr>
-                            <th>Product Name</th>
-                            <th>Quantity</th>                  
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody id="ttt">
-                          <tr>
-                            <td>Test1</td>
-                            <td>Test1</td>
-                            <td>Test1</td>
-                          </tr>
-                        </tbody>
-                      </table> -->
                <div class="clearfix form-actions">
         <div class="col-md-offset-3 col-md-9">
           <div class="pull-right">
@@ -197,12 +148,6 @@
       </div>
             </form>
           
-<!--             <div class="col-md-offset-10 col-md-2">
-              <div class="pull-right">
-              <button type="button" class="btn btn-success" id="pobtnSave">Create</button>
-              <button type="button" class="btn btn-primary" id="pobtncancel" onclick="$('#frmStudntEdit')[0].reset();">Cancel</button>
-            </div>
-            </div> -->
           </div>
         </div>
     </div>

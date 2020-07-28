@@ -53,14 +53,12 @@ function stockRouteSche()
 		echo ("SQL Error: " . $con->error);
 		exit;
 	}
-	//alert('func');
 	$nor = $result->num_rows;
 	if ($nor == 0) {
 		echo ("<option value='0'>No Route Schedules Avaliable</option>");
 	} else {
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
-			//merge province ID and name with HTML
 			echo ("<option value='" . $rec["routesche_id"] . "'>" . $rec["routesche_id"] . "</option>");
 		}
 	}
@@ -88,20 +86,6 @@ function viewRouteStock()
 		echo ("<td>No Record</td>");
 		echo ("<td>No Record</td>");
 		echo ("<td>No Record</td>");
-		echo ('<td><div class="hidden-sm hidden-xs btn-group">
-				<button class="btn btn-xs btn-success">
-					<i class="ace-icon fa-info-circle bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-info">
-					<i class="ace-icon fa fa-pencil bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-danger">
-					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-				</button>
-
-			</div></td>');
 		echo ("</tr>");
 		exit;
 	}
@@ -114,21 +98,6 @@ function viewRouteStock()
 		echo ("<td>" . $rec["pro_name"] . "</td>");
 		echo ("<td>" . $rec["rtsche_batch"] . "</td>");
 		echo ("<td>" . $rec["rtsche_qty"] . "</td>");
-
-		echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
-					<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelPoView" onclick="modalViewPo(\'' . $rec["pur_id"] . '\')">
-						<i class="ace-icon fa fa-info-circle bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelEditProduct">
-						<i class="ace-icon fa fa-pencil bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
-						<i class="ace-icon fa fa-trash-o bigger-120"></i>
-					</button>
-
-				</div></td>');
 		echo ("</tr>");
 	}
 

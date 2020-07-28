@@ -106,46 +106,7 @@ if (isset($_SESSION["user"]) && ($_SESSION["user"]["utype"] == "1")) {
 			</ul>
 		</li>
 
-		<li class="">
-			<a href="#" class="dropdown-toggle">
-				<i class="menu-icon fa fa-book"></i>
-				<span class="menu-text"> Create Sales </span>
 
-				<b class="arrow fa fa-angle-down"></b>
-			</a>
-
-			<b class="arrow"></b>
-
-			<ul class="submenu">
-				<li class="">
-					<a href="../pages/sales_view.php">
-						<i class="menu-icon fa fa-caret-right"></i>
-						View Sales
-					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-				<li class="">
-					<a href="../pages/sales_create6.php">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Create Sales
-					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-				<li class="">
-					<a href="../pages/sales_return.php">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Sales Return
-					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-			</ul>
-		</li>
 
 		<li class="">
 			<a href="#" class="dropdown-toggle">
@@ -245,7 +206,81 @@ if (isset($_SESSION["user"]) && ($_SESSION["user"]["utype"] == "1")) {
 
 			</ul>
 		</li>
+		<li class="">
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-book"></i>
+				<span class="menu-text"> Create Sales </span>
 
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+
+			<b class="arrow"></b>
+
+			<ul class="submenu">
+				<li class="">
+					<a href="../pages/sales_view.php">
+						<i class="menu-icon fa fa-caret-right"></i>
+						View Sales
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+
+				<li class="">
+					<a href="../pages/sales_create6.php">
+						<i class="menu-icon fa fa-caret-right"></i>
+						Create Sales
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+
+				<li class="">
+					<a href="../pages/sales_return.php">
+						<i class="menu-icon fa fa-caret-right"></i>
+						Sales Return
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+
+			</ul>
+		</li>
+
+		<li class="">
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-home"></i>
+				<span class="menu-text"> Warehouse </span>
+
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+
+			<b class="arrow"></b>
+
+			<ul class="submenu">
+
+
+				<li class="">
+					<a href="../pages/stock_issue.php">
+						<i class="menu-icon fa fa-caret-right"></i>
+						Issue Stock
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+
+				<li class="">
+					<a href="../pages/stock_receive.php">
+						<i class="menu-icon fa fa-caret-right"></i>
+						Receive Stock
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+
+
+			</ul>
+		</li>
 
 		<li class="">
 			<a href="#" class="dropdown-toggle">
@@ -311,40 +346,7 @@ if (isset($_SESSION["user"]) && ($_SESSION["user"]["utype"] == "1")) {
 			</ul>
 		</li>
 
-		<li class="">
-			<a href="#" class="dropdown-toggle">
-				<i class="menu-icon fa fa-home"></i>
-				<span class="menu-text"> Warehouses </span>
 
-				<b class="arrow fa fa-angle-down"></b>
-			</a>
-
-			<b class="arrow"></b>
-
-			<ul class="submenu">
-
-
-				<li class="">
-					<a href="../pages/stock_issue.php">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Issue Stock
-					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-				<li class="">
-					<a href="../pages/stock_receive.php">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Receive Stock
-					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-
-			</ul>
-		</li>
 
 		<li class="">
 			<a href="#" class="dropdown-toggle">
@@ -807,8 +809,6 @@ if (isset($_SESSION["user"]) && ($_SESSION["user"]["utype"] == "1")) {
 		</li>
 
 
-
-
 		<li class="">
 			<a href="#" class="dropdown-toggle">
 				<i class="menu-icon fa fa-bar-chart-o"></i>
@@ -820,53 +820,160 @@ if (isset($_SESSION["user"]) && ($_SESSION["user"]["utype"] == "1")) {
 			<b class="arrow"></b>
 
 			<ul class="submenu">
-				<li class="../pages/sales_view.php">
-					<a href="../pages/sales_view.php">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Sales Report
-					</a>
 
-					<b class="arrow"></b>
-				</li>
 
 				<li class="">
-					<a href="../pages/purchase_view2.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
 						Purchase Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/purchase_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/purchase_report_order.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
 
 				<li class="">
-					<a href="../pages/product_stock.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Stock Report
+						Inventory Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
 
+						<li class="">
+							<a href="../reports/inventory_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Inventory Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<!-- <li class="">
+							<a href="../reports/sales_report_cus.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Order ID
+							</a>
+
+							<b class="arrow"></b>
+						</li> -->
+					</ul>
 				</li>
-
 
 				<li class="">
-					<a href="">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Employee Report
+						GRN Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/grn_report_date.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								GRN Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/grn_report_id.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								GRN Report - GRN ID
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
+				
 				<li class="">
-					<a href="../pages/customer_view.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Customer Report
+						Route Schedule Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/rtsche_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Route Schedule Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/rtsche_report_id.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Route Schedule Report - Schedule ID
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
+
+				<li class="">
+					<a href="#" class="dropdown-toggle">
+						<i class="menu-icon fa fa-caret-right"></i>
+						Sales Report
+					</a>
+
+					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/sales_report_route.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Route
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/sales_report_cus.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Customer
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/sales_report_month.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
+				</li>
+
 			</ul>
 		</li>
+
+
 
 
 
@@ -1117,51 +1224,156 @@ if (isset($_SESSION["user"]) && ($_SESSION["user"]["utype"] == "1")) {
 			<b class="arrow"></b>
 
 			<ul class="submenu">
-				<li class="../pages/sales_view.php">
-					<a href="../pages/sales_view.php">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Sales Report
-					</a>
 
-					<b class="arrow"></b>
-				</li>
 
 				<li class="">
-					<a href="../pages/purchase_view2.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
 						Purchase Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/purchase_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/purchase_report_order.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
 
 				<li class="">
-					<a href="../pages/product_stock.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Stock Report
+						Inventory Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
 
+						<li class="">
+							<a href="../reports/inventory_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Inventory Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<!-- <li class="">
+							<a href="../reports/sales_report_cus.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Order ID
+							</a>
+
+							<b class="arrow"></b>
+						</li> -->
+					</ul>
 				</li>
-
 
 				<li class="">
-					<a href="">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Employee Report
+						GRN Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/grn_report_date.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								GRN Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/grn_report_id.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								GRN Report - GRN ID
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
+				
 				<li class="">
-					<a href="../pages/customer_view.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Customer Report
+						Route Schedule Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/rtsche_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Route Schedule Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/rtsche_report_id.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Route Schedule Report - Schedule ID
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
+
+				<li class="">
+					<a href="#" class="dropdown-toggle">
+						<i class="menu-icon fa fa-caret-right"></i>
+						Sales Report
+					</a>
+
+					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/sales_report_route.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Route
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/sales_report_cus.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Customer
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/sales_report_month.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
+				</li>
+
 			</ul>
 		</li>
 
@@ -1500,51 +1712,156 @@ if (isset($_SESSION["user"]) && ($_SESSION["user"]["utype"] == "1")) {
 			<b class="arrow"></b>
 
 			<ul class="submenu">
-				<li class="../pages/sales_view.php">
-					<a href="../pages/sales_view.php">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Sales Report
-					</a>
 
-					<b class="arrow"></b>
-				</li>
 
 				<li class="">
-					<a href="../pages/purchase_view2.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
 						Purchase Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/purchase_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/purchase_report_order.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
 
 				<li class="">
-					<a href="../pages/product_stock.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Stock Report
+						Inventory Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
 
+						<li class="">
+							<a href="../reports/inventory_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Inventory Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<!-- <li class="">
+							<a href="../reports/sales_report_cus.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Order ID
+							</a>
+
+							<b class="arrow"></b>
+						</li> -->
+					</ul>
 				</li>
-
 
 				<li class="">
-					<a href="">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Employee Report
+						GRN Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/grn_report_date.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								GRN Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/grn_report_id.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								GRN Report - GRN ID
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
+				
 				<li class="">
-					<a href="../pages/customer_view.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Customer Report
+						Route Schedule Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/rtsche_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Route Schedule Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/rtsche_report_id.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Route Schedule Report - Schedule ID
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
+
+				<li class="">
+					<a href="#" class="dropdown-toggle">
+						<i class="menu-icon fa fa-caret-right"></i>
+						Sales Report
+					</a>
+
+					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/sales_report_route.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Route
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/sales_report_cus.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Customer
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/sales_report_month.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
+				</li>
+
 			</ul>
 		</li>
 
@@ -1776,51 +2093,156 @@ if (isset($_SESSION["user"]) && ($_SESSION["user"]["utype"] == "1")) {
 			<b class="arrow"></b>
 
 			<ul class="submenu">
-				<li class="../pages/sales_view.php">
-					<a href="../pages/sales_view.php">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Sales Report
-					</a>
 
-					<b class="arrow"></b>
-				</li>
 
 				<li class="">
-					<a href="../pages/purchase_view2.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
 						Purchase Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/purchase_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/purchase_report_order.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
 
 				<li class="">
-					<a href="../pages/product_stock.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Stock Report
+						Inventory Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
 
+						<li class="">
+							<a href="../reports/inventory_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Inventory Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<!-- <li class="">
+							<a href="../reports/sales_report_cus.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Purchase Report - Order ID
+							</a>
+
+							<b class="arrow"></b>
+						</li> -->
+					</ul>
 				</li>
-
 
 				<li class="">
-					<a href="">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Employee Report
+						GRN Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/grn_report_date.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								GRN Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/grn_report_id.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								GRN Report - GRN ID
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
+				
 				<li class="">
-					<a href="../pages/customer_view.php">
+					<a href="#" class="dropdown-toggle">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Customer Report
+						Route Schedule Report
 					</a>
 
 					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/rtsche_report_sup.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Route Schedule Report - Supplier
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/rtsche_report_id.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Route Schedule Report - Schedule ID
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
 				</li>
+
+				<li class="">
+					<a href="#" class="dropdown-toggle">
+						<i class="menu-icon fa fa-caret-right"></i>
+						Sales Report
+					</a>
+
+					<b class="arrow"></b>
+					<ul class="submenu">
+
+						<li class="">
+							<a href="../reports/sales_report_route.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Route
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/sales_report_cus.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Customer
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="../reports/sales_report_month.php">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Sales Report - Date Range
+							</a>
+
+							<b class="arrow"></b>
+						</li>
+					</ul>
+				</li>
+
 			</ul>
 		</li>
 

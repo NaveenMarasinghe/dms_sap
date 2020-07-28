@@ -50,12 +50,6 @@ if (!isset($_SESSION["user"])) {
 
       </form>
 
-      <!--             <div class="col-md-offset-10 col-md-2">
-              <div class="pull-right">
-              <button type="button" class="btn btn-success" id="pobtnSave">Create</button>
-              <button type="button" class="btn btn-primary" id="pobtncancel" onclick="$('#frmStudntEdit')[0].reset();">Cancel</button>
-            </div>
-            </div> -->
 
     </div>
     <div class="modal fade" id="modelDeleteProduct" tabindex="-1">
@@ -116,10 +110,9 @@ if (!isset($_SESSION["user"])) {
         </div>
       </div>
     </div>
-    <!-- PAGE CONTENT ENDS -->
-  </div><!-- /.col -->
-</div><!-- /.row -->
-</div><!-- /.page-content -->
+  </div>
+</div>
+</div>
 <script type="text/javascript">
 
 function viewScheDetails(data) {
@@ -152,19 +145,53 @@ $.post("../controllers/controller_routeSche.php?type=viewScheModal", {
   function(data, status) {
     if (status == "success") {
   
-
       var jdata = jQuery.parseJSON(data);
       $("#modalDriver").val(jdata.emp_fullname);
     }
   });
 }
+
+function deleteRecord(cusid) {
+
+var cusid = cusid;
+
+Swal.fire({
+  title: 'Are you sure?',
+  text: "Remove : " + cusid,
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#d33',
+  cancelButtonColor: '#3085d6',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.value) {
+
+    $.post("../controllers/controller_routeSche.php?type=deleteSche", {
+        cusid: cusid
+      },
+      function (data, status) {
+        if (status == "success") {
+
+          Swal.fire(
+            'Deleted!',
+            'Record has been removed.',
+            'success'
+          ).then((result) => {
+            if (result.value) {
+
+              location.reload();
+
+            }
+          })
+        }
+      });
+  }
+})
+}
+
   jQuery(function($) {
 
-
-
     $(document).ready(function() {
-
-
 
       document.title = "Route Schedule View";
       $('#datestart').datepicker({
@@ -185,7 +212,7 @@ $.post("../controllers/controller_routeSche.php?type=viewScheModal", {
         },
         function(data, status) {
           if (status == "success") {
-            //alert(data);
+
             $("#rtscheViewTable").DataTable().destroy();
             $("#rtscheViewTable tbody").empty();
             $("#rtscheViewTable tbody").append(data);

@@ -62,26 +62,18 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <!--                     <h3 class="header smaller lighter blue">jQuery dataTables</h3> -->
+                                               
 
                                                 <div class="clearfix">
                                                     <div class="pull-right tableTools-container"></div>
                                                 </div>
 
 
-                                                <!-- div.table-responsive -->
-
-                                                <!-- div.dataTables_borderWrap -->
                                                 <div>
                                                     <table id="routeStockTable" class="table table-striped table-bordered table-hover">
                                                         <thead>
                                                             <tr>
-                                                                <!--                             <th class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </th> -->
+          
                                                                 <th>Check</th>
                                                                 <th>Product ID</th>
                                                                 <th>Product Name</th>
@@ -93,35 +85,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
 
                                                         <tbody>
 
-                                                            <!-- <tr class="selected"> -->
-                                                            <!--                             <td class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </td> -->
-
-                                                            <!--                             <td>GG</td>
-                            <td>GoodGame</td>
-                            <td class="hidden-480">30</td>
-
-                            <td>
-                              <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="blue" href="#">
-                                  <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                </a>
-
-                                <a class="green" href="#">
-                                  <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                </a>
-
-                                <a class="red" href="#">
-                                  <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                </a>
-                              </div>
-
-                            </td>
-                          </tr> -->
+   
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -133,22 +97,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                                 </div>
                             </div>
 
-                            <!--                     <table id="product_table" class="table table-bordered table-striped">
-                        <thead>
-                          <tr>
-                            <th>Product Name</th>
-                            <th>Quantity</th>                  
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody id="ttt">
-                          <tr>
-                            <td>Test1</td>
-                            <td>Test1</td>
-                            <td>Test1</td>
-                          </tr>
-                        </tbody>
-                      </table> -->
+
                             <div class="clearfix form-actions">
                                 <div class="col-md-offset-3 col-md-9">
                                     <div class="pull-right">
@@ -167,12 +116,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                             </div>
                         </form>
 
-                        <!--             <div class="col-md-offset-10 col-md-2">
-              <div class="pull-right">
-              <button type="button" class="btn btn-success" id="pobtnSave">Create</button>
-              <button type="button" class="btn btn-primary" id="pobtncancel" onclick="$('#frmStudntEdit')[0].reset();">Cancel</button>
-            </div>
-            </div> -->
+
                     </div>
                 </div>
             </div>
@@ -189,9 +133,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
             bAutoWidth: false,
             aoColumns: [null, null, null, null, null],
             aaSorting: [],
-            // select: {
-            //   style: 'multi'
-            // }
+
         });
 
         $(document).ready(function() {
@@ -210,13 +152,11 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
             }
 
             var stockDate = print_today();
-            //alert(stockDate);
             $.post("../controllers/controller_stock.php?type=stockRouteSche", {
                     stockDate: stockDate
                 },
                 function(data, status) {
                     if (status == "success") {
-                        //alert(data); 
                         $("#selectRouteSche").empty();
                         $("#selectRouteSche").append("<option value=''>--Select Route Schedule--</option>");
                         $("#selectRouteSche").append(data);
@@ -238,7 +178,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                     if (status == "success") {
                      
                         var recData = JSON.parse(data);
-                        // var name = (recData[0].name);
                         var vehicle = (recData[0].vehicle);
 
                         $("#routeVehicle").val(vehicle);
@@ -261,11 +200,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
 
                     }
                 });
-
-
-
-
-
 
         });
 
@@ -293,8 +227,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                 else $row.removeClass(active_class);
             });
 
-
-            // $('.date-picker').datepicker('setDate', 'today');
             $('.date-picker').datepicker({
                 autoclose: true,
                 minDate: 0,
@@ -313,7 +245,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
 
             $('#purchaseTable tbody').on('click', '.fa-pencil', function() {
                 var btn = this;
-                // alert("gg");
                 var $row = $(this).closest("tr"); // Find the row
                 var proname = $row.find("td:nth-child(2)").text();
 
@@ -337,14 +268,11 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                         $row.find("td:nth-child(3)").append(newQty2);
                         Swal.fire(`Quantity changed to: ${newQty2}`);
 
-                        // alert(newQty2);
-
                     }
                 });
-                // myTable.row('.selected').remove().draw( false );
+
             });
-            // // Automatically add a first row of data
-            // $('#addRow').click();
+  
         });
     });
 
@@ -372,7 +300,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
 
         $("#issueProduct").click(function() {
 
-            // if ($("#issueStock").valid()) {
             var rtscheid = $("#selectRouteSche").val()
 
             $.post("../controllers/controller_stock.php?type=receiveVehStock", {
@@ -405,8 +332,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                             url: "../controllers/controller_stock.php?type=receiveStock",
                             data: "pTableData=" + TableData,
                             success: function(msg) {
-                                // alert(msg);
-                                // $('#issueStock')[0].reset();
+               
                                 location.reload(true);
 
                             }

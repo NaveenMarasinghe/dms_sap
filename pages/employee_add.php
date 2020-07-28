@@ -16,9 +16,6 @@
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
-
-
-
             <div class="form-actions">
                 <div class="col-sm-3">
 
@@ -145,10 +142,6 @@
 
                 </form>
             </div>
-
-
-
-
             <!-- PAGE CONTENT ENDS -->
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -176,7 +169,7 @@
     });
 
     $("#addEmpSave").click(function() {
-        //alert('data');
+
         if ($("#form_addNewEmp").valid()) {
 
             d = new FormData($("#form_addNewEmp")[0]);
@@ -193,8 +186,7 @@
                         'success'
                     );
                     $('#form_addNewEmp')[0].reset();
-                    // location.reload(true);
-         
+      
 
                 }
             });

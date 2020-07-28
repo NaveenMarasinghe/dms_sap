@@ -15,9 +15,6 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <!-- PAGE CONTENT BEGINS -->
-
-
 
             <div class="form-actions">
                 <div class="col-sm-3">
@@ -108,13 +105,9 @@
                 </form>
             </div>
 
-
-
-
-            <!-- PAGE CONTENT ENDS -->
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-</div><!-- /.page-content -->
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -137,8 +130,7 @@
 
 
         $("#cus_ter").change(function() {
-            var custer = $("#cus_ter").val(); // get option's value
-            // get filtered data to datatable
+            var custer = $("#cus_ter").val(); 
             
             $.post("../controllers/controller_cus.php?type=getRoute", {
                 custer: custer
@@ -157,7 +149,7 @@
     });
 
     $("#addCustomerSave").click(function() {
-        //alert('data');
+
         if ($("#form_addNewCustomer").valid()) {
 
             d = new FormData($("#form_addNewCustomer")[0]);
@@ -174,8 +166,6 @@
                             'success'
                         );
                     $('#form_addNewCustomer')[0].reset();
-                    // location.reload(true);
-                    //alert(data);
 
                 }
             });

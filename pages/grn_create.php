@@ -41,15 +41,6 @@
 										<span class="title">Product List</span>
 									</li>
 
-									<!-- <li data-step="3">
-										<span class="step">3</span>
-										<span class="title">Complete GRN</span>
-									</li> -->
-
-									<!-- 								<li data-step="4">
-									<span class="step">4</span>
-									<span class="title">Other Info</span>
-								</li> -->
 								</ul>
 							</div>
 
@@ -57,7 +48,7 @@
 
 							<div class="step-content pos-rel">
 								<div class="step-pane active" data-step="1">
-									<!-- <h3 class="lighter block green">Enter the following information</h3> -->
+									
 
 									<form id="grnSupplierForm" method="post">
 										<div class="row">
@@ -230,12 +221,6 @@
 									</div>
 								</div>
 
-								<!-- 							<div class="step-pane" data-step="4">
-								<div class="center">
-									<h3 class="green">Congrats!</h3>
-									Your product is ready to ship! Click finish to continue!
-								</div>
-							</div> -->
 							</div>
 						</div>
 
@@ -342,7 +327,7 @@
 				processData: false,
 				contentType: false,
 				success: function(data) {
-					//alert(data); 
+
 					$("#grnSupplier").empty();
 					$("#grnSupplier").append("<option value=''>--Select Supplier--</option>");
 					$("#grnSupplier").append(data);
@@ -356,7 +341,7 @@
 				processData: false,
 				contentType: false,
 				success: function(data) {
-					//alert(data); 
+
 					$("#grnPOID").empty();
 					$("#grnPOID").append("<option value=''>--Select Purchase Order--</option>");
 					$("#grnPOID").append("<option value='1'>Without Purchase Order</option>");
@@ -376,7 +361,7 @@
 				},
 				function(data, status) {
 					if (status == "success") {
-						//alert(data);
+
 						$("#grnPOID").empty();
 						$("#grnPOID").append("<option value=''>--Select Purchase Order--</option>");
 						$("#grnPOID").append("<option value='0'>Without Purchase Order</option>");
@@ -391,7 +376,7 @@
 				},
 				function(data, status) {
 					if (status == "success") {
-						// alert(data);
+
 						$("#grnProductCat").empty();
 						$("#grnProductCat").append("<option value=''>--Select Product Category--</option>");
 						$("#grnProductCat").append(data);
@@ -543,9 +528,7 @@
 						"targets": 0
 					}
 				]
-				// select: {
-				// 	style: 'multi'
-				// }
+
 			});
 
 			$("#grnQty").val("");
@@ -557,7 +540,7 @@
 				placeholder: "--Select a Product--",
 				allowClear: true
 			});
-			var supplierval = $('#grnSupplier').val(); // get option's value
+			var supplierval = $('#grnSupplier').val(); 
 			var procatval = $('#grnProductCat').val();
 
 			//change product name select box options
@@ -567,7 +550,7 @@
 				},
 				function(data, status) {
 					if (status == "success") {
-						//alert(data);
+
 						$("#grnProductName").empty();
 						$("#grnProductName").append("<option value=''>--Select Product--</option>");
 						$("#grnProductName").append(data);
@@ -581,10 +564,6 @@
 			
 
 			var $row = $(this).closest("tr"); // Find the row
-			// var proname = $row.find("td:nth-child(2)").text();
-			// var proqty = $row.find("td:nth-child(3)").text();
-			// // alert(proqty);
-			// alert(proname);
 
 			Swal.fire({
 				title: 'Remove following items?',
@@ -601,7 +580,7 @@
 						proname + " - " + proqty + " units removed.",
 						'success'
 					);
-					// grnTable2.row($(btn).parents('tr')).remove().draw(false);
+
 				}
 			})
 
@@ -623,7 +602,7 @@
 			if (this.checked) $row.addClass(active_class);
 			else $row.removeClass(active_class);
 		});
-		//select code end
+
 
 		$('.date-picker').datepicker({
 			autoclose: true,
@@ -656,7 +635,7 @@
 			})
 
 			.on('finished.fu.wizard', function(e) {
-				//save to database
+
 				d = new FormData($("#grnSupplierForm")[0]);
 
 				$.ajax({

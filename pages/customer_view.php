@@ -46,6 +46,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "5")) {
   function deleteRecord(cusid) {
 
     var cusid = cusid;
+
     Swal.fire({
       title: 'Are you sure?',
       text: "Delete : " + cusid,
@@ -58,19 +59,24 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "5")) {
       if (result.value) {
 
         $.post("../controllers/controller_cus.php?type=deleteCus", {
-          cusid: cusid
+            cusid: cusid
           },
-          function(data, status) {
+          function (data, status) {
             if (status == "success") {
 
               Swal.fire(
                 'Deleted!',
-                'Your file has been deleted.',
+                'Record has been deleted.',
                 'success'
-              )
+              ).then((result) => {
+                if (result.value) {
+
+                  location.reload();
+
+                }
+              })
             }
           });
-
       }
     })
   }
@@ -79,18 +85,17 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "5")) {
     window.location.href = "customer_edit.php?cus_id=" + cusid;
   }
 
-  $(document).ready(function() {
+  $(document).ready(function () {
 
     document.title = "Customer View";
     $.noConflict();
 
-    // load datatable on load
     $.ajax({
       url: "../controllers/controller_cus.php?type=viewCustomerTable",
       method: "POST",
       processData: false,
       contentType: false,
-      success: function(data) {
+      success: function (data) {
         //alert(data);
         $("#supplierTable").DataTable().destroy();
         $("#supplierTable tbody").empty();

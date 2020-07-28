@@ -44,19 +44,15 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
                     <span class="step">3</span>
                     <span class="title">Complete Purchase Order</span>
                   </li>
-                  <!-- 
-                  <li data-step="4">
-									<span class="step">4</span>
-									<span class="title">Other Info</span>
-								</li> -->
+
                 </ul>
               </div>
 
-              <!-- <hr /> -->
+
 
               <div class="step-content pos-rel">
                 <div class="step-pane active" data-step="1">
-                  <!-- <h3 class="lighter block green">Enter the following information</h3> -->
+                 
 
                   <form id="poSupplierForm" method="post">
                     <div class="row">
@@ -169,12 +165,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
                             <table id="purchaseTable" class="table table-striped table-bordered table-hover" style="width:100%">
                               <thead>
                                 <tr>
-                                  <!--                             <th class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </th> -->
+
                                   <th>Product ID</th>
                                   <th>Product Name</th>
                                   <th>Quantity</th>
@@ -217,11 +208,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
                             <span class="blue" id="purdate"></span>
                           </div>
 
-                          <!-- <div class="widget-toolbar hidden-480">
-													<a href="#">
-														<i class="ace-icon fa fa-print"></i>
-													</a>
-												</div> -->
                         </div>
 
                         <div class="widget-body">
@@ -283,7 +269,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
                               </table>
                             </div>
 
-                            <!-- <div class="hr hr8 hr-double hr-dotted"></div> -->
+
 
 
                             <div class="space-6"></div>
@@ -295,12 +281,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
                   </div>
                 </div>
 
-                <!-- 							<div class="step-pane" data-step="4">
-								<div class="center">
-									<h3 class="green">Congrats!</h3>
-									Your product is ready to ship! Click finish to continue!
-								</div>
-							</div> -->
+
               </div>
             </div>
 
@@ -407,7 +388,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
         processData: false,
         contentType: false,
         success: function(data) {
-          //alert(data); 
+
           $("#poSupplier").empty();
           $("#poSupplier").append("<option value=''>--Select Supplier--</option>");
           $("#poSupplier").append(data);
@@ -418,7 +399,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 
       $('#poSupplier').change(function() {
         $("#poId").val('');
-        var supplierval = $('#poSupplier').val(); // get option's value
+        var supplierval = $('#poSupplier').val(); 
 
         //change product category select box
         $.post("../controllers/controller_products.php?type=get_filteredProCat", {
@@ -426,13 +407,13 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
           },
           function(data, status) {
             if (status == "success") {
-              // alert(data);
+
               $("#poProductCat").empty();
               $("#selectProductsubCat").empty();
               $("#poProductCat").append("<option value=''>--Select Product Category--</option>");
               $("#selectProductCat").append("<option value=''>--Select Product Category--</option>");
               $("#poProductCat").append(data);
-              // $("#poSupplier").attr("disabled", "disabled");
+
             }
           });
 
@@ -441,23 +422,20 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
       $('#poProductCat').change(function() {
 
         var supplierval = $('#poSupplier').val();
-        var procatval = $('#poProductCat').val(); // get option's value
+        var procatval = $('#poProductCat').val(); 
 
-        // get filtered data to datatable
+
         $.post("../controllers/controller_purchase.php?type=get_productList", {
             procatval: procatval,
             supplierval: supplierval
           },
           function(data, status) {
             if (status == "success") {
-              // alert(data);
+
               $("#poProductList").empty();
               $("#poProductList").append("<option></option>");
               $("#poProductList").append(data);
-              //   $('.select2gg').select2({
-              //   placeholder: "Select a Product",
-              //   allowClear: true
-              // });
+
             }
           });
         var prosubcatval = $('#selectProductsubCat').val();
@@ -467,9 +445,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 
     });
 
-    // var poTable = $('#purchaseTable').DataTable({
-    //   "aaSorting": []
-    // });
+
 
     $('#addProductButton').on('click', function() {
 
@@ -493,10 +469,10 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
               },
               function(data, status) {
                 if (status == "success") {
-                  // $("#purchaseTable").DataTable().destroy();
+
                   $("#purchaseTable tbody").empty();
                   $("#purchaseTable tbody").append(data);
-                  // $("#purchaseTable").DataTable();
+
                 }
               });
           }
@@ -506,7 +482,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
       $("#qty").val("0");
 
       var supplierval = $('#poSupplier').val();
-      var procatval = $('#poProductCat').val(); // get option's value
+      var procatval = $('#poProductCat').val(); 
 
       // get filtered data to datatable
       $.post("../controllers/controller_purchase.php?type=get_productList", {
@@ -515,7 +491,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
         },
         function(data, status) {
           if (status == "success") {
-            // alert(data);
+
             $("#poProductList").empty();
             $("#poProductList").append("<option></option>");
             $("#poProductList").append(data);
@@ -558,12 +534,11 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 
       var btn = this;
       var poId = $('#poId').val();
-      var $row = $(this).closest("tr"); // Find the row
+      var $row = $(this).closest("tr"); 
       var proid = $row.find("td:nth-child(1)").text();
       var proname = $row.find("td:nth-child(2)").text();
       var proqty = parseFloat($row.find(".tableQty").val());
-      // alert(proid);
-      // alert(poId);
+
 
       Swal.fire({
         title: 'Remove following items?',
@@ -586,17 +561,17 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
               proid: proid
             },
             function(data, status) {
-              // alert(data);
+
               if (status == "success") {}
               $.post("../controllers/controller_purchase.php?type=purCreateTable", {
                   poId: poId
                 },
                 function(data, status) {
                   if (status == "success") {
-                    // $("#purchaseTable").DataTable().destroy();
+
                     $("#purchaseTable tbody").empty();
                     $("#purchaseTable tbody").append(data);
-                    // $("#purchaseTable").DataTable();
+
                   }
                 });
             });
@@ -634,8 +609,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
     var $validation = false;
     $('#fuelux-wizard-container')
       .ace_wizard({
-        //step: 2 //optional argument. wizard will jump to step "2" at first
-        //buttons: '.wizard-actions:eq(0)'
+
       })
       .on('actionclicked.fu.wizard', function(e, info) {
         if (info.step == 1) {
@@ -671,10 +645,10 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
                     poId: poId
                   },
                   function(data, status) {
-                    // $("#purchaseTable").DataTable().destroy();
+
                     $("#purchaseTable tbody").empty();
                     $("#purchaseTable tbody").append(data);
-                    // $("#purchaseTable").DataTable();
+
 
 
                   });
@@ -697,17 +671,15 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
             function(data, status) {
               if (status == "success") {
 
-                // $("#purchaseTable").DataTable().destroy();
                 $("#purchaseViewData tbody").empty();
                 $("#purchaseViewData tbody").append(data);
-                // $("#purchaseTable").DataTable();
+
               }
             });
 
         }
       })
-      //.on('changed.fu.wizard', function() {
-      //})
+
       .on('finished.fu.wizard', function(e) {
         var poId = $("#poId").val();
 
@@ -735,10 +707,10 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
           });
 
       }).on('stepclick.fu.wizard', function(e) {
-        //e.preventDefault();//this will prevent clicking and selecting steps
+
       });
 
-    //documentation : http://docs.jquery.com/Plugins/Validation/validate
+
 
 
     $.mask.definitions['~'] = '[+-]';
@@ -846,15 +818,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
     $('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
 
 
-    /**
-    $('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
-    	$(this).closest('form').validate().element($(this));
-    });
-    
-    $('#mychosen').chosen().on('change', function(ev) {
-    	$(this).closest('form').validate().element($(this));
-    });
-    */
 
 
     $(document).one('ajaxloadstart.page', function(e) {

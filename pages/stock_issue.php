@@ -64,67 +64,29 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                   <div class="form-group">
                     <div class="row">
                       <div class="col-xs-12">
-                        <!--                     <h3 class="header smaller lighter blue">jQuery dataTables</h3> -->
+                      
 
                         <div class="clearfix">
                           <div class="pull-right tableTools-container"></div>
                         </div>
 
 
-                        <!-- div.table-responsive -->
-
-                        <!-- div.dataTables_borderWrap -->
                         <div>
                           <table id="routeStockTable" class="table table-striped table-bordered table-hover">
                             <thead>
                               <tr>
-                                <!--                             <th class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </th> -->
+
                                 <th>Check</th>
                                 <th>Product ID</th>
                                 <th>Product Name</th>
                                 <th>Batch ID</th>
                                 <th>Quantity</th>
-                                <th>Actions</th>
 
                               </tr>
                             </thead>
 
                             <tbody id="routeStockTable">
 
-                              <!-- <tr class="selected"> -->
-                              <!--                             <td class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </td> -->
-
-                              <!--                             <td>GG</td>
-                            <td>GoodGame</td>
-                            <td class="hidden-480">30</td>
-
-                            <td>
-                              <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="blue" href="#">
-                                  <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                </a>
-
-                                <a class="green" href="#">
-                                  <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                </a>
-
-                                <a class="red" href="#">
-                                  <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                </a>
-                              </div>
-
-                            </td>
-                          </tr> -->
                             </tbody>
                           </table>
                         </div>
@@ -136,22 +98,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                 </div>
               </div>
 
-              <!--                     <table id="product_table" class="table table-bordered table-striped">
-                        <thead>
-                          <tr>
-                            <th>Product Name</th>
-                            <th>Quantity</th>                  
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody id="ttt">
-                          <tr>
-                            <td>Test1</td>
-                            <td>Test1</td>
-                            <td>Test1</td>
-                          </tr>
-                        </tbody>
-                      </table> -->
               <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                   <div class="pull-right">
@@ -170,12 +116,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
               </div>
             </form>
 
-            <!--             <div class="col-md-offset-10 col-md-2">
-              <div class="pull-right">
-              <button type="button" class="btn btn-success" id="pobtnSave">Create</button>
-              <button type="button" class="btn btn-primary" id="pobtncancel" onclick="$('#frmStudntEdit')[0].reset();">Cancel</button>
-            </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -190,11 +130,9 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
     $.noConflict();
     var routeStockTable = $('#routeStockTable').DataTable({
       bAutoWidth: false,
-      aoColumns: [null, null, null, null, null, null],
+      aoColumns: [null, null, null, null, null],
       aaSorting: [],
-      // select: {
-      //   style: 'multi'
-      // }
+
     });
 
     $(document).ready(function() {
@@ -213,7 +151,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
       }
 
       var stockDate = print_today();
-      //alert(stockDate);
       $.post("../controllers/controller_stock.php?type=stockRouteSche", {
           stockDate: stockDate
         },
@@ -239,7 +176,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
         },
         function(data, status) {
           if (status == "success") {
-            //alert(data);
             $("#routeStockTable").DataTable().destroy();
             $("#routeStockTable tbody").empty();
             $("#routeStockTable tbody").append(data);
@@ -252,13 +188,11 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
         },
         function(data, status) {
           if (status == "success") {
-            //alert(data);
             var testdata = JSON.parse(data);
             console.log(data);
             var recData = JSON.parse(data);
             var vehicle = (recData[0].vehicle);
             $("#routeVehicle").val(vehicle);
-            // $("#eq_name").val(testdata[0].name);
           }
         });
 
@@ -290,7 +224,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
       });
 
 
-      // $('.date-picker').datepicker('setDate', 'today');
       $('.date-picker').datepicker({
         autoclose: true,
         minDate: 0,
@@ -336,16 +269,14 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
         });
 
         var supplierval = $('#poSupplier').val();
-        var procatval = $('#poProductCat').val(); // get option's value
+        var procatval = $('#poProductCat').val(); 
 
-        // get filtered data to datatable
         $.post("../controllers/controller_purchaseCreate.php?type=get_productList", {
             procatval: procatval,
             supplierval: supplierval
           },
           function(data, status) {
             if (status == "success") {
-              // alert(data);
               $("#poProductList").empty();
               $("#poProductList").append("<option></option>");
               $("#poProductList").append(data);
@@ -362,8 +293,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
         var $row = $(this).closest("tr"); // Find the row
         var proname = $row.find("td:nth-child(2)").text();
         var proqty = $row.find("td:nth-child(3)").text();
-        // alert(proqty);
-        // alert(proname);
 
         Swal.fire({
           title: 'Remove following items?',
@@ -389,12 +318,12 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
       $(".fa-trash-o").click(function() {
         myTable.row(".selected").remove().draw(false);
         alert('sda');
-        // myTable.row('.selected').remove().draw( false );
+
       });
 
       $('#purchaseTable tbody').on('click', '.fa-pencil', function() {
         var btn = this;
-        // alert("gg");
+
         var $row = $(this).closest("tr"); // Find the row
         var proname = $row.find("td:nth-child(2)").text();
 
@@ -418,14 +347,13 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
             $row.find("td:nth-child(3)").append(newQty2);
             Swal.fire(`Quantity changed to: ${newQty2}`);
 
-            // alert(newQty2);
+
 
           }
         });
-        // myTable.row('.selected').remove().draw( false );
+
       });
-      // // Automatically add a first row of data
-      // $('#addRow').click();
+
     });
   });
 
@@ -478,7 +406,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
         },
 
         success: function(e) {
-          $(e).closest('.form-group').removeClass('has-error'); //.addClass('has-info');
+          $(e).closest('.form-group').removeClass('has-error'); 
           $(e).remove();
         },
 
@@ -506,7 +434,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
 
     $("#issueProduct").click(function() {
 
-      // if ($("#issueStock").valid()) {
+
       var rtsche = $("#selectRouteSche").val()
 
       $.post("../controllers/controller_stock.php?type=issueStock", {
@@ -533,10 +461,9 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                     "vehnum": vehnum
                   }
                 }
-                //   poid    
-                // TableData.push("Kiwi");
+ 
               });
-              // TableData.shift();  // first row will be empty - so remove
+     
 
               return TableData;
             }
@@ -564,7 +491,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
                 });
 
                 $('#issueStock')[0].reset();
-                // location.reload(true);
+      
 
               }
             });
@@ -572,57 +499,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "2") || ($_SESSI
         });
 
 
-      // $.ajax({
-      //   url: "../controllers/controller_stock.php?type=issueStock",
-      //   method: "POST",
-      //   data: d,
-      //   processData: false,
-      //   contentType: false,
-      //   success: function(data) {
-      //     // $('#purchaseform')[0].reset();
-      //     // location.reload(true);
-      //     alert(data);
-
-      //     // $("#poid").append(data);
-      //     var issueStockId = jQuery.parseJSON(data);
-
-      //     function storeTblValues() {
-      //       var TableData = new Array();
-
-      //       $('#routeStockTable tr').each(function(row, tr) {
-      //         if ($(tr).hasClass('active')) {
-      //           TableData[row] = {
-      //             "pid": $(tr).find('td:eq(0)').text(),
-      //             "pname": $(tr).find('td:eq(1)').text(),
-      //             "pqty": $(tr).find('td:eq(2)').text(),
-      //             "poid": issueStockId
-      //           }
-      //         }
-      //         //   poid    
-      //         // TableData.push("Kiwi");
-      //       });
-      //       // TableData.shift();  // first row will be empty - so remove
-
-      //       return TableData;
-      //     }
-
-      //     TableData = storeTblValues()
-      //     TableData = JSON.stringify(TableData);
-      //     alert(TableData);
-      //     $.ajax({
-      //       type: "POST",
-      //       url: "../controllers/controller_stock.php?type=issueStockDetails",
-      //       data: "pTableData=" + TableData,
-      //       success: function(msg) {
-      //         alert(msg);
-      //         $('#issueStock')[0].reset();
-      //         location.reload(true);
-
-      //       }
-      //     });
-      //   }
-      // });
-      // }
     });
   });
 </script>

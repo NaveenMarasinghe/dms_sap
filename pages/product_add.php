@@ -551,13 +551,6 @@
 						else error.insertAfter(element.parent());
 					},
 					
-
-
-					// submitHandler: function (form) {
-
-					// },
-					// invalidHandler: function (form) {
-					// }
 				});
 
 
@@ -567,8 +560,7 @@
 
 
 		$("#btn_addProductSubmit").click(function(){
-			// var form = $("#form_addNewProduct");
-			// form.validate();
+
 
 			if($("#form_addNewProduct").valid()) {
 
@@ -581,17 +573,12 @@
 		            processData: false,
 		            contentType: false,
 		          success: function(data){
-		            //alert(data);
+		          
 		         //load success message 
 		          if(data=="Success"){
 		          // Add product name to modal
-		          // var supplierval2 = $('#pro_name').val();
-		          // $('#productAddedModal').append(supplierval2);
 
-		          	//alert(data);
 		          $('#form_addNewProduct')[0].reset();
-		          // location.reload(true);
-
 
 				//override dialog's title function to allow for HTML titles
 				$.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
@@ -602,9 +589,7 @@
 						else title.text($title);
 					}
 				}));
-			
-
-					// e.preventDefault();
+	
 			
 					var dialog = $( "#dialog-message" ).removeClass('hide').dialog({
 						modal: true,
@@ -621,16 +606,6 @@
 						]
 					});
 			
-					/**
-					dialog.data( "uiDialog" )._title = function(title) {
-						title.html( this.options.title );
-					};
-					**/
-
-
-		          //loads new student registration form
-		          //$("#content").load("views/productform.php"); 
-
 		          
 		        }
 		      } 
@@ -643,13 +618,6 @@
 
 
 		});
-
-		// $("#addProductCat").click(function(){
-		// 	var supplierval = $('#pro_supplier').val();
-
-		// 	$("#procat_supid").append(supplierval);
-
-		// });
 
 
 
@@ -668,7 +636,7 @@
 	         success: function(data){
 	         	$('#form_addNewSupplier')[0].reset();
 		        location.reload(true);
-	            //alert(data);
+
 
 		      } 
 		    }); 
@@ -692,7 +660,7 @@
 	         success: function(data){
 	         	$('#form_addNewProductCat')[0].reset();
 		        location.reload(true);
-	            //alert(data);
+
 
 		      } 
 		    }); 
@@ -712,7 +680,7 @@
 	         success: function(data){
 	         	$('#form_addNewProductSubCat')[0].reset();
 		        location.reload(true);
-	            //alert(data);
+
 
 		      } 
 		    }); 
@@ -721,37 +689,14 @@
 
 		jQuery(function($) {
 
-				// .on('actionclicked.fu.wizard' , function(e, info){
-				// 	if(info.step == 1 && $validation) {
-				// 		if(!$('#validation-form').valid()) e.preventDefault();
-				// 	}
-				// })
 
-
-
-				// $("#btn_addProductSubmit").click(function(){
-				// 	if(!$('#validation-form').valid());
-				// 	alert("hhh");
-				// });
 				$('#form_addNewProductCat').validate({
 					errorElement: 'div',
 					errorClass: 'help-block',
 					focusInvalid: false,
 					ignore: "",
 					rules: {
-						// email: {
-						// 	required: true,
-						// 	email:true
-						// },
-						// password: {
-						// 	required: true,
-						// 	minlength: 5
-						// },
-						// password2: {
-						// 	required: true,
-						// 	minlength: 5,
-						// 	equalTo: "#password"
-						// },
+
 						procat_supplier: {
 							required: true
 						},
@@ -768,12 +713,7 @@
 						pro_name: {
 							required: true
 						},
-						// gender: {
-						// 	required: true,
-						// },
-						// agree: {
-						// 	required: true,
-						// }
+
 					},
 			
 					messages: {
@@ -822,26 +762,10 @@
 					focusInvalid: false,
 					ignore: "",
 					rules: {
-						// email: {
-						// 	required: true,
-						// 	email:true
-						// },
-						// password: {
-						// 	required: true,
-						// 	minlength: 5
-						// },
-						// password2: {
-						// 	required: true,
-						// 	minlength: 5,
-						// 	equalTo: "#password"
-						// },
+
 						prosubcat_supplier: {
 							required: true
 						},
-						// phone: {
-						// 	required: true,
-						// 	phone: 'required'
-						// },
 						prosubcat_procat: {
 							required: true
 						},

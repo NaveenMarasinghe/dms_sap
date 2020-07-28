@@ -71,7 +71,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 												<div>
 													<label for="rtscheTerritory">Territory</label>
 													<select name="rtscheTerritory" id="rtscheTerritory" class="form-control selcet-filter">
-														<option value="0">--Select Terrritory--</option>
+														<option value="0">--Select Territory--</option>
 													</select>
 												</div>
 											</div>
@@ -415,8 +415,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 		$('#rtscheTerritory').change(function() {
 
 			var rtscheTerritory = $('#rtscheTerritory').val(); // get option's value
-			//alert(rtscheTerritory);
-			//change product name select box options
 			$.post("../controllers/controller_routeSche.php?type=selectRoute", {
 					rtscheTerritory: rtscheTerritory
 				},
@@ -434,15 +432,12 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 		$('#rtscheBatch').change(function() {
 
 			var rtscheBatch = $('#rtscheBatch').val(); // get option's value
-			alert(rtscheBatch);
-			//change product name select box options
 			$.post("../controllers/controller_routeSche.php?type=avaqty", {
 				rtscheBatch: rtscheBatch
 				},
 				function(data, status) {
 					if (status == "success") {
 						var avaqtydata = data;
-						alert(avaqtydata);
 						if(avaqtydata>0){
 							$("#avaqty").val(data);
 						}else{
@@ -461,7 +456,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 			var supplierval = $('#rtscheSupplier').val(); // get option's value
 			var procatval = $('#rtscheProCat').val();
 
-			//change product name select box options
 			$.post("../controllers/controller_purchaseCreate.php?type=get_productList", {
 					procatval: procatval,
 					supplierval: supplierval
@@ -479,9 +473,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 		$('#rtscheProName').change(function() {
 
 			var proid = $('#rtscheProName').val(); // get option's value
-			// var procatval = $('#rtscheProCat').val();
 
-			//change product name select box options
 			$.post("../controllers/controller_routeSche.php?type=get_batch", {
 					proid: proid
 				},
@@ -498,9 +490,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 
 		$('#rtscheDate').change(function() {
 			var rtscheDate = $('#rtscheDate').val(); // get option's value
-			// var procatval = $('#rtscheProCat').val();
-			//alert(proid);
-			//change product name select box options
+
 			$.post("../controllers/controller_routeSche.php?type=selectSalesman", {
 					rtscheDate: rtscheDate
 				},
@@ -518,7 +508,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 				},
 				function(data, status) {
 					if (status == "success") {
-						//alert(data);
 						$("#selectVehicle").empty();
 						$("#selectVehicle").append("<option value=''>--Select Vehicle--</option>");
 						$("#selectVehicle").append(data);
@@ -530,7 +519,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 				},
 				function(data, status) {
 					if (status == "success") {
-						//alert(data);
 						$("#selectDriver").empty();
 						$("#selectDriver").append("<option value=''>--Select Driver--</option>");
 						$("#selectDriver").append(data);
@@ -587,14 +575,12 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 			var supplierval = $('#rtscheSupplier').val(); // get option's value
 			var procatval = $('#rtscheProCat').val();
 
-			//change product name select box options
 			$.post("../controllers/controller_purchaseCreate.php?type=get_productList", {
 					procatval: procatval,
 					supplierval: supplierval
 				},
 				function(data, status) {
 					if (status == "success") {
-						//alert(data);
 						$("#rtscheProName").empty();
 						$("#rtscheProName").append("<option value=''>--Select Product--</option>");
 						$("#rtscheProName").append(data);
@@ -622,8 +608,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 			var $row = $(this).closest("tr"); // Find the row
 			var proname = $row.find("td:nth-child(2)").text();
 			var proqty = $row.find("td:nth-child(4)").text();
-			// alert(proqty);
-			// alert(proname);
 
 			Swal.fire({
 				title: 'Remove following items?',
@@ -674,11 +658,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 			})
 
 			.on('finished.fu.wizard', function(e) {
-				//save to database
-				// if (!$('#rtscheSupplier').valid()) e.preventDefault();
-				// 	if (!$('#selectSalesman').valid()) e.preventDefault();
-				// 	if (!$('#selectDriver').valid()) e.preventDefault();
-				// 	if (!$('#selectVehicle').valid()) e.preventDefault();
 
 				var rtscheSupplier = $("#rtscheSupplier").val();
 				var rtscheTerritory = $("#rtscheTerritory").val();
@@ -701,7 +680,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 					},
 					function(data, status) {
 						if (status == "success") {
-							//alert(data);
 							var rtscheid = jQuery.parseJSON(data);
 
 							function storeTblValues() {
@@ -715,10 +693,9 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 										"rtscheqty": $(tr).find('td:eq(3)').text(),
 										"rtscheid": rtscheid
 									}
-									//   poid    
-									// TableData.push("Kiwi");
+
 								});
-								// TableData.shift();  // first row will be empty - so remove
+	
 
 								return TableData;
 							}
@@ -731,31 +708,30 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 								url: "../controllers/controller_routeSche.php?type=rtscheSaveDetails",
 								data: "pTableData=" + TableData,
 								success: function(msg) {
-
-									// $('#purchaseform')[0].reset();
-									location.reload(true);
+								
+									Swal.fire({
+										title: 'Route Schedule Created!',
+										icon: 'info',
+										showCancelButton: false,
+										confirmButtonColor: '#3085d6',
+										cancelButtonColor: '#3085d6',
+										confirmButtonText: 'OK'
+									}).then((result) => {
+										if (result.value) {
+										window.location.href = "route_sche_view.php";
+										}
+									});
 
 								}
 							});
 						}
 					});
 
-				Swal.fire(
-					'Route Schedule Created!',
 
-					'success'
-				)
 			}).on('stepclick.fu.wizard', function(e) {
-				//e.preventDefault();//this will prevent clicking and selecting steps
+
 			});
 
-
-
-
-
-
-
-		//documentation : http://docs.jquery.com/Plugins/Validation/validate
 
 
 		$.mask.definitions['~'] = '[+-]';
@@ -847,19 +823,9 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "3") || ($_SESSI
 		$('#modal-wizard .wizard-actions .btn[data-dismiss=modal]').removeAttr('disabled');
 
 
-		/**
-		$('#date').datepicker({autoclose:true}).on('changeDate', function(ev) {
-			$(this).closest('form').validate().element($(this));
-		});
-		
-		$('#mychosen').chosen().on('change', function(ev) {
-			$(this).closest('form').validate().element($(this));
-		});
-		*/
-
 
 		$(document).one('ajaxloadstart.page', function(e) {
-			//in ajax mode, remove remaining elements before leaving page
+
 			$('[class*=select2]').remove();
 		});
 	})

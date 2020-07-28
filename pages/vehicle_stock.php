@@ -123,7 +123,6 @@ if (!isset($_SESSION["user"])) {
     $.post("../controllers/controller_vehicle.php?type=getVehicleNum",
       function(data, status) {
         if (status == "success") {
-          //alert(data);
           $("#selectVehNum").empty();
           $("#selectVehNum").append("<option value=''>--Select Vehicle Number--</option>");
           $("#selectVehNum").append(data);
@@ -146,7 +145,7 @@ if (!isset($_SESSION["user"])) {
 
     $('#selectVehNum').change(function() {
 
-var vehNum = $('#selectVehNum').val(); // get option's value
+var vehNum = $('#selectVehNum').val(); 
 
 $.post("../controllers/controller_vehicle.php?type=filteredVehStock", {
   vehNum: vehNum

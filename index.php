@@ -19,21 +19,11 @@
 	<!-- ace styles -->
 	<link rel="stylesheet" href="assets/css/ace.min.css" />
 
-	<!--[if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" />
-		<![endif]-->
 	<link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
-
-	<!--[if lte IE 9]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
-		<![endif]-->
 
 	<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
 	<script src="assets/js/jquery-2.1.4.min.js"></script>
-	<!--[if lte IE 8]>
-		<script src="assets/js/html5shiv.min.js"></script>
-		<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
+
 </head>
 
 <body class="login-layout blur-login">
@@ -44,7 +34,7 @@
 					<div class="login-container">
 						<div class="center">
 							<h1>
-								<!-- <span class="red">Distribution Management</span> -->
+								
 								<span class="white" id="id-text2">Distribution Management System</span>
 							</h1>
 
@@ -95,7 +85,7 @@
 										</form>
 
 
-									</div><!-- /.widget-main -->
+									</div>
 
 									<div class="toolbar clearfix">
 										<div>
@@ -107,8 +97,8 @@
 
 
 									</div>
-								</div><!-- /.widget-body -->
-							</div><!-- /.login-box -->
+								</div>
+							</div>
 
 							<div id="forgot-box" class="forgot-box widget-box no-border">
 								<div class="widget-body">
@@ -127,7 +117,7 @@
 										</p>
 
 
-									</div><!-- /.widget-main -->
+									</div>
 
 									<div class="toolbar center">
 										<a href="#" data-target="#login-box" class="back-to-login-link">
@@ -135,52 +125,43 @@
 											<i class="ace-icon fa fa-arrow-right"></i>
 										</a>
 									</div>
-								</div><!-- /.widget-body -->
-							</div><!-- /.forgot-box -->
+								</div>
+							</div>
 
 
-						</div><!-- /.position-relative -->
+						</div>
 
 
 					</div>
-				</div><!-- /.col -->
-			</div><!-- /.row -->
-		</div><!-- /.main-content -->
-	</div><!-- /.main-container -->
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<!-- basic scripts -->
-
-	<!--[if !IE]> -->
 	<script src="assets/js/jquery-2.1.4.min.js"></script>
 
-	<!-- <![endif]-->
 
-	<!--[if IE]>
-<script src="assets/js/jquery-1.11.3.min.js"></script>
-<![endif]-->
 	<script type="text/javascript">
 		if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
 	</script>
 
-	<!-- inline scripts related to this page -->
+
 	<script type="text/javascript">
 		jQuery(function($) {
 			$(document).on('click', '.toolbar a[data-target]', function(e) {
 				e.preventDefault();
 				var target = $(this).data('target');
-				$('.widget-box.visible').removeClass('visible'); //hide others
-				$(target).addClass('visible'); //show target
+				$('.widget-box.visible').removeClass('visible'); 
+				$(target).addClass('visible'); 
 			});
 		});
 	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#btnsubmit").click(function() { //save button in Contact info form
+			$("#btnsubmit").click(function() { 
 
 				var uname = $("#textname").val();
 				var pass = $("#textpass").val();
-				//alert(uname);
-				//alert(pass);
 				$.post("controllers/controller_login.php", {
 					uname: uname,
 					pass: pass
@@ -192,15 +173,12 @@
 						alert("Inactive User Account");
 					}
 					if (data == "3") {
-						// alert("Login sucessfull");
 						window.location.href = "controllers/controller_route.php";
 					} else {
-						// echo("");
 					}
-
 				});
-
 			});
+			
 		});
 	</script>
 </body>

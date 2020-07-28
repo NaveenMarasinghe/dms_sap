@@ -17,8 +17,6 @@ if (!isset($_SESSION["user"]) ) {
 			<!-- PAGE CONTENT BEGINS -->
 			<div class="col-md-4">
 				<div>
-
-
 					<div class="widget-body">
 						<div class="widget-main no-padding">
 							<h2> Top Selling Products</h2>
@@ -45,7 +43,7 @@ if (!isset($_SESSION["user"]) ) {
 					</div><!-- /.widget-body -->
 
 					<div class="widget-body">
-						<div class="widget-main no-padding">
+						<!-- <div class="widget-main no-padding">
 							<h2> Top Employees</h2>
 							<table id="topProducts" class="table table-bordered table-striped">
 								<thead class="thin-border-bottom">
@@ -66,7 +64,8 @@ if (!isset($_SESSION["user"]) ) {
 
 								</tbody>
 							</table>
-						</div><!-- /.widget-main -->
+						</div> -->
+						<!-- /.widget-main -->
 					</div><!-- /.widget-body -->
 				</div>
 				<div>
@@ -189,6 +188,54 @@ if (!isset($_SESSION["user"]) ) {
 				</div>
 			</div>
 
+						<!-- Modal -->
+			<div class="modal fade" id="ModalView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<form class="form-horizontal" method="POST" action="editEventTitle.php">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Route Schedule Details</h4>
+							</div>
+							<div class="modal-body">
+
+								<div class="form-group">
+									<label for="scheid" class="col-sm-3 control-label">Schedule ID</label>
+									<div class="col-sm-9">
+										<input type="text" name="scheid" class="form-control" id="scheid" placeholder="Schedule ID">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="routeName" class="col-sm-3 control-label">Route</label>
+									<div class="col-sm-9">
+										<input type="text" name="routeName" class="form-control" id="routeName" placeholder="Route Name">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="salesman" class="col-sm-3 control-label">Salesman</label>
+									<div class="col-sm-9">
+										<input type="text" name="salesman" class="form-control" id="salesman" placeholder="Salesman">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="vehicle" class="col-sm-3 control-label">Vehicle</label>
+									<div class="col-sm-9">
+										<input type="text" name="vehicle" class="form-control" id="vehicle" placeholder="Vehicle">
+									</div>
+								</div>
+
+
+								<input type="hidden" name="id" class="form-control" id="id">
+
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 			<!-- PAGE CONTENT ENDS -->
 		</div><!-- /.col -->
 	</div><!-- /.row -->
@@ -234,9 +281,40 @@ if (!isset($_SESSION["user"]) ) {
 				}
 			});
 
-
 		jQuery(function($) {
+			function modalDetails(){
+				var scheId = $('#scheid').val();
+				$.post("../controllers/controller_reports.php?type=getRouteName",{ 
+					scheId:scheId
+				},
+            function (data, status) {
+                if (status == "success") {
+                    $("#routeName").empty();
+                    $("#routeName").val(data);
+                }
+			});
 
+			$.post("../controllers/controller_reports.php?type=getSalesman",{ 
+					scheId:scheId
+				},
+            function (data, status) {
+                if (status == "success") {
+                    $("#salesman").empty();
+                    $("#salesman").val(data);
+                }
+			});
+
+			$.post("../controllers/controller_reports.php?type=getVehicle",{ 
+					scheId:scheId
+				},
+            function (data, status) {
+                if (status == "success") {
+                    $("#vehicle").empty();
+                    $("#vehicle").val(data);
+                }
+			});
+			
+			}
 
 			var b = 123;
 			$('#calendar').fullCalendar({
@@ -246,23 +324,18 @@ if (!isset($_SESSION["user"]) ) {
 					right: ''
 				},
 				editable: true,
-				eventLimit: true, // allow "more" link when too many events
+				eventLimit: true, 
 				selectable: true,
 				selectHelper: true,
 				select: function(start, end) {
-					var end = moment(start).add(90, 'days');
-					// alert("ggwp");
-					$('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD'));
-					$('#ModalAdd #end').val(moment(start).format('YYYY-MM-DD'));
-					$('#ModalAdd').modal('show');
 				},
 				eventRender: function(event, element) {
-					element.bind('dblclick', function() {
-						// alert("gg");
-						$('#ModalEdit #id').val(event.id);
-						$('#ModalEdit #title').val(event.title);
-						$('#ModalEdit #color').val(event.color);
-						$('#ModalEdit').modal('show');
+					element.bind('click', function() {						
+						$('#ModalView #id').val(event.id);
+						$('#ModalView #scheid').val(event.title);
+						$('#ModalView #color').val(event.color);
+						$('#ModalView').modal('show');
+						modalDetails();
 					});
 				},
 				eventDrop: function(event, delta, revertFunc) { // si changement de position
@@ -293,18 +366,6 @@ if (!isset($_SESSION["user"]) ) {
 					}
 					foreach ($events as $event) :
 
-						// $start = explode(" ", $event['start']);
-						// $end = explode(" ", $event['end']);
-						// if ($start[1] == '00:00:00') {
-						//     $start = $start[0];
-						// } else {
-						//     $start = $event['route_date'];
-						// }
-						// if ($end[1] == '00:00:00') {
-						//     $end = $end[0];
-						// } else {
-						//     $end = $event['end'];
-						// }
 					?> {
 
 							title: '<?php echo $event["routesche_id"]; ?>',
@@ -316,81 +377,7 @@ if (!isset($_SESSION["user"]) ) {
 				],
 			});
 
-			// function edit(event) {
-			// 	start = event.start.format('YYYY-MM-DD HH:mm:ss');
-			// 	if (event.end) {
-			// 		end = event.end.format('YYYY-MM-DD HH:mm:ss');
-			// 	} else {
-			// 		end = start;
-			// 	}
-
-			// 	id = event.id;
-
-			// 	Event = [];
-			// 	Event[0] = id;
-			// 	Event[1] = start;
-			// 	Event[2] = end;
-
-			// 	$.ajax({
-			// 		url: 'editEventDate.php',
-			// 		type: "POST",
-			// 		data: {
-			// 			Event: Event
-			// 		},
-			// 		success: function(rep) {
-			// 			if (rep == 'OK') {
-			// 				alert('Saved');
-			// 			} else {
-			// 				alert('Could not be saved. try again.');
-			// 			}
-			// 		}
-			// 	});
-			// }
-			// $('.nameselect').select2();
-
-
-			// if (!ace.vars['old_ie']) $('#date-timepicker1, #date-timepicker2').datetimepicker({
-			//     //format: 'MM/DD/YYYY h:mm:ss A',//use this option to display seconds
-			//     icons: {
-			//         time: 'fa fa-clock-o',
-			//         date: 'fa fa-calendar',
-			//         up: 'fa fa-chevron-up',
-			//         down: 'fa fa-chevron-down',
-			//         previous: 'fa fa-chevron-left',
-			//         next: 'fa fa-chevron-right',
-			//         today: 'fa fa-arrows ',
-			//         clear: 'fa fa-trash',
-			//         close: 'fa fa-times'
-			//     }
-			// }).next().on(ace.click_event, function() {
-			//     $(this).prev().focus();
-			// });
-
-
 		});
-
-		// var date = new Date();
-		// var d = date.getDate();
-		// var m = date.getMonth();
-		// var y = date.getFullYear();
-		// $('#calendar').fullCalendar({
-		//     header: {
-		//         left: 'prev,next today',
-		//         center: 'title',
-		//         right: ''
-		//     },
-		//     defaultDate: new Date(),
-		//     navLinks: true, // can click day/week names to navigate views
-		//     editable: true,
-		//     eventLimit: true, // allow "more" link when too many events
-		//     dayClick: function(date, jsEvent, view) {
-		//         alert('gg');
-		//         // $("#successModal").modal("show");
-		//         // $("#eventDate").val(date.format());
-
-		//     },
-		//     events: 
-		// });
 
 	});
 </script>

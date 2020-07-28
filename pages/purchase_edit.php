@@ -53,7 +53,7 @@
 
                             <div class="step-content pos-rel">
                                 <div class="step-pane active" data-step="1">
-                                    <!-- <h3 class="lighter block green">Enter the following information</h3> -->
+                                    
 
                                     <form id="poSupplierForm" method="post">
                                         <div class="row">
@@ -207,11 +207,7 @@
                                                         <span class="blue" id="purdate"></span>
                                                     </div>
 
-                                                    <!-- <div class="widget-toolbar hidden-480">
-													<a href="#">
-														<i class="ace-icon fa fa-print"></i>
-													</a>
-												</div> -->
+                                     
                                                 </div>
 
                                                 <div class="widget-body">
@@ -273,7 +269,7 @@
                                                             </table>
                                                         </div>
 
-                                                        <!-- <div class="hr hr8 hr-double hr-dotted"></div> -->
+                                                      
 
 
                                                         <div class="space-6"></div>
@@ -285,12 +281,6 @@
                                     </div>
                                 </div>
 
-                                <!-- 							<div class="step-pane" data-step="4">
-								<div class="center">
-									<h3 class="green">Congrats!</h3>
-									Your product is ready to ship! Click finish to continue!
-								</div>
-							</div> -->
                             </div>
                         </div>
 
@@ -407,13 +397,13 @@
                     },
                     function(data, status) {
                         if (status == "success") {
-                            // alert(data);
+          
                             $("#poProductCat").empty();
                             $("#selectProductsubCat").empty();
                             $("#poProductCat").append("<option value=''>--Select Product Category--</option>");
                             $("#selectProductCat").append("<option value=''>--Select Product Category--</option>");
                             $("#poProductCat").append(data);
-                            // $("#poSupplier").attr("disabled", "disabled");
+                   
                         }
                     });
                 });         
@@ -468,10 +458,10 @@
                             },
                             function(data, status) {
                                 if (status == "success") {
-                                    // $("#purchaseTable").DataTable().destroy();
+                            
                                     $("#purchaseTable tbody").empty();
                                     $("#purchaseTable tbody").append(data);
-                                    // $("#purchaseTable").DataTable();
+                     
                                 }
                             });
                     }
@@ -481,7 +471,7 @@
             $("#qty").val("0");
 
             var supplierval = $('#poSupplier').val();
-            var procatval = $('#poProductCat').val(); // get option's value
+            var procatval = $('#poProductCat').val(); 
 
             // get filtered data to datatable
             $.post("../controllers/controller_purchase.php?type=get_productList", {
@@ -490,7 +480,6 @@
                 },
                 function(data, status) {
                     if (status == "success") {
-                        // alert(data);
                         $("#poProductList").empty();
                         $("#poProductList").append("<option></option>");
                         $("#poProductList").append(data);
@@ -537,9 +526,7 @@
             var proid = $row.find("td:nth-child(1)").text();
             var proname = $row.find("td:nth-child(2)").text();
             var proqty = parseFloat($row.find(".tableQty").val());
-            // alert(proid);
-            // alert(poId);
-
+        
             Swal.fire({
                 title: 'Remove following items?',
                 text: proname + " - " + proqty + " units",
@@ -561,17 +548,17 @@
                             proid: proid
                         },
                         function(data, status) {
-                            // alert(data);
+                    
                             if (status == "success") {}
                             $.post("../controllers/controller_purchase.php?type=purCreateTable", {
                                     poId: poId
                                 },
                                 function(data, status) {
                                     if (status == "success") {
-                                        // $("#purchaseTable").DataTable().destroy();
+          
                                         $("#purchaseTable tbody").empty();
                                         $("#purchaseTable tbody").append(data);
-                                        // $("#purchaseTable").DataTable();
+    
                                     }
                                 });
                         });
@@ -609,24 +596,20 @@
         var $validation = false;
         $('#fuelux-wizard-container')
             .ace_wizard({
-                //step: 2 //optional argument. wizard will jump to step "2" at first
-                //buttons: '.wizard-actions:eq(0)'
+
             })
             .on('actionclicked.fu.wizard', function(e, info) {
                 if (info.step == 1) {
 
-                            // $("#poId").val(poId);
                             var poId = $("#poId").val();
                             $.post("../controllers/controller_purchase.php?type=purCreateTable", {
                                     poId: poId
                                 },
                                 function(data, status) {
-                                    // $("#purchaseTable").DataTable().destroy();
+                              
                                     $("#purchaseTable tbody").empty();
                                     $("#purchaseTable tbody").append(data);
-                                    // $("#purchaseTable").DataTable();
-
-
+                               
                                 });
 
 
@@ -644,17 +627,16 @@
                         function(data, status) {
                             if (status == "success") {
 
-                                // $("#purchaseTable").DataTable().destroy();
+                     
                                 $("#purchaseViewData tbody").empty();
                                 $("#purchaseViewData tbody").append(data);
-                                // $("#purchaseTable").DataTable();
+                         
                             }
                         });
 
                 }
             })
-            //.on('changed.fu.wizard', function() {
-            //})
+
             .on('finished.fu.wizard', function(e) {
                 var poId = $("#poId").val();
 
@@ -682,11 +664,10 @@
                     });
 
             }).on('stepclick.fu.wizard', function(e) {
-                //e.preventDefault();//this will prevent clicking and selecting steps
+         
             });
 
 
-        //documentation : http://docs.jquery.com/Plugins/Validation/validate
 
 
         $.mask.definitions['~'] = '[+-]';

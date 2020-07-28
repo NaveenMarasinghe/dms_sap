@@ -22,11 +22,7 @@
             <div>       
                   <h4 class="page-header"><b>Stock</b></h4>
             </div>
-<!--               <div class="row">
-                <div class="col-md-3">
-              <button type='button' class='btn btn-primary m-b-20' data-toggle='modal' data-target='#modelEditProduct' style='margin-bottom: 10px;' id='addbutton'>Add New Product</button> 
-                </div>
-              </div> -->
+
 
               <table id="stockTable" class="table table-bordered table-striped">
                 <thead>
@@ -57,7 +53,6 @@
 	        url:"../controllers/controller_stock.php?type=stockReport",
 	        method:"POST",
 	      success: function(data){
-	        //alert(data);
 	          $("#stockTable").DataTable().destroy();
 	          $("#stockTable tbody").empty();
 	          $("#stockTable tbody").append(data);

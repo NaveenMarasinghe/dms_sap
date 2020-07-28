@@ -85,6 +85,9 @@ if (isset($_GET["type"])) {
 		case "updateVehicle";
 			updateVehicle();
 			break;
+			case "salesCus";
+			salesCus();
+			break;
 	}
 }
 function get_route()
@@ -238,7 +241,7 @@ function get_batch()
 	//alert('func');
 	$nor = $result->num_rows;
 	if ($nor == 0) {
-		echo ("");
+		echo ("<option value='0'>No stock avaliable in vehicle</option>");
 	} else {
 		//fetch all the records
 		while ($rec = $result->fetch_assoc()) {
@@ -923,7 +926,7 @@ function get_rtscheid()
 		//alert('func');
 		$nor = $result->num_rows;
 		if ($nor == 0) {
-			echo ("");
+			echo ("<option value='1'>No Route Schedules Avaliable For Today</option>");
 		} else {
 			//fetch all the records
 			while ($rec = $result->fetch_assoc()) {
@@ -983,7 +986,7 @@ function updateVehicle()
 		$result4 = $con->query($sql4);
 		$rec4 = $result4->fetch_assoc();
 		$vehicleQty = $rec4['qty'];
-		
+		echo($vehicleQty);
 		$updateQty = $vehicleQty - $salesQty;
 
 		$sql5 = "UPDATE tbl_vehicle_products SET qty='$updateQty' WHERE batch_id='$batchId'";
@@ -997,5 +1000,16 @@ function updateVehicle()
 			echo ("error");
 		}
 	}
+	$con->close();
+}
+
+function salesCus(){
+	$salesId = $_POST['salesId'];
+	$db = new Connection();
+	$con = $db->db_con();
+	$sql = "SELECT cus.cus_name, cus.cus_add FROM tbl_customers cus, tbl_sales_order so WHERE so.sales_id='$salesId' AND so.cus_id=cus.cus_id";
+	$result = $con->query($sql);
+	$rec = $result->fetch_assoc();
+	echo (json_encode($rec));
 	$con->close();
 }

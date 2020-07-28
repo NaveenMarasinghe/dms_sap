@@ -284,14 +284,11 @@
       {procatval:procatval,supplierval:supplierval},
       function(data,status){
       if(status=="success"){
-        // alert(data);
+
         $("#poProductList").empty();
         $("#poProductList").append("<option></option>");
         $("#poProductList").append(data);
-      //   $('.select2gg').select2({
-      //   placeholder: "Select a Product",
-      //   allowClear: true
-      // });
+
         }
       });
 
@@ -303,11 +300,7 @@
         {supplierval:supplierval,procatval:procatval,prosubcatval:prosubcatval},
         function(data,status){
         if(status=="success"){
-          //alert(data);
-          // $("#productTable").DataTable().destroy();
-          // $("#productTable tbody").empty();
-          // $("#productTable tbody").append(data);
-          // $("#productTable").DataTable();
+
           }
       });
 
@@ -315,62 +308,9 @@
 
   $.noConflict();
   jQuery(function($){
-          //   $('#purchaseform').validate({
-          //   errorElement: 'div',
-          //   errorClass: 'help-block',
-          //   focusInvalid: false,
-          //   ignore: "",
-          //   rules: {
-          //     qty: {
-          //       required: true,
-          //       number: true
-          //     },
-          //     poProductList: {
-          //       required: true
-          //     },
-          //     poProductCat: {
-          //       required: false
-          //     }
-          //   },
-        
-          //   messages: {
-          //     qty: {
-          //     number: "Please select a supplier.",
-          //     required: "Please enter valid quantity."
-          //   },
-          //     poProductList: "Please select a product"
-          //   },
-        
-        
-          //   highlight: function (e) {
-          //     $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-          //   },
-        
-          //   success: function (e) {
-          //     $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
-          //     $(e).remove();
-          //   },
-        
-          //   errorPlacement: function (error, element) {
-          //     if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
-          //       var controls = element.closest('div[class*="col-"]');
-          //       if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
-          //       else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-          //     }
-          //     else if(element.is('.select2')) {
-          //       error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
-          //     }
-          //     else if(element.is('.chosen-select')) {
-          //       error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-          //     }
-          //     else error.insertAfter(element.parent());
-          //   },
-            
-          // });
+
   $(document).ready(function() {
 
-
-      // $('.date-picker').datepicker('setDate', 'today');
       $('.date-picker').datepicker({
         autoclose: true,
         minDate: 0,
@@ -388,9 +328,7 @@
       var proname = $("#poProductList option:selected").text();
       var proid = $('#poProductList').val();
       var qnty = $('#qty').val();
-      // var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
-
-      //<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>
+       
 
       var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-success' id='btn_modelView'><i class='ace-icon fa fa-info-circle bigger-120'></i></button><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button><button type='button' class='btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button></div>"
       if(proid!=0){
@@ -418,21 +356,18 @@
       });
 
           var supplierval = $('#poSupplier').val();
-          var procatval = $('#poProductCat').val(); // get option's value
+          var procatval = $('#poProductCat').val(); 
 
       // get filtered data to datatable
       $.post("../controllers/controller_purchaseCreate.php?type=get_productList",
       {procatval:procatval,supplierval:supplierval},
       function(data,status){
       if(status=="success"){
-        // alert(data);
+
         $("#poProductList").empty();
         $("#poProductList").append("<option></option>");
         $("#poProductList").append(data);
-      //   $('.select2gg').select2({
-      //   placeholder: "Select a Product",
-      //   allowClear: true
-      // });
+
         }
       });
 
@@ -442,11 +377,10 @@
       
       var btn = this;      
 
-      var $row = $(this).closest("tr");    // Find the row
+      var $row = $(this).closest("tr");   
       var proname = $row.find("td:nth-child(2)").text();
       var proqty = $row.find("td:nth-child(3)").text();
-      // alert(proqty);
-      // alert(proname);
+
 
         Swal.fire({
           title: 'Remove following items?',
@@ -471,22 +405,16 @@
  
       $(".fa-trash-o").click(function(){
         myTable.row(".selected").remove().draw( false );
-         alert('sda');
-        // myTable.row('.selected').remove().draw( false );
+
+
       }); 
 
       $('#purchaseTable tbody').on( 'click', '.fa-pencil', function (){
         var btn = this; 
-        // alert("gg");
+
         var $row = $(this).closest("tr");    // Find the row
         var proname = $row.find("td:nth-child(2)").text();
-        // bootbox.prompt("What is your name?", function(result) {
-        //   if (result === null) {
 
-        //   } else {
-        //     $row.find("td:nth-child(2)").append(result);
-        //   }
-        // });
 
         const { value: newQty } = Swal.fire({
           title: proname,
@@ -505,39 +433,20 @@
           $row.find("td:nth-child(3)").append(newQty2);
           Swal.fire(`Quantity changed to: ${newQty2}`);
 
-          // alert(newQty2);
+
           
         }
       });
-        // myTable.row('.selected').remove().draw( false );
+
       });       
-      // // Automatically add a first row of data
-      // $('#addRow').click();
+
   });
 });
 
 
       jQuery(function($){
 
-        // var myTable = $('#purchaseTable').DataTable({
-        //   bAutoWidth: false,
-        //   aoColumns: [null, null,null, null],
-        //   aaSorting: [],
-        //   select: {style: 'multi'}
-        //   });
 
-
-
-
-
-      // $('#stockTable').on( 'click', 'tbody tr', function () {
-      //   myTable.row( this ).delete( {
-      //       buttons: [
-      //           { label: 'Cancel', fn: function () { this.close(); } },
-      //           'Delete'
-      //       ]
-      //     });
-      //   });
 
         
       $(document).ready(function() {
@@ -547,10 +456,6 @@
           allowClear: true
         });
 
-
-          // $.validator.addMethod("notEqual", function(value, element, param) {
-          //   return this.optional(element) || value != param;
-          // }, "Please specify a different (non-default) value");
 
           $('#purchaseform').validate({
             errorElement: 'div',
@@ -618,20 +523,7 @@
 
       });
 
-      // $('#addproductbutton').click(function(){
-      //   var proname = $("#id_label_multiple option:selected").text();
-      //   var proid = $('#id_label_multiple').val();
-      //   var qnty = $('#qty').val();
-      //   var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
-          
 
-      //     // $('#tablebody').append("<tr><td>"+ proid +"</td><td>" + proname + "</td><td>" + qnty + "</td> '<td><div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div> </td>' </tr>" );
-          
-      //     $('#id_label_multiple').val("");
-      //     $('#qty').val("");
-      //     $('#productname').focus();
-
-      //   });
 
       jQuery(function($){
 
@@ -647,11 +539,10 @@
                       processData: false,
                       contentType: false,
                    success: function(data){
-                    // $('#purchaseform')[0].reset();
-                    // location.reload(true);
+
                       alert(data);
 
-                    // $("#poid").append(data);
+
                     var poidddata=jQuery.parseJSON(data);
                     function storeTblValues()
                         {
@@ -664,10 +555,9 @@
                                     , "pqty" :$(tr).find('td:eq(2)').text()
                                     , "poid" :poidddata
                                 }
-                              //   poid    
-                              // TableData.push("Kiwi");
+                           
                             }); 
-                            // TableData.shift();  // first row will be empty - so remove
+                            
 
                             return TableData;
                         }                    

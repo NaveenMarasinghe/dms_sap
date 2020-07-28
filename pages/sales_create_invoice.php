@@ -151,9 +151,8 @@
                                             <div class="col-md-6" style="text-align:right">
                                                 <h5>Customer</h5>
                                                     <div style="margin-bottom: 12px;">
-                                                        S.A.P. Distributors, </br>
-                                                        Muthugala Road,</br>
-                                                        Bihalpola, Nakkawaththa.
+                                                        <div id="customer"> </div>
+                                                        <div id="cusAdd"> </div>
                                                     </div>
                                             </div>
                                         </div>
@@ -278,6 +277,17 @@
                             $('#preBalance').text(invoiceData.sales_prebal);
                             $('#invDate').text(invoiceData.sales_date);
                             $('#invSalesId').text(invoiceData.sales_id);
+                        }
+                    });
+
+                    $.post("../controllers/controller_sales.php?type=salesCus", {
+                        salesId: salesId
+                    },
+                    function(data, status) {
+                        if (status == "success") {
+                            var invoiceCusData = JSON.parse(data);
+                            $('#customer').append(invoiceCusData.cus_name);
+                            $('#cusAdd').append(invoiceCusData.cus_add);
                         }
                     });
                 $("#btnBack").click(function() {

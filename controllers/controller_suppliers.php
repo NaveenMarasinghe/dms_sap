@@ -29,23 +29,6 @@ function viewSupplierTable(){
 			echo("<td>No Record</td>");
 			echo("<td>No Record</td>");
 			echo("<td>No Record</td>");
-			echo('<td><div class="hidden-sm hidden-xs btn-group">
-				<button class="btn btn-xs btn-success">
-					<i class="ace-icon fa-info-circle bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-info">
-					<i class="ace-icon fa fa-pencil bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-danger">
-					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-				</button>
-
-				<button class="btn btn-xs btn-warning">
-					<i class="ace-icon fa fa-flag bigger-120"></i>
-				</button>
-			</div></td>');
 			echo("</tr>");
 			exit;
 		
@@ -58,23 +41,6 @@ function viewSupplierTable(){
 			echo("<td>".$rec["sup_name"]."</td>");
 			echo("<td>".$rec["sup_add"]."</td>");
 			echo("<td>".$rec["sup_tel"]."</td>");
-			echo('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
-					<button class="btn btn-xs btn-success" id="btn_modelView" data-toggle="modal" data-target="#modelViewProduct" onclick="modalViewProduct(\''.$rec["pro_id"].'\')">
-						<i class="ace-icon fa fa-info-circle bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#modelEditProduct">
-						<i class="ace-icon fa fa-pencil bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modelDeleteProduct">
-						<i class="ace-icon fa fa-trash-o bigger-120"></i>
-					</button>
-
-					<button class="btn btn-xs btn-warning">
-						<i class="ace-icon fa fa-flag bigger-120"></i>
-					</button>
-				</div></td>');
 			echo("</tr>");
 			
 		}

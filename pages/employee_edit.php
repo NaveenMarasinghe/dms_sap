@@ -21,80 +21,58 @@
 
                 </div>
                 <div class="col-sm-9">
-                    <h4 class="page-header"><b>Edit Customer</b></h4>
+                    <h4 class="page-header"><b>Edit Employee Details</b></h4>
                 </div>
                 <form class="form-horizontal" role="form" id="form_updateCustomer">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="cus_id"> Customer ID </label>
+                        <label class="col-sm-3 control-label no-padding-right" for="emp_id"> Employee ID </label>
 
                         <div class="col-sm-9">
                             <div class="clearfix">
-                                <input readonly type="text" id="cus_id" value="<?php echo $_GET['cus_id'] ?>"
-                                    name="cus_id" placeholder="" class="col-sm-6" />
+                                <input readonly type="text" id="emp_id" value="<?php echo $_GET['emp_id'] ?>"
+                                    name="emp_id" placeholder="" class="col-sm-6" />
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="cus_name"> Customer Name </label>
+                        <label class="col-sm-3 control-label no-padding-right" for="emp_name"> Employee Name </label>
 
                         <div class="col-sm-9">
                             <div class="clearfix">
-                                <input type="text" id="cus_name" name="cus_name" placeholder="" class="col-sm-6" />
+                                <input type="text" id="emp_name" name="emp_name" placeholder="" class="col-sm-6" />
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="cus_ter"> Territory </label>
+                        <label class="col-sm-3 control-label no-padding-right" for="emp_add"> Address </label>
 
                         <div class="col-sm-9">
                             <div class="clearfix">
-                                <select class="col-sm-6" id="cus_ter" name="cus_ter">
-                                    <option value="">Select Territory</option>
-                                </select>
+                            <input type="text" id="emp_add" name="emp_add" placeholder="" class="col-sm-6" />
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="cus_route"> Route </label>
+                        <label class="col-sm-3 control-label no-padding-right" for="cus_route"> Telephone </label>
 
                         <div class="col-sm-9">
                             <div class="clearfix">
-                                <select class="col-sm-6" id="cus_route" name="cus_route">
-                                    <option value="">Select Route</option>
-                                </select>
+                            <input type="text" id="emp_tel" name="emp_tel" placeholder="" class="col-sm-6" />
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="cus_add"> Address </label>
-
-                        <div class="col-sm-9">
-                            <div class="clearfix">
-                                <input type="text" id="cus_add" name="cus_add" placeholder="" class="col-sm-6" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="cus_tel"> Telephone </label>
-
-                        <div class="col-sm-9">
-                            <div class="clearfix">
-                                <input type="text" id="cus_tel" name="cus_tel" placeholder="" class="col-sm-6" />
-                            </div>
-                        </div>
-                    </div>
+ 
 
                     <div class="clearfix form-actions">
                         <div class="col-md-offset-3 col-md-9">
-
-                            <button id="btnCancel2" onclick="reloadPage()" class="btn btn-default">
+                            <a href="../pages/employee_view.php">
+                            <button class="btn btn-default" type="button">
                                 <i class="ace-icon fa fa-undo bigger-110"></i>
                                 Cancel
-                            </button>
+                            </button> </a>
 
                             &nbsp; &nbsp; &nbsp;
                             <button class="btn btn-info" type="button" id="addCustomerSave">
@@ -105,62 +83,32 @@
                     </div>
                 </form>
             </div>
-            <!-- PAGE CONTENT ENDS -->
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-</div><!-- /.page-content -->
+
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
-    function reloadPage() {
-        window.location.href = "customer_view.php";
-    }
 
     $(document).ready(function () {
-
+        document.title = "Edit Employee Details";
 
         $.noConflict();
 
 
-        $.post("../controllers/controller_cus.php?type=getTerritory", {
-
-            },
-            function (data, status) {
-                if (status == "success") {
-
-                    $("#cus_ter").empty();
-                    $("#cus_ter").append("<option value=''>Select Territory</option>");
-                    $("#cus_ter").append(data);
-                }
-            });
-            var cusId=$("#cus_id").val();
-        $.post("../controllers/controller_cus.php?type=getCusDetails", {
-            cusId:cusId
+            var empId=$("#emp_id").val();
+        $.post("../controllers/controller_cus.php?type=getEmpDetails", {
+            empId:empId
             },
             function (data, status) {
                 if (status == "success") {
                     var jdata = jQuery.parseJSON(data);
-                    $("#cus_name").val(jdata.cus_name);
-                    $("#cus_add").val(jdata.cus_add);
-                    $("#cus_tel").val(jdata.cus_tel);
+                    $("#emp_name").val(jdata.emp_fullname);
+                    $("#emp_add").val(jdata.emp_add);
+                    $("#emp_tel").val(jdata.emp_tel);
                 }
             });
 
-        $("#cus_ter").change(function () {
-            var custer = $("#cus_ter").val();
-
-            $.post("../controllers/controller_cus.php?type=getRoute", {
-                    custer: custer
-                },
-                function (data, status) {
-                    if (status == "success") {
-
-                        $("#cus_route").empty();
-                        $("#cus_route").append("<option value=''>Select Route</option>");
-                        $("#cus_route").append(data);
-                    }
-                });
-
-        });
 
     });
 
@@ -170,21 +118,21 @@
 
             d = new FormData($("#form_updateCustomer")[0]);
             $.ajax({
-                url: "../controllers/controller_cus.php?type=updateCustomer",
+                url: "../controllers/controller_cus.php?type=updateEmp",
                 method: "POST",
                 data: d,
                 processData: false,
                 contentType: false,
                 success: function (data) {
                     Swal.fire({
-                        title: 'Customer Details Updated',
+                        title: 'Employee Details Updated',
                         icon: 'info',
                         showCancelButton: false,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
                         confirmButtonText: 'OK'
                     }).then((result) => {
-                        window.location.href = "customer_view.php";
+                        window.location.href = "employee_view.php";
                     })
 
                 }
@@ -201,18 +149,15 @@
             ignore: "",
             rules: {
 
-                cus_name: {
-
+                emp_name: {
                     required: true
                 },
-
-                cus_route: {
+                emp_add: {
                     required: true
                 },
-                cus_ter: {
+                emp_tel: {
                     required: true
                 },
-
 
             },
 

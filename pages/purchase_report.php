@@ -58,11 +58,7 @@
             <div>       
                   <h4 class="page-header"><b>Purchase order report</b></h4>
             </div>
-<!--               <div class="row">
-                <div class="col-md-3">
-              <button type='button' class='btn btn-primary m-b-20' data-toggle='modal' data-target='#modelEditProduct' style='margin-bottom: 10px;' id='addbutton'>Add New Product</button> 
-                </div>
-              </div> -->
+
 
               <table id="purchaseOrderTable" class="table table-bordered table-striped">
                 <thead>
@@ -99,12 +95,6 @@
                       <table id="purchaseModalTable" class="table table-striped table-bordered table-hover" style="width:100%;">
                         <thead>
                           <tr>
-<!--                             <th class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </th> -->
                             <th>Product ID</th>
                             <th>Product Name</th>
                             <th>Quantity</th>
@@ -114,35 +104,7 @@
 
                         <tbody id="purchaseModalTableBody">
  
-<!--                           <tr class="selected">
-                            <td class="center">
-                              <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                              </label>
-                            </td>
 
-                            <td>GG</td>
-                            <td>GoodGame</td>
-                            <td class="hidden-480">30</td>
-
-                            <td>
-                              <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="blue" href="#">
-                                  <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                </a>
-
-                                <a class="green" href="#">
-                                  <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                </a>
-
-                                <a class="red" href="#">
-                                  <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                </a>
-                              </div>
-
-                            </td>
-                          </tr> -->
                         </tbody>
                       </table>
                     </div>
@@ -189,7 +151,7 @@
         dateFormat: 'yy-mm-dd',
         maxDate : new Date()
       });
-      //$('.date-picker').datepicker('setDate', new Date());
+
 
   $(document).ready(function(){
 	loadReport(); 
@@ -205,14 +167,13 @@
 
 
     $.noConflict();
-    // $('#productTable').datatable();
-    // load datatable on load
+
       $.ajax({
         url:"../controllers/controller_purchase.php?type=purchaseReportView",
         method:"POST",
         data :{dateFrom:dateFrom,dateTo:dateTo},
       success: function(data){
-        //alert(data);
+
           $("#purchaseOrderTable").DataTable().destroy();
           $("#purchaseOrderTable tbody").empty();
           $("#purchaseOrderTable tbody").html(data);

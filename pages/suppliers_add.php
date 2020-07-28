@@ -99,7 +99,7 @@
        });
 
 			$("#addSupplierSave").click(function(){
-			//alert('data');
+
 			if($("#form_addNewSupplier").valid()) {
 
 			d= new FormData($("#form_addNewSupplier")[0]);
@@ -112,7 +112,7 @@
 	         success: function(data){
 	         	$('#form_addNewSupplier')[0].reset();
 		        location.reload(true);
-	            //alert(data);
+
 
 		      } 
 		    }); 
@@ -128,19 +128,7 @@
 					focusInvalid: false,
 					ignore: "",
 					rules: {
-						// email: {
-						// 	required: true,
-						// 	email:true
-						// },
-						// password: {
-						// 	required: true,
-						// 	minlength: 5
-						// },
-						// password2: {
-						// 	required: true,
-						// 	minlength: 5,
-						// 	equalTo: "#password"
-						// },
+
 						sup_id: {
 							required: false
 						},

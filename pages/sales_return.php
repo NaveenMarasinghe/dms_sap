@@ -23,7 +23,7 @@
 
             <div class="form-actions">
                 <div>
-                    <!-- <h4 class="page-header"><b>Create Sales</b></h4> -->
+            
                 </div>
                 <div class="box box-info">
                     <!-- /.box-header -->
@@ -161,18 +161,14 @@
                                                 <div>
                                                     <label for="returnSoldQty" style="display:block;">Sold Qty</label>
                                                     <input type="text" readonly class="form-control" name="returnSoldQty" id="returnSoldQty">
-                                                    <!-- <select class="form-control selcet-filter select2gg" id="salesBatch" name="salesBatch" style="width:100%;">
-                                                        <option></option>
-                                                    </select> -->
+                               
                                                 </div>
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <div>
                                                     <label for="salesBatch" style="display:block;">Product Batch</label>
                                                     <input type="text" readonly class="form-control" name="salesBatch" id="salesBatch">
-                                                    <!-- <select class="form-control selcet-filter select2gg" id="salesBatch" name="salesBatch" style="width:100%;">
-                                                        <option></option>
-                                                    </select> -->
+   
                                                 </div>
                                             </div>                                            
                                         </div>
@@ -228,14 +224,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <!--                     <h3 class="header smaller lighter blue">jQuery dataTables</h3> -->
-
-
-
-
-                                                    <!-- div.table-responsive -->
-
-                                                    <!-- div.dataTables_borderWrap -->
+      
                                                     <div>
                                                         <table id="salesTable" class="table table-striped table-bordered table-hover">
                                                             <thead>
@@ -287,7 +276,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- <div id="grid-pager"></div> -->
+                         
                                         </div>
                                     </div>
                                 </div>
@@ -304,19 +293,7 @@
                                         <button type="button" class="btn btn-success btn-block btn-flat" id="salesSubmit">Submit</button>
                                     </div>
                                 </div>
-                                <!-- <div class="clearfix form-actions">
-                                    <div class="col-md-offset-3 col-md-9">
-                                        <div class="pull-right">
 
-
-                                            &nbsp; &nbsp; &nbsp;
-                                            <button class="btn btn-info" type="button" id="salessave">
-                                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
 
@@ -359,8 +336,6 @@
         return TableData;
     }
 
-
-
     function calGrossTol() {
         var itemPrice = $("#returnVal").val();
         var qty = $("#qty").val();
@@ -373,17 +348,14 @@
 
     function updateSubTol() {
 
-        // $("#salesTable tbody").on("change", '.discountVal', function() { 
         var $row = $(this).closest("tr");
         var subTotal = 0;
 
         $('#salesTableBody tr').each(function(row, tr) {
             var $row = $(this).closest("tr");
-            // var rows = $("#invoice-table tbody").children('tr');
             var rowTotalVal = parseFloat($row.find("td:nth-child(6)").text());
             rowTotalVal = rowTotalVal;
             subTotal = subTotal + rowTotalVal;
-            // alert(subTotal);
             subTotal = parseFloat(subTotal);
         });
         $("#subTotal").text(subTotal.toFixed(2));
@@ -392,8 +364,7 @@
     }
 
     function updateAmountDue() {
-        // alert("gg");
-        // var balance = 0;
+
         var selectCustomer = $("#salesCustomer").val();
 
         $.post("../controllers/controller_sales.php?type=getSalesBalance", {
@@ -415,7 +386,7 @@
 
                 }
             });
-        // var prebalance = parseFloat($("#preBalance").text());
+     
 
 
     }
@@ -438,7 +409,6 @@
 jQuery(function($) {
     $(document).ready(function() {
 
-        // $('#salesChangeCusDiv').hide();
         $('#selectProducts').hide();
         $('#salesChangeCusDiv').hide();
         $('#salesSelectPrdDiv').hide();
@@ -456,17 +426,17 @@ jQuery(function($) {
 
         var empId = $('#empId').val();
         var date = $('#salesDate').val();
-        // alert(empId);
+
 
         $.noConflict();
-        // load supplier select box
+
         $.post("../controllers/controller_sales.php?type=get_rtscheid",{
             empId:empId,
             date:date
         },
             function(data, status) {
                 if (status == "success") {
-                    // alert(data);
+ 
                     $("#rtsche").empty();
                     $("#rtsche").append("<option value=''>--Select Route--</option>");
                     $("#rtsche").append(data);
@@ -483,19 +453,18 @@ jQuery(function($) {
         $('#selectProducts').show();
         $('#btnSet').show();
 
-        var salesSupplier = $('#salesSupplier').val(); // get option's value
-        alert(salesSupplier);
-        //change product category select box
+        var salesSupplier = $('#salesSupplier').val(); 
+
         $.post("../controllers/controller_sales.php?type=get_ProCat", {
                 salesSupplier: salesSupplier
             },
             function(data, status) {
                 if (status == "success") {
-                    //alert(data);
+          
                     $("#salesProductCat").empty();
                     $("#salesProductCat").append("<option value=''>--Select Product Category--</option>");
                     $("#salesProductCat").append(data);
-                    // $("#poSupplier").attr("disabled", "disabled");
+       
                 }
             });
     });
@@ -503,19 +472,19 @@ jQuery(function($) {
 
     $('#rtsche').change(function() {
 
-        var rtsche = $('#rtsche').val(); // get option's value
+        var rtsche = $('#rtsche').val();
 
-        //change product category select box
+
         $.post("../controllers/controller_sales.php?type=get_customers", {
                 rtsche: rtsche
             },
             function(data, status) {
                 if (status == "success") {
-                    // alert(data);
+            
                     $("#salesCustomer").empty();
                     $("#salesCustomer").append("<option value=''>--Select Customer--</option>");
                     $("#salesCustomer").append(data);
-                    // $("#poSupplier").attr("disabled", "disabled");
+          
                 }
             });
             $.post("../controllers/controller_sales.php?type=get_suppliers", {
@@ -523,7 +492,7 @@ jQuery(function($) {
             },
             function(data, status) {
                 if (status == "success") {
-                    //alert(data); 
+        
                     $("#salesSupplierName").val(data);
 
                 }
@@ -533,7 +502,7 @@ jQuery(function($) {
             },
             function(data, status) {
                 if (status == "success") {
-                    alert(data); 
+        
                     $("#salesSupplier").val(data);
 
                 }
@@ -545,7 +514,7 @@ jQuery(function($) {
                 if (status == "success") {
 
                     $("#salesRoute").empty();
-                    // $("#salesRoute").append("<option value=''>--Select Route--</option>");
+          
                     $("#salesRoute").val(data);
 
                 }
@@ -563,7 +532,7 @@ jQuery(function($) {
     $('#salesProductCat').change(function() {
 
         var supplierval = $('#salesSupplier').val();
-        var procatval = $('#salesProductCat').val(); // get option's value
+        var procatval = $('#salesProductCat').val(); 
 
         // get filtered data to datatable
         $.post("../controllers/controller_purchase.php?type=get_productList", {
@@ -572,39 +541,18 @@ jQuery(function($) {
             },
             function(data, status) {
                 if (status == "success") {
-                    // alert(data);
+       
                     $("#salesProductName").empty();
                     $("#salesProductName").append("<option></option>");
                     $("#salesProductName").append(data);
-                    //   $('.select2gg').select2({
-                    //   placeholder: "Select a Product",
-                    //   allowClear: true
-                    // });
+     
                 }
             });
 
 
     });
 
-    // $('#salesProductName').change(function() {
 
-    //     var cusId = $('#salesCustomer').val();
-    //     var proId = $('#salesProductName').val(); 
-    //     // var procatval = $('#rtscheProCat').val();
-    //     alert(proId);
-    //     //change product name select box options
-    //     $.post("../controllers/controller_sales.php?type=getMRP", {
-    //         proId: proId,
-    //         cusId: cusId
-    //         },
-    //         function(data, status) {
-    //             if (status == "success") {
-    //                 alert(data);
-
-    //             }
-    //         });
-
-    // });
 
     $('#itemPrice').keyup(function() {
 
@@ -694,14 +642,7 @@ jQuery(function($) {
                 var subTotal = parseInt($("#grossTotal").val());
                 var tablerow = "<tr class='item-row'><td>" + buttons + "</td><td>" + batch + "</td><td>" + proname + "</td><td>" + item_cost + "</td><td>" + qnty + "</td><td class='subTol' style='text-align:right'>" + subTotal.toFixed(2) + "</td></tr>";
 
-                // var buttons = "<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>"
-
-                //<div class='hidden-sm hidden-xs action-buttons'><a class='blue' href='#''> <i class='ace-icon fa fa-search-plus bigger-130'></i></a> <a class='green' href='#''> <i class='ace-icon fa fa-pencil bigger-130'></i></a><a class='red' href='#''> <i class='ace-icon fa fa-trash-o bigger-130'></i> </a> </div>
-                // if(batch!=""){
-                // alert(item_cost);
-                // $("#salesTable").DataTable().destroy();
                 $("#salesTable tbody").append(tablerow);
-                // $("#salesTable").DataTable();
                 updateSubTol()
                 updateAmountDue();
                 var salesId = $("#salesid").val();
@@ -720,7 +661,7 @@ jQuery(function($) {
 
 
                 var supplierval = $('#salesSupplier').val();
-                var procatval = $('#salesProductCat').val(); // get option's value
+                var procatval = $('#salesProductCat').val(); 
 
                 // get filtered data to datatable
                 $.post("../controllers/controller_purchase.php?type=get_productList", {
@@ -729,14 +670,10 @@ jQuery(function($) {
                     },
                     function(data, status) {
                         if (status == "success") {
-                            // alert(data);
                             $("#salesProductName").empty();
                             $("#salesProductName").append("<option></option>");
                             $("#salesProductName").append(data);
-                            //   $('.select2gg').select2({
-                            //   placeholder: "Select a Product",
-                            //   allowClear: true
-                            // });
+ 
                         }
                     });
 
@@ -749,10 +686,6 @@ jQuery(function($) {
 
                 }
 
-
-
-
-
             });
             var oldVal = "";
 
@@ -763,8 +696,7 @@ jQuery(function($) {
                 var $row = $(this).closest("tr"); // Find the row
                 var proname = $row.find("td:nth-child(3)").text();
                 var proqty = $row.find("td:nth-child(5)").text();
-                // alert(proqty);
-                // alert(proname);
+
 
                 Swal.fire({
                     title: 'Remove following items?',
@@ -795,7 +727,7 @@ jQuery(function($) {
 
         $("#salesSubmit").click(function() {
 
-            // if($("#purchaseform").valid()) {
+   
             d = new FormData($("#salesform")[0]);
     
             var subTol = $("#subTotal").text();
@@ -803,10 +735,7 @@ jQuery(function($) {
             var balanceValFloat = parseFloat(balanceVal);
             var cusid = $('#salesCustomer').val();
             var salesDate = $('#salesDate').val();
-            
-
-
-   
+       
 
             d.append("cusid", cusid);
             d.append("subTol", subTol);
@@ -819,11 +748,7 @@ jQuery(function($) {
                 processData: false,
                 contentType: false,
                 success: function(data) {
-                    // $('#purchaseform')[0].reset();
-                    // location.reload(true);
-       
-
-                    // $("#poid").append(data);
+                
                     var salesId = jQuery.parseJSON(data);
                     
                     TableData = storeTblValues(salesId)
@@ -835,8 +760,6 @@ jQuery(function($) {
                         data: "pTableData=" + TableData,
                         success: function(msg) {
                             
-                 
-                            // $('#salesform').reset();
                             location.reload(true);
 
                         }
@@ -857,8 +780,6 @@ jQuery(function($) {
                 placeholder: "--Select a Product--",
                 allowClear: true
             });
-
-
 
             $('#purchaseform').validate({
                 errorElement: 'div',

@@ -23,7 +23,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
             <div class="form-actions">
                 <div>
-                    <!-- <h4 class="page-header"><b>Create Sales</b></h4> -->
+                   
                 </div>
                 <div class="box box-info">
                     <!-- /.box-header -->
@@ -91,12 +91,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                                                     <label for="salesRoute">Route</label>
                                                     <input readonly type="text" class="form-control" id="salesRoute" name="salesRoute" value=''>
                                                 </div>
-                                                <!-- <div>
-                                                    <label for="salesRoute" style="display:block;">Route</label>
-                                                    <select class="form-control selcet-filter select2gg" id="salesRoute" name="salesRoute" style="width:100%;">
-                                                        <option></option>
-                                                    </select>
-                                                </div> -->
+                     
                                             </div>
 
                                             <div class="col-md-6 form-group">
@@ -104,12 +99,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                                                     <label for="salesSupplierName">Supplier</label>
                                                     <input readonly type="text" class="form-control" id="salesSupplierName" name="salesSupplierName" value=''>
                                                 </div>
-                                                <!-- <div>
-                                                    <label for="salesSupplier" style="display:block;">Supplier</label>
-                                                    <select class="form-control selcet-filter select2gg" id="salesSupplier" name="salesSupplier" style="width:100%;">
-                                                        <option></option>
-                                                    </select>
-                                                </div> -->
+                    
                                             </div>
 
 
@@ -127,13 +117,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                                                         </select>
                                                     </div>
 
-                                                    <!-- <div>
-
-                                                        <select class="form-control selcet-filter select2gg" id="rtsche" name="rtsche" style="width:100%;">
-                                                            <option></option>
-                                                            <option value='gg'>gg</option>
-                                                        </select>
-                                                    </div> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-6 form-group">
@@ -152,12 +135,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
                                                     <input type="hidden" readonly class="form-control" id="salesSupplier" name="salesSupplier" value=''>
                                                 </div>
-                                                <!-- <div>
-                                                    <label for="salesSupplier" style="display:block;">Supplier</label>
-                                                    <select class="form-control selcet-filter select2gg" id="salesSupplier" name="salesSupplier" style="width:100%;">
-                                                        <option></option>
-                                                    </select>
-                                                </div> -->
+                              
                                             </div>
                                         </div>
                                     </div>
@@ -325,7 +303,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                                                 </div>
                                             </div>
 
-                                            <!-- <div id="grid-pager"></div> -->
+                                
                                         </div>
                                     </div>
                                 </div>
@@ -360,7 +338,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 <script type="text/javascript">
     jQuery(function($) {
         function toFixedFunction(numb) {
-            // var num = 5.56789;
             var n = numb.toFixed(2);
             return n;
         }
@@ -386,8 +363,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
         var batch = $("#salesBatch option:selected").text();
         var rtsche = $("#rtsche option:selected").text();
-        // alert(batch);
-        // alert(rtsche);
+
         $.post("../controllers/controller_sales.php?type=get_avaQty", {
                 rtsche: rtsche,
                 batch: batch
@@ -413,13 +389,11 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
     function updateSubTol() {
 
-        // $("#salesTable tbody").on("change", '.discountVal', function() { 
         var $row = $(this).closest("tr");
         var subTotal = 0;
 
         $('#salesTableBody tr').each(function(row, tr) {
-            var $row = $(this).closest("tr");
-            // var rows = $("#invoice-table tbody").children('tr');
+            var $row = $(this).closest("tr");       
             var rowTotalVal = $row.find("td:nth-child(7)").text();
             rowTotalVal = parseFloat(rowTotalVal);
             subTotal = subTotal + rowTotalVal;
@@ -432,8 +406,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
     }
 
     function updateAmountDue() {
-        // alert("gg");
-        // var balance = 0;
+
         var selectCustomer = $("#salesCustomer").val();
 
         $.post("../controllers/controller_sales.php?type=getSalesBalance", {
@@ -454,8 +427,6 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
                 }
             });
-
-
 
     }
 
@@ -497,16 +468,10 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
             $('.date-picker').datepicker('setDate', new Date());
 
 
-
-
-
-
-
             //load route schedule id
             var empId = $('#empId').val();
             var date = $('#salesDate').val();
-            //alert(empId);
-            //alert(date);
+     
 
             $.post("../controllers/controller_sales.php?type=get_rtscheid", {
                     empId: empId,
@@ -514,7 +479,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                 },
                 function(data, status) {
                     if (status == "success") {
-                        //alert(data);
+        
                         $("#rtsche").empty();
                         $("#rtsche").append("<option value=''>--Select Schedule--</option>");
                         $("#rtsche").append(data);
@@ -548,7 +513,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
     $('#rtsche').change(function() {
 
-        var rtsche = $('#rtsche').val(); // get option's value
+        var rtsche = $('#rtsche').val(); 
 
 
         $.post("../controllers/controller_sales.php?type=get_route", {
@@ -558,7 +523,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                 if (status == "success") {
 
                     $("#salesRoute").empty();
-                    // $("#salesRoute").append("<option value=''>--Select Route--</option>");
+             
                     $("#salesRoute").val(data);
 
                 }
@@ -569,11 +534,11 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
             },
             function(data, status) {
                 if (status == "success") {
-                    //alert(data);
+         
                     $("#salesCustomer").empty();
                     $("#salesCustomer").append("<option value=''>--Select Product Category--</option>");
                     $("#salesCustomer").append(data);
-                    // $("#poSupplier").attr("disabled", "disabled");
+             
                 }
             });
 
@@ -582,9 +547,9 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
             },
             function(data, status) {
                 if (status == "success") {
-                    //alert(data); 
+             
                     $("#salesSupplierName").empty();
-                    // $("#salesSupplier").append("<option value=''>--Select Supplier--</option>");
+                  
                     $("#salesSupplierName").val(data);
 
                 }
@@ -595,7 +560,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
             },
             function(data, status) {
                 if (status == "success") {
-                    //alert(data);
+           
                     $("#salesSupplier").empty();
                     $("#salesSupplier").val(data);
 
@@ -608,9 +573,8 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
     $('#salesRoute').change(function() {
 
-        var salesRoute = $('#salesRoute').val(); // get option's value
-        alert('gg');
-        //change product category select box
+   
+
 
 
     });
@@ -625,7 +589,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
     $('#salesProductCat').change(function() {
 
         var supplierval = $('#salesSupplier').val();
-        var procatval = $('#salesProductCat').val(); // get option's value
+        var procatval = $('#salesProductCat').val(); 
 
         // get filtered data to datatable
         $.post("../controllers/controller_purchase.php?type=get_productList", {
@@ -646,7 +610,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
     $('#salesProductName').change(function() {
 
-        var proid = $('#salesProductName').val(); // get option's value
+        var proid = $('#salesProductName').val(); 
 
         $.post("../controllers/controller_sales.php?type=get_batch", {
                 proid: proid
@@ -684,7 +648,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                 $('#salesChangeCusDiv').show();
                 $('#btnSet').show();
 
-                var salesSupplier = $('#salesSupplier').val(); // get option's value
+                var salesSupplier = $('#salesSupplier').val(); 
 
                 //change product category select box
                 $.post("../controllers/controller_sales.php?type=get_ProCat", {
@@ -696,7 +660,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                             $("#salesProductCat").empty();
                             $("#salesProductCat").append("<option value=''>--Select Product Category--</option>");
                             $("#salesProductCat").append(data);
-                            // $("#poSupplier").attr("disabled", "disabled");
+                            
                         }
                     });
 
@@ -708,7 +672,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                     },
                     function(data, status) {
                         if (status == "success") {
-                            // alert(data);
+              
                             $("#salesProductName").empty();
                             $("#salesProductName").append("<option></option>");
                             $("#salesProductName").append(data);
@@ -751,9 +715,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
             $("#qty").val("0");
             $("#disVal").val("0");
             $(".balanceVal").text("0.00");
-            // $('.date-picker').datepicker('setDate', 'today');
-
-
+       
 
             $("#qty").keyup(function() {
                 getItemPrice();
@@ -780,7 +742,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                     var qnty = $('#qty').val();
                     var buttons = "<div class='hidden-sm hidden-xs btn-group'><button type='button' class='btn btn-xs btn-info'><i class='ace-icon fa fa-pencil bigger-120'></i></button></div>"
                     var item_cost = $('#itemPrice').val();
-                    // alert(item_cost); 
+            
                     var discount = parseInt($('#disVal').val());
                     var subTotal = parseInt($("#grossTotal").val());
                     var total = item_cost * qnty;
@@ -831,7 +793,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
 
                     var supplierval = $('#salesSupplier').val();
-                    var procatval = $('#salesProductCat').val(); // get option's value
+                    var procatval = $('#salesProductCat').val(); 
 
                     // get filtered data to datatable
                     $.post("../controllers/controller_purchase.php?type=get_productList", {
@@ -884,7 +846,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
                 updateSubTol();
                 updateAmountDue();
-                // updateTableRow();
+           
                 $.post("../controllers/controller_sales.php?type=updateTableRow", {
                         salesid: salesid,
                         listNo: listNo,
@@ -914,7 +876,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                 $row.find("td:nth-child(7)").text(grossTotal);
                 updateSubTol();
                 updateAmountDue();
-                // updateTableRow();
+           
                 $.post("../controllers/controller_sales.php?type=updateTableRow", {
                         salesid: salesid,
                         listNo: listNo,
@@ -942,8 +904,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                 var $row = $(this).closest("tr"); // Find the row
                 var proname = $row.find("td:nth-child(3)").text();
                 var proqty = parseFloat($row.find(".tableQty").val());
-                // alert(proqty);
-                // alert(proname);
+             
                 var salesid = $('#salesid').val();
                 var listNo = parseInt($row.find("td:nth-child(2)").text());
                 Swal.fire({
@@ -1000,7 +961,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
 
             $('#salesTable tbody').on('click', '.fa-pencil', function() {
                 var btn = this;
-                // alert("gg");
+       
                 var $row = $(this).closest("tr"); // Find the row
                 var listNo = $row.attr("id");
                 var salesId = $("#salesid").text();
@@ -1041,17 +1002,17 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                     },
                     function(data, status) {
                         if (status == "success") {
-                            alert("gg");
+                            
                             $.post("../controllers/controller_sales.php?type=updateVehicle", {
                                 salesid:salesid
                                 },
                                 function(data, status) {
-                                    alert(data);
+                                    
                                     if (status == "success") {
-                                        
+                                        window.location.href = "sales_create_invoice.php?salesid=" + salesid;
                                     }
                                 });
-                            // window.location.href = "sales_create_invoice.php?salesid=" + salesid;
+                            
                         }
                     });
 
@@ -1154,7 +1115,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                 },
 
                 success: function(e) {
-                    $(e).closest('.form-group').removeClass('has-error'); //.addClass('has-info');
+                    $(e).closest('.form-group').removeClass('has-error'); 
                     $(e).remove();
                 },
 
@@ -1215,7 +1176,7 @@ if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"] == "4") || ($_SESSI
                 },
 
                 success: function(e) {
-                    $(e).closest('.form-group').removeClass('has-error'); //.addClass('has-info');
+                    $(e).closest('.form-group').removeClass('has-error'); 
                     $(e).remove();
                 },
 
