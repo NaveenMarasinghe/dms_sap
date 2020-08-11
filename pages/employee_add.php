@@ -1,8 +1,8 @@
 <?php
   session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="2") || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="5")){
-      header("location:../index.php");
-    } 
+    if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="2") || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="5")) {
+        header("location:../index.php");
+    }
 ?>
 
 <?php require_once("../incl/header.php"); ?>
@@ -50,7 +50,8 @@
 
                         <div class="col-sm-9">
                             <div class="clearfix">
-                                <input type="text" id="emp_fullname" name="emp_fullname" placeholder="" class="col-sm-6" />
+                                <input type="text" id="emp_fullname" name="emp_fullname" placeholder=""
+                                    class="col-sm-6" />
                             </div>
                         </div>
                     </div>
@@ -186,8 +187,6 @@
                         'success'
                     );
                     $('#form_addNewEmp')[0].reset();
-      
-
                 }
             });
         }
@@ -272,4 +271,4 @@
 </script>
 
 <!-- Require footer here -->
-<?php require_once("../incl/footer.php"); ?>
+<?php require_once("../incl/footer.php");

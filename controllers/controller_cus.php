@@ -1,9 +1,9 @@
 <?php
-require_once("../controllers/class_dbconnection.php");
+require_once "../controllers/class_dbconnection.php";
 
 if (isset($_GET["type"])) {
     $type = $_GET["type"];
-    switch ($type) {            
+    switch ($type) {
         case "viewCustomerTable":
             viewCustomerTable();
             break;
@@ -34,18 +34,18 @@ if (isset($_GET["type"])) {
         case "deleteCus":
             deleteCus();
             break;
-            case "getCusDetails":
-                getCusDetails();
-                break;
-                case "removeEmp":
-                    removeEmp();
-                    break;
-                    case "getEmpDetails":
-                        getEmpDetails();
-                        break;
-                        case "updateEmp":
-                            updateEmp();
-                            break;
+        case "getCusDetails":
+            getCusDetails();
+            break;
+        case "removeEmp":
+            removeEmp();
+            break;
+        case "getEmpDetails":
+            getEmpDetails();
+            break;
+        case "updateEmp":
+            updateEmp();
+            break;
     }
 }
 
@@ -80,12 +80,12 @@ function viewCustomerTable()
         echo ("<td>" . $rec["cus_add"] . "</td>");
         echo ("<td>" . $rec["cus_tel"] . "</td>");
         echo ("<td>" . $rec["sales_balance"] . "</td>");
-        echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">					
-                    
+        echo ('<td id="2"><div id="1" class="hidden-sm hidden-xs btn-group">
+
                     <button class="btn btn-xs btn-info" onclick="editRecord(\'' . $rec["cus_id"] . '\')">
                         <i class="ace-icon fa fa-pencil bigger-120"></i>
-                    </button>                    
-                    
+                    </button>
+
 					<button class="btn btn-xs btn-danger" onclick="deleteRecord(\'' . $rec["cus_id"] . '\')">
 						<i class="ace-icon fa fa-trash-o bigger-120"></i>
 					</button>
@@ -113,9 +113,8 @@ function addNewCustomer()
         exit;
     }
 
-    //checks the number of rows in the result 
+    //checks the number of rows in the result
     $nor = $result->num_rows;
-
 
     if ($nor > 0) {
         //fetch the result
@@ -149,14 +148,14 @@ function addNewCustomer()
         echo ("SQL Error: " . $con->error);
         exit;
     }
-    
+
     $nor = $result->num_rows;
     if ($nor == 0) {
         echo ("");
     } else {
         //fetch all the records
         while ($rec = $result->fetch_assoc()) {
-            
+
             echo ("Success");
         }
     }
@@ -173,7 +172,7 @@ function getTerritory()
         echo ("SQL Error: " . $con->error);
         exit;
     }
-   
+
     $nor = $result->num_rows;
     if ($nor == 0) {
         echo ("No records");
@@ -223,7 +222,7 @@ function getEmpType()
         echo ("SQL Error: " . $con->error);
         exit;
     }
-  
+
     $nor = $result->num_rows;
     if ($nor == 0) {
         echo ("No records");
@@ -302,9 +301,8 @@ function addNewEmp()
         exit;
     }
 
-    //checks the number of rows in the result 
+    //checks the number of rows in the result
     $nor = $result->num_rows;
-
 
     if ($nor > 0) {
         //fetch the result
@@ -363,12 +361,12 @@ function createRtscheSesson()
 
 function updateCustomer()
 {
-    $cus_id=$_POST["cus_id"];
-    $cus_name=$_POST["cus_name"];
-    $cus_ter=$_POST["cus_ter"];
-    $cus_route=$_POST["cus_route"];
-    $cus_add=$_POST["cus_add"];
-    $cus_tel=$_POST["cus_tel"];
+    $cus_id = $_POST["cus_id"];
+    $cus_name = $_POST["cus_name"];
+    $cus_ter = $_POST["cus_ter"];
+    $cus_route = $_POST["cus_route"];
+    $cus_add = $_POST["cus_add"];
+    $cus_tel = $_POST["cus_tel"];
 
     $db = new Connection();
     $con = $db->db_con();
@@ -388,27 +386,29 @@ function deleteCus()
     $con->close();
 }
 
-function getCusDetails(){
-	$cusId=$_POST["cusId"];
+function getCusDetails()
+{
+    $cusId = $_POST["cusId"];
 
-	$db=new Connection();
-	$con=$db->db_con();
-	$sql="SELECT cus_name, cus_add, cus_tel FROM tbl_customers WHERE cus_id='$cusId'";
-	$result=$con->query($sql);
+    $db = new Connection();
+    $con = $db->db_con();
+    $sql = "SELECT cus_name, cus_add, cus_tel FROM tbl_customers WHERE cus_id='$cusId'";
+    $result = $con->query($sql);
 
-	if ($con->errno) {
-		echo("SQL Error: ". $con->error);
-		exit;
-	}
+    if ($con->errno) {
+        echo ("SQL Error: " . $con->error);
+        exit;
+    }
 
-	$rec=$result->fetch_assoc();
-	echo(json_encode($rec));
-	$con->close();
+    $rec = $result->fetch_assoc();
+    echo (json_encode($rec));
+    $con->close();
 
 }
 
-function removeEmp(){
-    $empId=$_POST["empId"];
+function removeEmp()
+{
+    $empId = $_POST["empId"];
     $db = new Connection();
     $con = $db->db_con();
     $sql = "UPDATE tbl_users SET emp_status='0' WHERE emp_id='$empId'";
@@ -416,30 +416,31 @@ function removeEmp(){
     $con->close();
 }
 
-function getEmpDetails(){
-    $empId=$_POST["empId"];
+function getEmpDetails()
+{
+    $empId = $_POST["empId"];
 
-	$db=new Connection();
-	$con=$db->db_con();
-	$sql="SELECT emp_fullname, emp_add, emp_tel FROM tbl_user_details WHERE emp_id='$empId'";
-	$result=$con->query($sql);
+    $db = new Connection();
+    $con = $db->db_con();
+    $sql = "SELECT emp_fullname, emp_add, emp_tel FROM tbl_user_details WHERE emp_id='$empId'";
+    $result = $con->query($sql);
 
-	if ($con->errno) {
-		echo("SQL Error: ". $con->error);
-		exit;
-	}
+    if ($con->errno) {
+        echo ("SQL Error: " . $con->error);
+        exit;
+    }
 
-	$rec=$result->fetch_assoc();
-	echo(json_encode($rec));
-	$con->close();
+    $rec = $result->fetch_assoc();
+    echo (json_encode($rec));
+    $con->close();
 }
 
 function updateEmp()
 {
-    $emp_id=$_POST["emp_id"];
-    $emp_name=$_POST["emp_name"];
-    $emp_add=$_POST["emp_add"];
-    $emp_tel=$_POST["emp_tel"];
+    $emp_id = $_POST["emp_id"];
+    $emp_name = $_POST["emp_name"];
+    $emp_add = $_POST["emp_add"];
+    $emp_tel = $_POST["emp_tel"];
 
     $db = new Connection();
     $con = $db->db_con();

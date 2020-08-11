@@ -1,9 +1,9 @@
 <?php
-require_once("../controllers/class_dbconnection.php");
+require_once "../controllers/class_dbconnection.php";
 
 if (isset($_GET["type"])) {
     $type = $_GET["type"];
-    switch ($type) {            // checks the type 
+    switch ($type) { // checks the type
         case "getVehicleNum":
             getVehicleNum();
             break;
@@ -13,9 +13,9 @@ if (isset($_GET["type"])) {
         case "filteredVehStock":
             filteredVehStock();
             break;
-            case "addNewVehicle":
-                addNewVehicle();
-                break;
+        case "addNewVehicle":
+            addNewVehicle();
+            break;
     }
 }
 
@@ -42,7 +42,7 @@ function getVehicleNum()
             echo ("<option value='" . $rec["veh_number"] . "'>" . $rec["veh_number"] . "</option>");
         }
     }
-    $con->close();   
+    $con->close();
 }
 
 function viewVehicleStock()
@@ -50,7 +50,7 @@ function viewVehicleStock()
     $db = new Connection();
     $con = $db->db_con();
     $sql = "SELECT veh.veh_id, veh.pro_id, pro.pro_name, veh.batch_id, veh.qty
-    FROM tbl_vehicle_products veh, tbl_products pro 
+    FROM tbl_vehicle_products veh, tbl_products pro
     WHERE veh.pro_id=pro.pro_id";
     $result = $con->query($sql);
     if ($con->errno) {
@@ -69,7 +69,6 @@ function viewVehicleStock()
         exit;
     }
     while ($rec = $result->fetch_assoc()) {
-
         echo ("<tr>");
         echo ("<td>" . $rec["veh_id"] . "</td>");
         echo ("<td>" . $rec["pro_id"] . "</td>");
@@ -79,7 +78,7 @@ function viewVehicleStock()
         echo ("</tr>");
     }
 
-    $con->close();   
+    $con->close();
 }
 
 function filteredVehStock()
@@ -88,7 +87,7 @@ function filteredVehStock()
     $db = new Connection();
     $con = $db->db_con();
     $sql = "SELECT veh.veh_id, veh.pro_id, pro.pro_name, veh.batch_id, veh.qty
-            FROM tbl_vehicle_products veh, tbl_products pro 
+            FROM tbl_vehicle_products veh, tbl_products pro
             WHERE veh_id='$vehNum' AND veh.pro_id=pro.pro_id";
     $result = $con->query($sql);
     if ($con->errno) {
@@ -107,7 +106,6 @@ function filteredVehStock()
         exit;
     }
     while ($rec = $result->fetch_assoc()) {
-
         echo ("<tr>");
         echo ("<td>" . $rec["veh_id"] . "</td>");
         echo ("<td>" . $rec["pro_id"] . "</td>");
@@ -117,58 +115,56 @@ function filteredVehStock()
         echo ("</tr>");
     }
 
-    $con->close();   
+    $con->close();
 }
 
 function addNewVehicle()
 {
-	$db = new Connection();
-	$con = $db->db_con();
+    $db = new Connection();
+    $con = $db->db_con();
 
     $sqlsup = "SELECT veh_id FROM tbl_vehicles ORDER BY veh_id DESC LIMIT 1;";
 
-	//execute the query
-	$result = $con->query($sqlsup);
+    //execute the query
+    $result = $con->query($sqlsup);
 
-	//error handling
-	if ($con->errno) {
-		echo ("SQL Error: " . $con->error);
-		exit;
-	}
+    //error handling
+    if ($con->errno) {
+        echo ("SQL Error: " . $con->error);
+        exit;
+    }
 
-	//checks the number of rows in the result 
-	$nor = $result->num_rows;
+    //checks the number of rows in the result
+    $nor = $result->num_rows;
 
+    if ($nor > 0) {
+        //fetch the result
+        $rec = $result->fetch_assoc();
+        //assign ID to variable $num
+        $num = $rec["veh_id"];
+        //eliminate string S and get remaining ID no
+        $num = substr($num, 3);
+        //increment the ID
+        $num++;
+        //merge zeros to left side of ID (total length of ID should be 3)
+        $no = str_pad($num, 3, '0', STR_PAD_LEFT);
+        //merge string S to new id
+        $new_id = "VEH" . $no;
+    } else {
+        //first ID of student
+        $new_id = "VEH001";
+    }
 
-	if ($nor > 0) {
-		//fetch the result
-		$rec = $result->fetch_assoc();
-		//assign ID to variable $num
-		$num = $rec["veh_id"];
-		//eliminate string S and get remaining ID no
-		$num = substr($num, 3);
-		//increment the ID
-		$num++;
-		//merge zeros to left side of ID (total length of ID should be 3)
-		$no = str_pad($num, 3, '0', STR_PAD_LEFT);
-		//merge string S to new id
-		$new_id = "VEH" . $no;
-	} else {
-		//first ID of student
-		$new_id = "VEH001";
-	}
-    
-	$veh_name = $_POST["veh_name"];
-	$veh_type = $_POST["veh_type"];
-	$veh_num = $_POST["veh_num"];
+    $veh_name = $_POST["veh_name"];
+    $veh_type = $_POST["veh_type"];
+    $veh_num = $_POST["veh_num"];
 
-	$sql = "INSERT INTO tbl_vehicles(veh_id,veh_number,veh_name,veh_type)
+    $sql = "INSERT INTO tbl_vehicles(veh_id,veh_number,veh_name,veh_type)
 		VALUES('$new_id','$veh_num','$veh_name','$veh_type');";
-	$result = $con->query($sql);
-	if ($con->errno) {
-		echo ("SQL Error: " . $con->error);
-		exit;
-	}
-	$con->close();
-
+    $result = $con->query($sql);
+    if ($con->errno) {
+        echo ("SQL Error: " . $con->error);
+        exit;
+    }
+    $con->close();
 }

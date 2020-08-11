@@ -1,8 +1,8 @@
 <?php
   session_start();
-    if(!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")){
-      header("location:../index.php");
-    } 
+    if (!isset($_SESSION["user"]) || ($_SESSION["user"]["utype"]=="3") || ($_SESSION["user"]["utype"]=="4")) {
+        header("location:../index.php");
+    }
 ?>
 
 <?php require_once("../incl/header.php"); ?>
@@ -29,7 +29,8 @@
 
                         <div class="col-sm-9">
                             <div class="clearfix">
-                                <input readonly type="text" id="emp_id" value="<?php echo $_GET['emp_id'] ?>"
+                                <input readonly type="text" id="emp_id"
+                                    value="<?php echo $_GET['emp_id'] ?>"
                                     name="emp_id" placeholder="" class="col-sm-6" />
                             </div>
                         </div>
@@ -50,7 +51,7 @@
 
                         <div class="col-sm-9">
                             <div class="clearfix">
-                            <input type="text" id="emp_add" name="emp_add" placeholder="" class="col-sm-6" />
+                                <input type="text" id="emp_add" name="emp_add" placeholder="" class="col-sm-6" />
                             </div>
                         </div>
                     </div>
@@ -60,19 +61,19 @@
 
                         <div class="col-sm-9">
                             <div class="clearfix">
-                            <input type="text" id="emp_tel" name="emp_tel" placeholder="" class="col-sm-6" />
+                                <input type="text" id="emp_tel" name="emp_tel" placeholder="" class="col-sm-6" />
                             </div>
                         </div>
                     </div>
- 
+
 
                     <div class="clearfix form-actions">
                         <div class="col-md-offset-3 col-md-9">
                             <a href="../pages/employee_view.php">
-                            <button class="btn btn-default" type="button">
-                                <i class="ace-icon fa fa-undo bigger-110"></i>
-                                Cancel
-                            </button> </a>
+                                <button class="btn btn-default" type="button">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    Cancel
+                                </button> </a>
 
                             &nbsp; &nbsp; &nbsp;
                             <button class="btn btn-info" type="button" id="addCustomerSave">
@@ -89,18 +90,17 @@
 </div>
 
 <script type="text/javascript">
-
-    $(document).ready(function () {
+    $(document).ready(function() {
         document.title = "Edit Employee Details";
 
         $.noConflict();
 
 
-            var empId=$("#emp_id").val();
+        var empId = $("#emp_id").val();
         $.post("../controllers/controller_cus.php?type=getEmpDetails", {
-            empId:empId
+                empId: empId
             },
-            function (data, status) {
+            function(data, status) {
                 if (status == "success") {
                     var jdata = jQuery.parseJSON(data);
                     $("#emp_name").val(jdata.emp_fullname);
@@ -112,7 +112,7 @@
 
     });
 
-    $("#addCustomerSave").click(function () {
+    $("#addCustomerSave").click(function() {
 
         if ($("#form_updateCustomer").valid()) {
 
@@ -123,7 +123,7 @@
                 data: d,
                 processData: false,
                 contentType: false,
-                success: function (data) {
+                success: function(data) {
                     Swal.fire({
                         title: 'Employee Details Updated',
                         icon: 'info',
@@ -141,7 +141,7 @@
 
     });
 
-    jQuery(function ($) {
+    jQuery(function($) {
         $('#form_updateCustomer').validate({
             errorElement: 'div',
             errorClass: 'help-block',
@@ -167,16 +167,16 @@
                 gender: "Please choose gender",
                 agree: "Please accept our policy"
             },
-            highlight: function (e) {
+            highlight: function(e) {
                 $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
             },
 
-            success: function (e) {
+            success: function(e) {
                 $(e).closest('.form-group').removeClass('has-error'); //.addClass('has-info');
                 $(e).remove();
             },
 
-            errorPlacement: function (error, element) {
+            errorPlacement: function(error, element) {
                 if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
                     var controls = element.closest('div[class*="col-"]');
                     if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
@@ -193,4 +193,4 @@
 </script>
 
 <!-- Require footer here -->
-<?php require_once("../incl/footer.php"); ?>
+<?php require_once("../incl/footer.php");
